@@ -9,6 +9,7 @@ export const {
     handlers: { GET, POST },
     auth,
 } = NextAuth({
+    trustHost: true,
     providers: [
         Zitadel({
             clientId: process.env.ZITADEL_CLIENT_ID,
