@@ -1,5 +1,9 @@
-import NextAuth from 'next-auth';
+import NextAuth, { Session, User } from 'next-auth';
 import Zitadel from 'next-auth/providers/zitadel';
+
+interface MSession extends Session {
+    accessToken?: string,
+}
 
 export const {
     handlers: { GET, POST },
@@ -34,10 +38,12 @@ export const {
             return token;
         },
         session({ session, token }) {
-            console.log(token.user)
-            session.accessToken = token.accessToken;
-            session.user = token.user;
-            return session;
+            const mSession: MSession = session;
+
+            mSession.accessToken = token.accessToken as string;
+            mSession.user = token.user as User;
+
+            return mSession;
         },
     },
     secret: 'this-is-very-secret',
