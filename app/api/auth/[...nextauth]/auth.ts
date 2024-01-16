@@ -7,7 +7,7 @@ export const {
 } = NextAuth({
     providers: [
         Zitadel({
-            clientId: '245811430975175510@mumbleweb',
+            clientId: process.env.ZITADEL_CLIENT_ID,
             issuer: 'https://cas-fee-adv-ed1ide.zitadel.cloud',
             authorization: {
                 params: {
