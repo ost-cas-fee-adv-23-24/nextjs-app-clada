@@ -6,7 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier": "prettier . --write",
+    "test": "npx playwright test",
+    "test-ui-mode": "npx playwright test --ui"
+  },
+  "lint-staged": {
+    "*.{css,mdx,json,ts,tsx}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --max-warnings 0"
+    ]
   },
   "dependencies": {
     "autoprefixer": "10.4.15",
@@ -21,8 +32,14 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.41.1",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7"
+    "@types/react-dom": "18.2.7",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.11"
   }
 }
