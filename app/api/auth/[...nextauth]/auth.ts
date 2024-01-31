@@ -1,5 +1,6 @@
 import NextAuth, { Session, User } from 'next-auth';
 import Zitadel from 'next-auth/providers/zitadel';
+import { Config } from '@/config/env';
 
 interface MSession extends Session {
   accessToken?: string;
@@ -12,7 +13,7 @@ export const {
   trustHost: true,
   providers: [
     Zitadel({
-      clientId: process.env.ZITADEL_CLIENT_ID,
+      clientId: Config.zitadelClientId,
       issuer: 'https://cas-fee-adv-ed1ide.zitadel.cloud',
       authorization: {
         params: {
@@ -41,7 +42,7 @@ export const {
     },
     session({ session, token }) {
       const mSession: MSession = session;
-
+      
       mSession.accessToken = token.accessToken as string;
       mSession.user = token.user as User;
 

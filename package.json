@@ -8,8 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier . --write",
-    "test": "npx playwright test",
-    "test-ui-mode": "npx playwright test --ui"
+    "test": "npm-run-all test:*",
+    "test:mock": "",
+    "test:playwright": "npx playwright test",
+    "test:ui-mode": "npx playwright test --ui"
   },
   "lint-staged": {
     "*.{css,mdx,json,ts,tsx}": [
@@ -39,6 +41,8 @@
     "eslint-config-prettier": "^9.1.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
+    "msw": "^2.1.5",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.11"
   }
