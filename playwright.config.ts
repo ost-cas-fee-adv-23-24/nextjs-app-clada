@@ -1,4 +1,5 @@
-import { defineConfig, devices } from '@playwright/test';
+import {defineConfig, devices, test} from '@playwright/test';
+import dotenv from 'dotenv';
 
 /**
  * Read environment variables from file.
@@ -9,6 +10,10 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
+dotenv.config({ path: "./.env.test", override: true });
+const testEnv = { ...process.env } as { [key: string]: string };
+
 export default defineConfig({
   testDir: './__tests__',
   /* Run tests in files in parallel */
@@ -72,6 +77,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run test-mocks',
     url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI
+    reuseExistingServer: !process.env.CI,
+    env: testEnv
   },
 });
