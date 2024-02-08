@@ -3,12 +3,12 @@
 import { signIn } from 'next-auth/react';
 
 export default function LoginButton() {
-    return (
-        <button
-            onClick={() => signIn('zitadel')}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-            Login with Zitadel
-        </button>
-    );
+  return (
+    <button
+      onClick={() => signIn('zitadel')}
+      className='rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700'
+    >
+      Login with Zitadel
+    </button>
+  );
 }
