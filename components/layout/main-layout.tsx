@@ -3,11 +3,11 @@ import { Header } from './header';
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <body className='h-full w-full'>
+    <body>
       <Header />
       <div className='pt-l'></div>
-      <main className='bg-base-100 py-xl pl-l pt-header grid w-full place-items-center items-start'>
-        <div className='w-content flex'>{children}</div>
+      <main className='grid w-full place-items-center items-start bg-base-100 py-xl pl-l pr-l pt-header'>
+        <div className='flex max-w-xl'>{children}</div>
       </main>
     </body>
   );

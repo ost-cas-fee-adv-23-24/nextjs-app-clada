@@ -5,8 +5,8 @@ import LoginButton from '../login-button';
 
 export const Header = () => {
   return (
-    <header className='p-s bg-primary-700 max-h-header fixed flex w-full place-content-center'>
-      <div className='w-content flex justify-between'>
+    <header className='fixed z-10 flex max-h-header w-full place-content-center bg-primary-700 p-s'>
+      <div className='flex max-w-xl flex-grow justify-between'>
         <Logo variant='white' href='/'></Logo>
         <LoginButton></LoginButton>
       </div>
