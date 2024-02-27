@@ -1,9 +1,9 @@
-import LoginButton from '@/components/login-button';
 import { auth } from './api/auth/[...nextauth]/auth';
 import React from 'react';
-import LogoutButton from '@/components/logout-button';
+import { GetUsers } from './api/actions/user.actions';
 export default async function Home() {
   const session = await auth();
+  const users = await GetUsers()
 
   return (
     <div>
@@ -19,6 +19,7 @@ export default async function Home() {
       <div className='mb-font-label-xl rounded-m p-l h-screen w-full bg-white'>
         Content Placeholder
       </div>
+      <div>{JSON.stringify(users)}</div>
     </div>
   );
 }
