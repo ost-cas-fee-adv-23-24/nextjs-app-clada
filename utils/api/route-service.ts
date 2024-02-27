@@ -1,4 +1,4 @@
-import { Config } from "@/config/env";
+import { Config } from '@/config/env';
 
 const BASE_URL_API = Config.apiUrl;
 
@@ -22,9 +22,11 @@ export enum ApiRoutes {
   UserAvatar = '/users/avatar',
 }
 
-type TQuery = Record<string, string | string[] | number | undefined> | undefined | null;
+type TQuery =
+  | Record<string, string | string[] | number | undefined>
+  | undefined
+  | null;
 type TParams = Record<string, string | null | undefined> | undefined | null;
-
 
 /**
  * Service class for generating URLs for pages and APIs.
@@ -37,7 +39,11 @@ export class RouteService {
    * @param query - Optional query parameters to be appended to the URL.
    * @returns The generated URL.
    */
-  public static page(route: PageRoutes, params?: TParams, query?: TQuery): string {
+  public static page(
+    route: PageRoutes,
+    params?: TParams,
+    query?: TQuery
+  ): string {
     return this._processUrl('', route, params, query);
   }
   /**
@@ -47,7 +53,11 @@ export class RouteService {
    * @param query - Optional query parameters to be appended to the URL.
    * @returns The generated URL.
    */
-  public static api(route: ApiRoutes, params?: TParams, query?: TQuery): string {
+  public static api(
+    route: ApiRoutes,
+    params?: TParams,
+    query?: TQuery
+  ): string {
     return this._processUrl(BASE_URL_API, route, params, query);
   }
 
@@ -65,14 +75,16 @@ export class RouteService {
     baseUrl: string | undefined,
     route: PageRoutes | ApiRoutes,
     params?: TParams,
-    query?: TQuery,
+    query?: TQuery
   ): string {
-    if(!baseUrl) {
-        throw new Error('Base URL not defined');
+    if (!baseUrl) {
+      throw new Error('Base URL not defined');
     }
 
     if (!route.startsWith('/')) {
-      throw new TypeError(`Expect the first parameter to start with '/', you passed ${route}.`);
+      throw new TypeError(
+        `Expect the first parameter to start with '/', you passed ${route}.`
+      );
     }
 
     let formattedRoute: string = baseUrl + route;
@@ -80,7 +92,10 @@ export class RouteService {
     if (params) {
       Object.keys(params).forEach((key: string) => {
         if (formattedRoute.includes(`:${key}`)) {
-          formattedRoute = formattedRoute.replace(`:${key}`, String(params[key]));
+          formattedRoute = formattedRoute.replace(
+            `:${key}`,
+            String(params[key])
+          );
         }
       });
     }
@@ -100,17 +115,24 @@ export class RouteService {
    */
   private static _objectToQuery(obj: TQuery): string | null {
     if (obj && Object.keys(obj).length > 0) {
-      const query = Object.entries(obj).reduce((previousValue, [key, value]) => {
-        if (value === undefined || value === null) return previousValue;
+      const query = Object.entries(obj).reduce(
+        (previousValue, [key, value]) => {
+          if (value === undefined || value === null) return previousValue;
 
-        if (Array.isArray(value)) {
-          const arrayParams = value.map((item) => `${key}=${encodeURIComponent(String(item))}`);
-          return previousValue ? `${previousValue}&${arrayParams.join('&')}` : `?${arrayParams.join('&')}`;
-        }
-        return previousValue
-          ? `${previousValue}&${key}=${encodeURIComponent(String(value))}`
-          : `?${key}=${encodeURIComponent(String(value))}`;
-      }, '');
+          if (Array.isArray(value)) {
+            const arrayParams = value.map(
+              (item) => `${key}=${encodeURIComponent(String(item))}`
+            );
+            return previousValue
+              ? `${previousValue}&${arrayParams.join('&')}`
+              : `?${arrayParams.join('&')}`;
+          }
+          return previousValue
+            ? `${previousValue}&${key}=${encodeURIComponent(String(value))}`
+            : `?${key}=${encodeURIComponent(String(value))}`;
+        },
+        ''
+      );
       return query || null;
     }
 

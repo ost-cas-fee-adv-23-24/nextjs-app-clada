@@ -261,7 +261,7 @@ export interface UpdatePostData {
 }
 
 /** Model to update user data. */
-export interface UpdateUserData {
+export interface UpdateUserData extends FormData {
   /** If set, updates the firstname of the profile. */
   firstname?: string | null;
   /** If set, updates the lastname of the profile. */
@@ -305,7 +305,7 @@ export interface UserPaginatedResult {
    */
   count?: number;
   /** The data for this given page. */
-  data?: User[];
+  data: User[];
   /**
    * Link to next page. If this is null, there is no next page.
    * The link will contain pagination information (offset, limit).

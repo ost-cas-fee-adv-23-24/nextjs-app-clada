@@ -9,7 +9,7 @@ export interface MSession extends Session {
 export const {
   handlers: { GET, POST },
   auth,
-  signIn
+  signIn,
 } = NextAuth({
   trustHost: true,
   providers: [
@@ -43,7 +43,7 @@ export const {
     },
     session({ session, token }) {
       const mSession: MSession = session;
-      
+
       mSession.accessToken = token.accessToken as string;
       mSession.user = token.user as User;
 

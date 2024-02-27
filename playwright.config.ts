@@ -1,4 +1,4 @@
-import {defineConfig, devices, test} from '@playwright/test';
+import { defineConfig, devices, test } from '@playwright/test';
 import dotenv from 'dotenv';
 
 /**
@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
  * See https://playwright.dev/docs/test-configuration.
  */
 
-dotenv.config({ path: "./.env.test", override: true });
+dotenv.config({ path: './.env.test', override: true });
 const testEnv = { ...process.env } as { [key: string]: string };
 
 export default defineConfig({
@@ -78,6 +78,6 @@ export default defineConfig({
     command: 'npm run test-mocks',
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
-    env: testEnv
+    env: testEnv,
   },
 });

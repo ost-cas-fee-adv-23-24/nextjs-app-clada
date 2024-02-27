@@ -1,7 +1,10 @@
 import { z } from 'zod';
 
 export const decodeULIDTimestamp = (ulid: string) => {
-  const validatedUlid = z.string().ulid({ message: 'Invalid ULID' }).parse(ulid);
+  const validatedUlid = z
+    .string()
+    .ulid({ message: 'Invalid ULID' })
+    .parse(ulid);
   const timestampPart = validatedUlid.substring(0, 10);
   const characters = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 

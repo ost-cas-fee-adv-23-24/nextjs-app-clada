@@ -18,7 +18,7 @@ export class APIBase {
   };
 
   public static getAuthHeader = async (): Promise<HeadersInit> => {
-    const session: MSession|null = await auth();
+    const session: MSession | null = await auth();
     if (!session) return {};
     return session ? { Authorization: `Bearer ${session.accessToken}` } : {};
   };
@@ -44,7 +44,7 @@ export class APIBase {
 export class APIError extends Error {
   constructor(
     message: string,
-    public status: number,
+    public status: number
   ) {
     super(message);
   }
