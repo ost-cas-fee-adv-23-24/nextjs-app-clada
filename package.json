@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "husky install && npx playwright install",
     "dev": "next dev",
+    "dev-mock": "cross-env NODE_ENV=dev-mock next dev & mocks-server",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -39,6 +40,7 @@
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.1",
     "eslint": "8.49.0",
     "eslint-config-next": "^14.0.4",

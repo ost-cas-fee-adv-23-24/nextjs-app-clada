@@ -12,6 +12,11 @@ export const GetUsers = async (): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>('/users', {
     method: 'GET',
   });
+
+  // todo: check if needs revalidation
+
+  console.log(JSON.stringify(response))
+
   return response;
 };
 
@@ -19,6 +24,8 @@ export const GetUserById = async (id: string): Promise<PublicUser> => {
   const response = await httpRequest<PublicUser>(`/users/${id}`, {
     method: 'GET',
   });
+
+  // todo: check if needs revalidation
 
   return response;
 };
@@ -36,6 +43,8 @@ export const GetUserFollowers = async (
     }
   );
 
+  // todo: check if needs revalidation
+
   return response;
 };
 
@@ -52,6 +61,8 @@ export const GetUserFollowees = async (
     }
   );
 
+  // todo: check if needs revalidation
+
   return response;
 };
 
@@ -59,6 +70,8 @@ export const deleteUserAvatar = async (): Promise<void> => {
   await httpRequest<void>('/users/avatar', {
     method: 'DELETE',
   });
+
+  // todo: check if needs revalidation
 };
 
 export const updateUserAvatar = async (data: FormData) => {
@@ -72,6 +85,9 @@ export const updateUserAvatar = async (data: FormData) => {
     method: 'PUT',
     body: data,
   });
+
+  // todo: check if needs revalidation
+
 };
 
 export const updateUser = async (data: UpdateUserData) => {
@@ -85,16 +101,25 @@ export const updateUser = async (data: UpdateUserData) => {
     method: 'PATCH',
     body: data,
   });
+
+  // todo: check if needs revalidation
+
 };
 
 export const followUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
     method: 'PUT',
   });
+
+  // todo: check if needs revalidation
+
 };
 
 export const unfollowUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
     method: 'PUT',
   });
+
+  // todo: check if needs revalidation
+
 };
