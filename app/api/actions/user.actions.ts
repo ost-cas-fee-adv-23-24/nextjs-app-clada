@@ -1,6 +1,6 @@
 'use server';
-import { APIBase } from '@/utils/api/base';
-import { ApiRoutes, RouteService } from '@/utils/api/route-service';
+// import { APIBase } from '@/utils/api/base';
+import { httpRequest } from '@/utils/api/request';
 import { validate } from '@/utils/api/validation';
 import {
   PublicUser,
@@ -9,30 +9,25 @@ import {
 } from '@/utils/models';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
-  const response = await APIBase.fetch(RouteService.api(ApiRoutes.Users), {
+  const response = await httpRequest<UserPaginatedResult>('/users', {
     method: 'GET',
   });
-  return (await response.json()) as UserPaginatedResult;
+  return response;
 };
 
-export const GetUserById = async (payload: {
-  id: string;
-}): Promise<PublicUser> => {
-  const response = await APIBase.fetch(
-    RouteService.api(ApiRoutes.UserId, { id: payload.id }),
-    {
-      method: 'GET',
-    }
-  );
+export const GetUserById = async (id: string): Promise<PublicUser> => {
+  const response = await httpRequest<PublicUser>(`/users/${id}`, {
+    method: 'GET',
+  });
 
-  return (await response.json()) as PublicUser;
+  return response;
 };
 
-export const GetUserFollowers = async (payload: {
-  id: string;
-}): Promise<UserPaginatedResult> => {
-  const response = await APIBase.fetch(
-    RouteService.api(ApiRoutes.UserFollowers, { id: payload.id }),
+export const GetUserFollowers = async (
+  id: string
+): Promise<UserPaginatedResult> => {
+  const response = await httpRequest<UserPaginatedResult>(
+    `/users/${id}/followers`,
     {
       method: 'GET',
       next: {
@@ -41,70 +36,65 @@ export const GetUserFollowers = async (payload: {
     }
   );
 
-  return (await response.json()) as UserPaginatedResult;
+  return response;
 };
 
-export const GetUserFollowees = async (payload: {
-  id: string;
-}): Promise<UserPaginatedResult> => {
-  const response = await APIBase.fetch(
-    RouteService.api(ApiRoutes.UserFollowees, { id: payload.id }),
+export const GetUserFollowees = async (
+  id: string
+): Promise<UserPaginatedResult> => {
+  const response = await httpRequest<UserPaginatedResult>(
+    `/users/${id}/followees`,
     {
       method: 'GET',
+      next: {
+        revalidate: 300,
+      },
     }
   );
 
-  return (await response.json()) as UserPaginatedResult;
+  return response;
 };
 
 export const deleteUserAvatar = async (): Promise<void> => {
-  await APIBase.fetch(RouteService.api(ApiRoutes.UserAvatar), {
+  await httpRequest<void>('/users/avatar', {
     method: 'DELETE',
   });
 };
 
-export const updateUserAvatar = async (payload: { data: FormData }) => {
-  const { data } = payload;
+export const updateUserAvatar = async (data: FormData) => {
   const validation = validate(data);
 
   if (!validation.success) {
     return Promise.reject(validation.error.flatten().fieldErrors);
   }
 
-  await APIBase.fetch(RouteService.api(ApiRoutes.UserAvatar), {
+  await httpRequest<void>('/users/avatar', {
     method: 'PUT',
     body: data,
   });
 };
 
-export const updateUser = async (payload: { data: UpdateUserData }) => {
-  const { data } = payload;
+export const updateUser = async (data: UpdateUserData) => {
   const validation = validate(data);
 
   if (!validation.success) {
     return Promise.reject(validation.error.flatten().fieldErrors);
   }
 
-  await APIBase.fetch(RouteService.api(ApiRoutes.Users), {
+  await httpRequest('/users', {
     method: 'PATCH',
     body: data,
   });
 };
 
-export const followUser = async (payload: { id: string }) => {
-  await APIBase.fetch(
-    RouteService.api(ApiRoutes.UserFollowers, { id: payload.id }),
-    {
-      method: 'PUT',
-    }
-  );
+export const followUser = async (id: string) => {
+  await httpRequest(`/users/${id}/followers`, {
+    method: 'PUT',
+  });
 };
 
-export const unfollowUser = async (payload: { id: string }) => {
-  await APIBase.fetch(
-    RouteService.api(ApiRoutes.UserFollowers, { id: payload.id }),
-    {
-      method: 'DELETE',
-    }
-  );
+export const unfollowUser = async (id: string) => {
+  await httpRequest(`/users/${id}/followers`, {
+    method: 'PUT',
+  });
 };

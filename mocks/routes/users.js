@@ -29,7 +29,7 @@ const ALL_USERS = [
 module.exports = [
   {
     id: 'get-users', // route id
-    url: '/api/users', // url in express format
+    url: '/users', // url in express format
     method: 'GET', // HTTP method
     variants: [
       {
