@@ -46,9 +46,9 @@ export default async function Home() {
       <UserTabs></UserTabs>
 
       <div className='pt-s'></div>
-      {userPosts.map((post: TPost) => (
+      {userPosts.map((post: TPost, index: number) => (
         <div>
-          <Post post={post}></Post>
+          <Post key='number' post={post}></Post>
           <div className='pt-l'></div>
         </div>
       ))}

@@ -35,8 +35,8 @@ export default async function Detail() {
         <CreateReply></CreateReply>
       </div>
 
-      {replies.map((post: TPost) => (
-        <Reply reply={post}></Reply>
+      {replies.map((post: TPost, index: number) => (
+        <Reply key='index' reply={post}></Reply>
       ))}
     </div>
   );

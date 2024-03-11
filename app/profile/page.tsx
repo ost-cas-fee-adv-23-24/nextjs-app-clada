@@ -42,9 +42,9 @@ export default async function Home() {
       <div className='pt-l'></div>
       <FollowingState user={user}></FollowingState>
       <div className='pt-s'></div>
-      {userPosts.map((post: TPost) => (
+      {userPosts.map((post: TPost, index: number) => (
         <div>
-          <Post post={post}></Post>
+          <Post key='index' post={post}></Post>
           <div className='pt-l'></div>
         </div>
       ))}
