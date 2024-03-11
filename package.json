@@ -5,13 +5,12 @@
   "scripts": {
     "postinstall": "husky install && npx playwright install",
     "dev": "next dev",
-    "dev-mock": "cross-env NODE_ENV=dev-mock next dev & mocks-server",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier . --write",
     "test": "npx playwright test",
-    "test-mocks": "next dev && mocks-server"
+    "test-interactive": "npx playwright test --ui"
   },
   "lint-staged": {
     "*.{css,mdx,json,ts,tsx}": [
@@ -35,13 +34,11 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@mocks-server/main": "^4.1.0",
     "@playwright/test": "^1.41.1",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.4.1",
     "eslint": "8.49.0",
     "eslint-config-next": "^14.0.4",
     "eslint-config-prettier": "^9.1.0",

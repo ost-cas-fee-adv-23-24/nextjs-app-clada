@@ -1,3 +1,5 @@
+'use server';
+
 import { httpRequest } from '@/utils/api/request';
 import { validate } from '@/utils/api/validation';
 import { parseValidationError } from '@/utils/error';
