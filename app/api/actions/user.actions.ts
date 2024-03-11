@@ -2,6 +2,7 @@
 // import { APIBase } from '@/utils/api/base';
 import { httpRequest } from '@/utils/api/request';
 import { validate } from '@/utils/api/validation';
+import { parseValidationError } from '@/utils/error';
 import {
   PublicUser,
   UpdateUserData,
@@ -78,7 +79,7 @@ export const updateUserAvatar = async (data: FormData) => {
   const validation = validate(data);
 
   if (!validation.success) {
-    return Promise.reject(validation.error.flatten().fieldErrors);
+    return Promise.reject(parseValidationError(validation));
   }
 
   await httpRequest<void>('/users/avatar', {
@@ -94,7 +95,7 @@ export const updateUser = async (data: UpdateUserData) => {
   const validation = validate(data);
 
   if (!validation.success) {
-    return Promise.reject(validation.error.flatten().fieldErrors);
+    return Promise.reject(parseValidationError(validation));
   }
 
   await httpRequest('/users', {

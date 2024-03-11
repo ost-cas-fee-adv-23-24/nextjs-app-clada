@@ -1,5 +1,6 @@
 import { httpRequest } from "@/utils/api/request"
 import { validate } from "@/utils/api/validation"
+import { parseValidationError } from "@/utils/error"
 import { Post, PostPaginatedResult, ReplyPaginatedResult } from "@/utils/models"
 
 type GetPostsParams = {
@@ -42,7 +43,7 @@ export const CreatePost = async (data: FormData) => {
     const validation = validate(data);
 
     if (!validation.success) {
-        return Promise.reject(validation.error.flatten().fieldErrors);
+        return Promise.reject(parseValidationError(validation));
     }
 
     await httpRequest<void>('/posts', {
@@ -55,7 +56,7 @@ export const UpdatePost = async (id: string, data: FormData) => {
     const validation = validate(data)
 
     if (!validation.success) {
-        return Promise.reject(validation.error.flatten().fieldErrors);
+        return Promise.reject(parseValidationError(validation));
     }
 
     await httpRequest<void>(`/posts/${id}`, {
@@ -87,7 +88,7 @@ export const CreateReply = async (id: string, data: FormData) => {
     const validation = validate(data);
 
     if (!validation.success) {
-        return Promise.reject(validation.error.flatten().fieldErrors)
+        return Promise.reject(parseValidationError(validation))
     }
 
     await httpRequest<void>(`/posts/${id}/replies`, {
