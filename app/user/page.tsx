@@ -1,9 +1,9 @@
 import React from 'react';
-import { GET_POSTS } from '@/utils/api/api-actions-posts';
 import { Post } from '@/components/post/post';
 import { Profile } from '@/components/user/profile';
 import { auth } from '../api/auth/[...nextauth]/auth';
 import { UserTabs } from '@/components/user/user-tabs';
+import { getPosts } from '@/mocks/testdata/get-users';
 
 let fakeSrc =
   'https://storage.googleapis.com/mumble-api-data/55068752-3e6d-41d4-94d8-905edc23f0a5';
@@ -24,7 +24,7 @@ export default async function Home() {
   let userPosts;
 
   try {
-    userPosts = await GET_POSTS();
+    userPosts = getPosts();
   } catch (error) {
     console.log(error);
     throw error;
@@ -47,8 +47,8 @@ export default async function Home() {
 
       <div className='pt-s'></div>
       {userPosts.map((post: TPost, index: number) => (
-        <div>
-          <Post key='number' post={post}></Post>
+        <div key='number'>
+          <Post post={post}></Post>
           <div className='pt-l'></div>
         </div>
       ))}

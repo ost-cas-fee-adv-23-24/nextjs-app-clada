@@ -1,5 +1,4 @@
 import React from 'react';
-import { GET_POSTS } from '@/utils/api/api-actions-posts';
 import { Post } from '@/components/post/post';
 import { Profile } from '@/components/user/profile';
 import { auth } from '../../api/auth/[...nextauth]/auth';
@@ -7,6 +6,7 @@ import { UserTabs } from '@/components/user/user-tabs';
 import { CreatePost } from '@/components/post/create-post';
 import { CreateReply } from '@/components/reply/create-reply';
 import { RecommendedUsers } from '@/components/user/recommended-users';
+import { getPosts } from '@/mocks/testdata/get-users';
 
 export default async function Home() {
   const session = await auth();
@@ -24,7 +24,7 @@ export default async function Home() {
   let userPosts;
 
   try {
-    userPosts = await GET_POSTS();
+    userPosts = getPosts();
   } catch (error) {
     console.log(error);
     throw error;

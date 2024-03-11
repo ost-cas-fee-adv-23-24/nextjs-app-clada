@@ -1,11 +1,11 @@
 import React from 'react';
-import { GET_POSTS } from '@/utils/api/api-actions-posts';
 import { Reply } from '@/components/reply/reply';
 import { Post } from '@/components/post/post';
 import { CreatePost } from '@/components/post/create-post';
 import { PostContent } from '@/components/post/post-content';
 import { CreateReply } from '@/components/reply/create-reply';
 import { auth } from '../api/auth/[...nextauth]/auth';
+import { getPosts } from '@/mocks/testdata/get-users';
 
 export default async function Detail() {
   const session = await auth();
@@ -16,7 +16,7 @@ export default async function Detail() {
 
   let detailedPost: TPost;
   try {
-    userPosts = await GET_POSTS();
+    userPosts = getPosts();
     detailedPost = userPosts[15];
     replies = userPosts.slice(1, 15);
   } catch (error) {
