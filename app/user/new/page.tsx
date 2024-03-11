@@ -58,8 +58,8 @@ export default async function Home() {
       <div className='pt-s'></div>
 
       {userPosts.map((post: TPost, index: number) => (
-        <div>
-          <Post key='index' post={post}></Post>
+        <div key='index'>
+          <Post post={post}></Post>
           <div className='pt-l'></div>
         </div>
       ))}
