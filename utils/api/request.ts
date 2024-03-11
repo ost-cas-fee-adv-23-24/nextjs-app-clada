@@ -12,7 +12,7 @@ const getAuthHeader = async () => {
   if (!session) {
     return null;
   }
-  
+
   return session
     ? ({ Authorization: `Bearer ${session.accessToken}` } as HeadersInit)
     : null;

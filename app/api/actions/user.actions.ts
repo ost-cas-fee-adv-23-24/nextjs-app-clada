@@ -16,8 +16,6 @@ export const GetUsers = async (): Promise<UserPaginatedResult> => {
 
   // todo: check if needs revalidation
 
-  console.log(JSON.stringify(response))
-
   return response;
 };
 
@@ -88,7 +86,6 @@ export const updateUserAvatar = async (data: FormData) => {
   });
 
   // todo: check if needs revalidation
-
 };
 
 export const updateUser = async (data: UpdateUserData) => {
@@ -104,7 +101,6 @@ export const updateUser = async (data: UpdateUserData) => {
   });
 
   // todo: check if needs revalidation
-
 };
 
 export const followUser = async (id: string) => {
@@ -113,7 +109,6 @@ export const followUser = async (id: string) => {
   });
 
   // todo: check if needs revalidation
-
 };
 
 export const unfollowUser = async (id: string) => {
@@ -122,5 +117,4 @@ export const unfollowUser = async (id: string) => {
   });
 
   // todo: check if needs revalidation
-
 };

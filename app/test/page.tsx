@@ -31,7 +31,7 @@ export default async function Page() {
         <div>{JSON.stringify(singleUser)}</div>
       </div>
       <div>
-       <h2 className='mb-font-h2'>Get Posts</h2>
+        <h2 className='mb-font-h2'>Get Posts</h2>
         <div>{JSON.stringify(posts)}</div>
       </div>
       {/* <div>
