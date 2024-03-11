@@ -10,7 +10,7 @@
     "lint": "next lint",
     "prettier": "prettier . --write",
     "test": "npx playwright test",
-    "test-mocks": "next dev && mocks-server"
+    "test-interactive": "npx playwright test --ui"
   },
   "lint-staged": {
     "*.{css,mdx,json,ts,tsx}": [
@@ -23,6 +23,7 @@
   "dependencies": {
     "autoprefixer": "10.4.15",
     "clada-storybook": "^2.0.0",
+    "dotenv": "^16.4.5",
     "env-linter": "^2.0.0",
     "next": "^14.0.4",
     "next-auth": "^5.0.0-beta.4",
@@ -30,15 +31,15 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "3.3.3",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@mocks-server/main": "^4.1.0",
     "@playwright/test": "^1.41.1",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
-    "dotenv": "^16.4.1",
+    "cross-env": "^7.0.3",
     "eslint": "8.49.0",
     "eslint-config-next": "^14.0.4",
     "eslint-config-prettier": "^9.1.0",

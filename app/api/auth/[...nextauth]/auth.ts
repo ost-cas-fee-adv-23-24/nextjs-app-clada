@@ -2,13 +2,14 @@ import NextAuth, { Session, User } from 'next-auth';
 import Zitadel from 'next-auth/providers/zitadel';
 import { Config } from '@/config/env';
 
-interface MSession extends Session {
+export interface MSession extends Session {
   accessToken?: string;
 }
 
 export const {
   handlers: { GET, POST },
   auth,
+  signIn,
 } = NextAuth({
   trustHost: true,
   providers: [
@@ -42,7 +43,7 @@ export const {
     },
     session({ session, token }) {
       const mSession: MSession = session;
-      
+
       mSession.accessToken = token.accessToken as string;
       mSession.user = token.user as User;
 

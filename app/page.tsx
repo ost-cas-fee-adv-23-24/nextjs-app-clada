@@ -1,5 +1,6 @@
 import { auth } from './api/auth/[...nextauth]/auth';
 import React from 'react';
+import { GetUsers } from './api/actions/user.actions';
 import { GET_POSTS } from '@/utils/api/api-actions-posts';
 import { Post } from '@/components/post/post';
 import { CreatePost } from '@/components/post/create-post';
@@ -8,6 +9,7 @@ import { getPosts } from '@/mocks/testdata/get-users';
 
 export default async function Home() {
   const session = await auth();
+  const users = await GetUsers();
 
   console.log('session', session);
 
