@@ -7,7 +7,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
       <Header />
       <div className='pt-l'></div>
       <main className='grid w-full place-items-center items-start bg-base-100 py-xl pl-l pr-l pt-header'>
-        <div className='flex max-w-xl'>{children}</div>
+        <div className='flex max-w-2xl'>{children}</div>
       </main>
     </body>
   );
