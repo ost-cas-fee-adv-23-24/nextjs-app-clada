@@ -1,3 +1,4 @@
+import { GetPosts } from '../api/actions/post.actions';
 import {
   GetUserById,
   // GetUserFollowees,
@@ -9,6 +10,7 @@ import { auth } from '../api/auth/[...nextauth]/auth';
 export default async function Page() {
   const session = await auth();
   const users = await GetUsers();
+  const posts = await GetPosts();
 
   const singleUser = await GetUserById(users.data[0].id as string);
   // const usersFollowers = await GetUserFollowers({
@@ -27,6 +29,10 @@ export default async function Page() {
       <div>
         <h2 className='mb-font-h2'>Get User</h2>
         <div>{JSON.stringify(singleUser)}</div>
+      </div>
+      <div>
+       <h2 className='mb-font-h2'>Get Posts</h2>
+        <div>{JSON.stringify(posts)}</div>
       </div>
       {/* <div>
         <h2 className='mb-font-h2'>Get User's Followers</h2>

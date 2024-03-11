@@ -4,7 +4,7 @@ import { URL } from 'url';
 import { APIError, InternalServerError } from '../error';
 import { signIn } from 'next-auth/react';
 
-type SearchParams = Record<string, string | number | boolean>[];
+type SearchParams = Record<string, string | string[] | number | boolean>[];
 
 const getAuthHeader = async () => {
   const session: MSession | null = await auth();
@@ -58,7 +58,7 @@ const processSlug = (slug: string, queryParams?: SearchParams) => {
 export const httpRequest = async <T>(
   slug: string,
   init?: RequestInit,
-  queryParams?: SearchParams
+  queryParams?: SearchParams | any
 ) => {
   const authHeader = await getAuthHeader();
   const processedUrl = processSlug(slug, queryParams).toString();
