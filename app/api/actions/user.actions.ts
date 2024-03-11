@@ -16,8 +16,6 @@ export const GetUsers = async (): Promise<UserPaginatedResult> => {
 
   // todo: check if needs revalidation
 
-  console.log(response);
-
   return response;
 };
 

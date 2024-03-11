@@ -63,8 +63,6 @@ export const httpRequest = async <T>(
   const authHeader = await getAuthHeader();
   const processedUrl = processSlug(slug, queryParams).toString();
 
-  console.log(processedUrl);
-
   const res = await fetch(processedUrl.toString(), {
     headers: {
       ...init?.headers,

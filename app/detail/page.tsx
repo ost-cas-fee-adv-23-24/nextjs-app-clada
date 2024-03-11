@@ -9,7 +9,6 @@ import { getPosts } from '@/mocks/testdata/get-users';
 
 export default async function Detail() {
   const session = await auth();
-  console.log('session', session);
 
   let userPosts: Array<TPost>;
   let replies: Array<TPost>;
@@ -20,7 +19,6 @@ export default async function Detail() {
     detailedPost = userPosts[15];
     replies = userPosts.slice(1, 15);
   } catch (error) {
-    console.log(error);
     throw error;
   }
 

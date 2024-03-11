@@ -10,7 +10,6 @@ let fakeSrc =
 
 export default async function Home() {
   const session = await auth();
-  console.log('session', session);
 
   let user = {
     id: '179944860378202369',
@@ -26,14 +25,8 @@ export default async function Home() {
   try {
     userPosts = getPosts();
   } catch (error) {
-    console.log(error);
     throw error;
   }
-
-  console.log(
-    'userPosts',
-    userPosts.filter((x) => x.mediaUrl)
-  );
 
   return (
     <div>

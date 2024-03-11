@@ -9,8 +9,6 @@ export default async function Home() {
   const session = await auth();
   const users = await GetUsers();
 
-  console.log('session', session);
-
   let userPosts;
   try {
     userPosts = getPosts();
