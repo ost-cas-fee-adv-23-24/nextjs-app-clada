@@ -2,7 +2,7 @@ import { TimeDiff } from '../shared/time-diff';
 import { InteractionStrip } from '../shared/interaction-strip';
 import ZoomImage from '../shared/zoom-image';
 import { UserHandle } from '../user/user-handle';
-import {Post} from '@/utils/models';
+import { Post } from '@/utils/models';
 import { GetUserById } from '@/app/api/actions/user.actions';
 
 export const PostContent = async ({

@@ -1,10 +1,10 @@
 import { PostFrame } from './post-frame';
 import { PostContent } from './post-content';
-import {Post} from '@/utils/models';
+import { Post } from '@/utils/models';
 
 type Props = {
-  post: Post
-}
+  post: Post;
+};
 
 export const SinglePost = ({ post }: Props) => {
   return (

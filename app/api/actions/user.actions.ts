@@ -5,7 +5,8 @@ import { validate } from '@/utils/api/validation';
 import { parseValidationError } from '@/utils/error';
 import {
   PublicUser,
-  UpdateUserData, User,
+  UpdateUserData,
+  User,
   UserPaginatedResult,
 } from '@/utils/models';
 
@@ -23,8 +24,8 @@ export const GetUserById = async (id: string): Promise<User> => {
   const response = await httpRequest<User>(`/users/${id}`, {
     method: 'GET',
     next: {
-      revalidate: 3600
-    }
+      revalidate: 3600,
+    },
   });
 
   // todo: check if needs revalidation

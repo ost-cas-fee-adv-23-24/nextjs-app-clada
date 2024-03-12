@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { UserImage } from '../shared/user-image';
-import {Post} from '@/utils/models';
+import { Post } from '@/utils/models';
 
 export const PostFrame = ({
   post,

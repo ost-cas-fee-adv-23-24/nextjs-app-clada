@@ -1,4 +1,4 @@
-import { Post } from "@/utils/models";
+import { Post } from '@/utils/models';
 
 export const InteractionStrip = ({ post }: { post: Post }) => {
   return (
