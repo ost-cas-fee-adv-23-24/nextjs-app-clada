@@ -1,9 +1,20 @@
 import { auth } from './api/auth/[...nextauth]/auth';
 import React from 'react';
 import { GetUsers } from './api/actions/user.actions';
+import { Post } from '@/components/post/post';
+import { CreatePost } from '@/components/post/create-post';
+import { getPosts } from '@/mocks/testdata/get-users';
+
 export default async function Home() {
   const session = await auth();
   const users = await GetUsers();
+
+  let userPosts;
+  try {
+    userPosts = getPosts();
+  } catch (error) {
+    throw error;
+  }
 
   return (
     <div>
@@ -13,13 +24,16 @@ export default async function Home() {
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
         voluptua.
       </h2>
-
       <div className='pt-l'></div>
+      <CreatePost></CreatePost>
+      <div className='pt-m'></div>
 
-      <div className='h-screen w-full rounded-m bg-white p-l mb-font-label-xl'>
-        Content Placeholder
-      </div>
-      <div>{JSON.stringify(users)}</div>
+      {userPosts.map((post: TPost, index: number) => (
+        <div key={index}>
+          <Post post={post}></Post>
+          <div className='pt-l'></div>
+        </div>
+      ))}
     </div>
   );
 }
