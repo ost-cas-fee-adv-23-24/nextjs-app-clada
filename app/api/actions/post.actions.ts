@@ -56,7 +56,6 @@ export const GetPostReplies = async (id: string) => {
 };
 
 export const CreatePost = async (data: FormData) => {
-  'use server';
   const validation = validate(data);
 
   if (!validation.success) {
@@ -68,7 +67,7 @@ export const CreatePost = async (data: FormData) => {
     body: data,
   });
 
-  revalidatePath('/posts', 'page');
+  revalidatePath('/', 'page');
 };
 
 export const UpdatePost = async (id: string, data: FormData) => {

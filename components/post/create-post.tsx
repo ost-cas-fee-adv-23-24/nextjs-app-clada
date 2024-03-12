@@ -1,6 +1,6 @@
 'use client';
 
-import { CreatePost as CREATEPost } from '@/app/api/actions/post.actions';
+import { CreatePost as createPost } from '@/app/api/actions/post.actions';
 import { PostFrame } from './post-frame';
 import { EyeIcon, Button, Textarea, SendIcon, Label } from 'clada-storybook';
 
@@ -16,7 +16,7 @@ export const CreatePost = ({
   subtitle?: string;
 }) => {
   const create = async (formData: FormData) => {
-    CREATEPost(formData);
+    const result = await createPost(formData);
   };
 
   return (
