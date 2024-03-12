@@ -15,10 +15,9 @@ export const CreatePost = ({
   label?: string;
   subtitle?: string;
 }) => {
-  
   const create = async (formData: FormData) => {
-    CREATEPost(formData)
-  }
+    CREATEPost(formData);
+  };
 
   return (
     <PostFrame hasHover={false} showUser={showUser}>
@@ -31,7 +30,7 @@ export const CreatePost = ({
           <div className='mb-font-h3'>{label}</div>
         )}
         <div className='pt-xxs'></div>
-        
+
         <div className='mb-fon-paragraph-m color-primary-200'>{subtitle}</div>
         {subtitle && <div className='pt-s'></div>}
         <div className='pt-xs'></div>

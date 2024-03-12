@@ -56,7 +56,7 @@ export const GetPostReplies = async (id: string) => {
 };
 
 export const CreatePost = async (data: FormData) => {
-  'use server'
+  'use server';
   const validation = validate(data);
 
   if (!validation.success) {

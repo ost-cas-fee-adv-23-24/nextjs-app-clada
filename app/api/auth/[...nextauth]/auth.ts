@@ -9,7 +9,6 @@ export interface MSession extends Session {
 export const {
   handlers: { GET, POST },
   auth,
-  signIn,
 } = NextAuth({
   trustHost: true,
   providers: [

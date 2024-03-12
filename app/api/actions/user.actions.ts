@@ -3,12 +3,7 @@
 import { httpRequest } from '@/utils/api/request';
 import { validate } from '@/utils/api/validation';
 import { parseValidationError } from '@/utils/error';
-import {
-  PublicUser,
-  UpdateUserData,
-  User,
-  UserPaginatedResult,
-} from '@/utils/models';
+import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>('/users', {
