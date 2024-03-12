@@ -1,20 +1,10 @@
-import { auth } from './api/auth/[...nextauth]/auth';
 import React from 'react';
-import { GetUsers } from './api/actions/user.actions';
-import { Post } from '@/components/post/post';
+import { SinglePost } from '@/components/post/single-post';
 import { CreatePost } from '@/components/post/create-post';
-import { getPosts } from '@/mocks/testdata/get-users';
+import { GetPosts } from './api/actions/post.actions';
 
 export default async function Home() {
-  const session = await auth();
-  const users = await GetUsers();
-
-  let userPosts;
-  try {
-    userPosts = getPosts();
-  } catch (error) {
-    throw error;
-  }
+  const posts = await GetPosts();
 
   return (
     <div>
@@ -28,9 +18,9 @@ export default async function Home() {
       <CreatePost></CreatePost>
       <div className='pt-m'></div>
 
-      {userPosts.map((post: TPost, index: number) => (
+      {posts?.data?.map((post, index: number) => (
         <div key={index}>
-          <Post post={post}></Post>
+          <SinglePost post={post}></SinglePost>
           <div className='pt-l'></div>
         </div>
       ))}

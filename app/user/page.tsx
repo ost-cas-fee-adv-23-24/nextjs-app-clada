@@ -1,5 +1,5 @@
 import React from 'react';
-import { Post } from '@/components/post/post';
+import { Post } from '@/components/post/single-post';
 import { Profile } from '@/components/user/profile';
 import { auth } from '../api/auth/[...nextauth]/auth';
 import { UserTabs } from '@/components/user/user-tabs';

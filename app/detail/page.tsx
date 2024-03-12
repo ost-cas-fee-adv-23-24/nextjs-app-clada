@@ -1,6 +1,6 @@
 import React from 'react';
 import { Reply } from '@/components/reply/reply';
-import { Post } from '@/components/post/post';
+import { Post } from '@/components/post/single-post';
 import { CreatePost } from '@/components/post/create-post';
 import { PostContent } from '@/components/post/post-content';
 import { CreateReply } from '@/components/reply/create-reply';

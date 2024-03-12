@@ -1,4 +1,6 @@
-export const InteractionStrip = ({ post }: { post: TPost }) => {
+import { Post } from "@/utils/models";
+
+export const InteractionStrip = ({ post }: { post: Post }) => {
   return (
     <div className='mt-s flex'>
       <div className='text-primary-500'>replies: {post.replies}</div>
