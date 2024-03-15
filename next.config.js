@@ -6,12 +6,13 @@ const nextConfig = {
     },
   },
   images: {
-    remotePatterns: [{
-      protocol: 'https',
-      hostname: 'storage.googleapis.com',
-      port: ''
-
-    }],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        port: '',
+      },
+    ],
   },
 };
 

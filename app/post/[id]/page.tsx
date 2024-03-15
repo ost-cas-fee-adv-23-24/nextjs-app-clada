@@ -8,14 +8,18 @@ import { decodeULIDTimestamp } from '@/utils/api/ulid';
 import { GetPostById, GetPostReplies } from '@/app/api/actions/post.actions';
 import { Post } from '@/utils/models';
 
-export default async function Detail({ params } : { params: {
-  id: string
-}}) {
+export default async function Detail({
+  params,
+}: {
+  params: {
+    id: string;
+  };
+}) {
   const session = await auth();
 
-  const postId = decodeULIDTimestamp(params.id)
+  const postId = decodeULIDTimestamp(params.id);
   const detailedPost = await GetPostById(params.id);
-  const replies = await GetPostReplies(params.id)
+  const replies = await GetPostReplies(params.id);
 
   return (
     <div>
@@ -27,7 +31,7 @@ export default async function Detail({ params } : { params: {
       <div className='relative w-full bg-white pb-l pl-xl pr-xl pt-l text-base-600'>
         <CreateReply></CreateReply>
       </div>
-{/* 
+      {/* 
       {replies.data?.map((post: Reply, index: number) => (
         <Reply key='index' reply={post}></Reply>
       ))} */}

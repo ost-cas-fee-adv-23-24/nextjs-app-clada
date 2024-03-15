@@ -14,7 +14,10 @@ export const PostContent = async ({
 }) => {
   const textClasses = `mt-s text-black ${size === 'large' && 'text-[20px] tracking-normal leading-relaxed'}`;
   const user = await GetUserById(post?.creator?.id ?? '');
-  const displayedName = !user.firstname || !user.lastname ? user.username : `${user?.firstname} ${user.lastname}`
+  const displayedName =
+    !user.firstname || !user.lastname
+      ? user.username
+      : `${user?.firstname} ${user.lastname}`;
 
   return (
     <div>

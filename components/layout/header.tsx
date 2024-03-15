@@ -7,7 +7,7 @@ import { LogO } from './logo';
 
 export const Header = async () => {
   const session = await auth();
-  console.log(session)
+  console.log(session);
 
   return (
     <header className='fixed z-10 flex max-h-header w-full place-content-center bg-primary-700 p-s'>

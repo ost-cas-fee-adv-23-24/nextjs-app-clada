@@ -19,9 +19,7 @@ export default async function Home() {
         heute dazu?.
       </h2>
       <div className='pt-l'></div>
-      {session && (
-        <CreatePost />
-      )}
+      {session && <CreatePost />}
       <div className='pt-m'></div>
       <PostList posts={posts} />
     </section>

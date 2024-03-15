@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { Logo } from "clada-storybook"
+import { Logo } from 'clada-storybook';
 
 export const LogO = () => {
-    return <Logo variant='white' href='/' />
-}
+  return <Logo variant='white' href='/' />;
+};
