@@ -1,4 +1,4 @@
-import { SafeParseReturnType, z } from 'zod';
+import { SafeParseReturnType } from 'zod';
 
 export class APIError extends Error {
   constructor(

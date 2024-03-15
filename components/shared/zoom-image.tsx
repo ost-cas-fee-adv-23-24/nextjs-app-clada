@@ -2,7 +2,6 @@
 
 import { FullscreenIcon } from 'clada-storybook';
 import NextImage from 'next/image';
-import React from 'react';
 
 const ZoomImage = ({ src }: { src?: string }) => {
   return (

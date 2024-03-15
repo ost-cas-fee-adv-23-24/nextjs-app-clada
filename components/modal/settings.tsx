@@ -1,8 +1,8 @@
 'use client';
 
 import { Input, Label, Textarea } from 'clada-storybook';
-import { ModalWindow } from './modal';
 import { useState } from 'react';
+import { ModalWindow } from './modal';
 
 export const Settings = () => {
   const [isOpen, setIsOpen] = useState(true);

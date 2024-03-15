@@ -15,7 +15,7 @@ export const CreateReply = () => {
           <div className='mb-xs mb-font-label-m'>John D. Mumble</div>
           <div className='flex'>
             <div>
-              <UserHandle name='John D. Mumble'></UserHandle>
+              <UserHandle name='John D. Mumble' id={'1'}></UserHandle>
             </div>
           </div>
         </div>

@@ -1,15 +1,16 @@
-import { PostFrame } from './post-frame';
+import { Post, PostReply } from '@/utils/models';
 import { PostContent } from './post-content';
-import { Post } from '@/utils/models';
+import { PostFrame } from './post-frame';
 
 type Props = {
   post: Post;
+  replies?: PostReply[];
 };
 
-export const SinglePost = ({ post }: Props) => {
+export const SinglePost = ({ post, replies }: Props) => {
   return (
     <PostFrame post={post}>
-      <PostContent post={post}></PostContent>
+      <PostContent post={post} replies={replies}></PostContent>
     </PostFrame>
   );
 };

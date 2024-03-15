@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Link } from 'clada-storybook';
+import { Link } from 'clada-storybook';
 import Image from 'next/image';
 
 export default function NotFound() {

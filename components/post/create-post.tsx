@@ -1,8 +1,8 @@
 'use client';
 
 import { CreatePost as createPost } from '@/app/api/actions/post.actions';
+import { Button, EyeIcon, Label, SendIcon, Textarea } from 'clada-storybook';
 import { PostFrame } from './post-frame';
-import { EyeIcon, Button, Textarea, SendIcon, Label } from 'clada-storybook';
 
 export const CreatePost = ({
   showUser = true,

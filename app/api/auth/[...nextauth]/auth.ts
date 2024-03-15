@@ -1,6 +1,6 @@
+import { Config } from '@/config/env';
 import NextAuth, { Session, User } from 'next-auth';
 import Zitadel from 'next-auth/providers/zitadel';
-import { Config } from '@/config/env';
 
 export interface MSession extends Session {
   accessToken?: string;

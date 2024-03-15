@@ -1,6 +1,5 @@
-import { ReactNode } from 'react';
-import { UserImage } from '../shared/user-image';
 import { Post } from '@/utils/models';
+import { ReactNode } from 'react';
 
 export const PostFrame = ({
   post,
@@ -18,11 +17,6 @@ export const PostFrame = ({
 
   return (
     <div className={containerClasses}>
-      {showUser && (
-        <div className='absolute -ml-[82px] -mt-xs'>
-          <UserImage border={true} url={post?.creator?.avatarUrl}></UserImage>
-        </div>
-      )}
       <div>{children}</div>
     </div>
   );

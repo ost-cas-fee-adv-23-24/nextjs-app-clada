@@ -1,6 +1,5 @@
-import React from 'react';
-import { auth } from '../api/auth/[...nextauth]/auth';
 import { Settings } from '@/components/modal/settings';
+import { auth } from '../api/auth/[...nextauth]/auth';
 
 export default async function Home() {
   const session = await auth();

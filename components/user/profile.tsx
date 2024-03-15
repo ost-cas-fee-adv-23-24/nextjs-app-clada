@@ -1,12 +1,12 @@
 'use client';
 
-import { TimeDiff } from '../shared/time-diff';
-import { UserHandle } from './user-handle';
-import { Location } from './location';
-import NextImage from 'next/image';
-import { EditIcon, SettingsIcon } from 'clada-storybook';
-import { UserImage } from '../shared/user-image';
 import { User } from '@/utils/models';
+import { EditIcon, SettingsIcon } from 'clada-storybook';
+import NextImage from 'next/image';
+import { TimeDiff } from '../shared/time-diff';
+import { UserImage } from '../shared/user-image';
+import { Location } from './location';
+import { UserHandle } from './user-handle';
 
 export const Profile = ({
   user,
@@ -67,7 +67,7 @@ export const Profile = ({
       </div>
       <div className='pt-xs'></div>
       <div className='flex gap-xs'>
-        <UserHandle name={user.username}></UserHandle>
+        <UserHandle name={user.username} id={user.id}></UserHandle>
         <Location name='fake location'></Location>
         <TimeDiff ulid={user.id} text='Mitglied seit '></TimeDiff>
       </div>

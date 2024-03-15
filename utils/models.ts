@@ -164,7 +164,7 @@ export interface PublicUser {
    * ID of the user who created the post.
    * @example "179944860378202369"
    */
-  id?: string | undefined;
+  id: string;
   /**
    * The username of the creator.
    * @example "max_muster"
@@ -175,19 +175,19 @@ export interface PublicUser {
 }
 
 /** A reply to a post. */
-export interface Reply {
+export interface PostReply {
   /**
    * ULID
    * ID of the post, defined in the ULID format.
    * @format ulid
    * @example "01GDMMR85BEHP8AKV8ZGGM259K"
    */
-  id?: string;
+  id: string;
   /**
    * Public user information. This information is publicly available to everyone.
    * It contains basic information such as the ID.
    */
-  creator?: PublicUser;
+  creator: PublicUser;
   /**
    * Text for the post. Can be undefined if the post is only a media post.
    * Can contain hashtags and mentions.
@@ -236,7 +236,7 @@ export interface ReplyPaginatedResult {
    */
   count?: number;
   /** The data for this given page. */
-  data?: Reply[];
+  data?: PostReply[];
   /**
    * Link to next page. If this is undefined, there is no next page.
    * The link will contain pagination information (offset, limit).

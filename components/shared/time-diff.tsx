@@ -2,15 +2,9 @@
 
 import { getTimeDifferenceInMinutes } from '@/utils/utils';
 import { TimeIcon } from 'clada-storybook';
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export const TimeDiff = ({
-  ulid,
-  text,
-}: {
-  ulid: string;
-  text?: string;
-}) => {
+export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
   const [timeDiff, setTimeDiff] = useState('');
 
   useEffect(() => {

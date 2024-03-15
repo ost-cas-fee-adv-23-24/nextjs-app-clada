@@ -14,9 +14,7 @@ export const decodeULIDTimestamp = (ulid: string) => {
   return new Date(timestamp);
 };
 
-export const getTimeDifferenceInMinutes = (
-  ulid: string
-): number => {
+export const getTimeDifferenceInMinutes = (ulid: string): number => {
   let timestamp = decodeULIDTimestamp(ulid);
   const now = new Date();
   const diffInMilliseconds = now.getTime() - timestamp.getTime();
