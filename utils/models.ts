@@ -48,7 +48,7 @@ export interface Post {
    * Public user information. This information is publicly available to everyone.
    * It contains basic information such as the ID.
    */
-  creator?: PublicUser;
+  creator: PublicUser;
   /**
    * Text for the post. Can be undefined if the post is only a media post.
    * Can contain hashtags and mentions.
@@ -279,12 +279,12 @@ export interface User {
    * ID of the user who created the post.
    * @example "179944860378202369"
    */
-  id?: string | undefined;
+  id: string;
   /**
    * The username of the creator.
    * @example "max_muster"
    */
-  username?: string | undefined;
+  username: string;
   /** If set, points to the avatar of the user. */
   avatarUrl?: string | undefined;
   /** Firstname of the user. */

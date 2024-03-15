@@ -4,11 +4,10 @@ import { UserImage } from '../shared/user-image';
 import { InteractionStrip } from '../shared/interaction-strip';
 import { TimeDiff } from '../shared/time-diff';
 import { UserHandle } from '../user/user-handle';
-import NextImage from 'next/image';
-import { FullscreenIcon } from 'clada-storybook';
 import ZoomImage from '../shared/zoom-image';
+import { Post } from '@/utils/models';
 
-export const Reply = ({ reply }: { reply: TPost }) => {
+export const Reply = ({ reply }: { reply: Post }) => {
   return (
     <div className='relative w-full border-b-1 border-base-100 bg-white pb-l pl-xl pr-xl pt-l text-base-600'>
       <div className='flex'>
@@ -16,7 +15,7 @@ export const Reply = ({ reply }: { reply: TPost }) => {
           <UserImage
             size='s'
             border={false}
-            url={reply?.creator.avatarUrl}
+            url={reply?.creator?.avatarUrl}
           ></UserImage>
         </div>
         <div>
@@ -26,7 +25,7 @@ export const Reply = ({ reply }: { reply: TPost }) => {
               <UserHandle name={reply.creator.username}></UserHandle>
             </div>
             <div className='ml-s'>
-              <TimeDiff postId={reply.id}></TimeDiff>
+              <TimeDiff ulid={reply.id}></TimeDiff>
             </div>
           </div>
         </div>

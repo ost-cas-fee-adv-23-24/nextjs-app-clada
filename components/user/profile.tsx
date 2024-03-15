@@ -69,7 +69,7 @@ export const Profile = ({
       <div className='flex gap-xs'>
         <UserHandle name={user.username}></UserHandle>
         <Location name='fake location'></Location>
-        <TimeDiff postId={user.id} text='Mitglied seit '></TimeDiff>
+        <TimeDiff ulid={user.id} text='Mitglied seit '></TimeDiff>
       </div>
       <div className='pt-s'></div>
       <div className='text-base-400'>

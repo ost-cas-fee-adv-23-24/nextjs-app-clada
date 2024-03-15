@@ -2,7 +2,7 @@
 
 import { IconButton, ProfileIcon } from 'clada-storybook';
 
-export const UserHandle = ({ name }: { name: string | undefined }) => {
+export const UserHandle = ({ name }: { name: string }) => {
   return (
     <div>
       <IconButton Icon={ProfileIcon} href='/'>

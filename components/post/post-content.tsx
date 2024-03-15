@@ -27,7 +27,7 @@ export const PostContent = async ({
           <UserHandle name={post?.creator?.username || ''}></UserHandle>
         </div>
         <div className='ml-s'>
-          <TimeDiff postId={post.id}></TimeDiff>
+          <TimeDiff ulid={post.id}></TimeDiff>
         </div>
       </div>
       <div className={textClasses}>{post?.text}</div>
