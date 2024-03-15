@@ -1,7 +1,6 @@
 import React from 'react';
 import { CreatePost } from '@/components/post/create-post';
 import { GetPosts } from './api/actions/post.actions';
-import { Post } from '@/utils/models';
 import { PostList } from '@/components/post-list/post-list';
 import { auth } from './api/auth/[...nextauth]/auth';
 

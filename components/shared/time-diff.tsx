@@ -8,7 +8,7 @@ export const TimeDiff = ({
   postId,
   text,
 }: {
-  postId: string;
+  postId: string | undefined;
   text?: string;
 }) => {
   const [timeDiff, setTimeDiff] = useState('');

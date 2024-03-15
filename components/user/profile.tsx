@@ -4,16 +4,16 @@ import { TimeDiff } from '../shared/time-diff';
 import { UserHandle } from './user-handle';
 import { Location } from './location';
 import NextImage from 'next/image';
-import { Button, CancelIcon, EditIcon, SettingsIcon } from 'clada-storybook';
+import { EditIcon, SettingsIcon } from 'clada-storybook';
 import { UserImage } from '../shared/user-image';
-import { FollowingState } from './following-state';
+import { User } from '@/utils/models';
 
 export const Profile = ({
   user,
   editable = false,
   imgUrl = '',
 }: {
-  user: TUser;
+  user: User;
   editable?: boolean;
   imgUrl?: string;
 }) => {
