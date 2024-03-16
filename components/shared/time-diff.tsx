@@ -2,20 +2,14 @@
 
 import { getTimeDifferenceInMinutes } from '@/utils/utils';
 import { TimeIcon } from 'clada-storybook';
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export const TimeDiff = ({
-  postId,
-  text,
-}: {
-  postId: string;
-  text?: string;
-}) => {
+export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
   const [timeDiff, setTimeDiff] = useState('');
 
   useEffect(() => {
     const updateTimeDiff = () => {
-      const minutes = getTimeDifferenceInMinutes(postId);
+      const minutes = getTimeDifferenceInMinutes(ulid);
       let formattedTimeDiff = '';
 
       const hours = Math.floor(minutes / 60);
@@ -45,7 +39,7 @@ export const TimeDiff = ({
     const intervalId = setInterval(updateTimeDiff, 60000);
 
     return () => clearInterval(intervalId);
-  }, [postId]);
+  }, [ulid]);
 
   return (
     <div>

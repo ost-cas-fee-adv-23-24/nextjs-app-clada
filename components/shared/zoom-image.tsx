@@ -2,9 +2,8 @@
 
 import { FullscreenIcon } from 'clada-storybook';
 import NextImage from 'next/image';
-import React from 'react';
 
-const ZoomImage = ({ src }: { src: string | null }) => {
+const ZoomImage = ({ src }: { src?: string }) => {
   return (
     src && (
       <div className='group relative h-auto w-full cursor-pointer overflow-hidden rounded-s'>

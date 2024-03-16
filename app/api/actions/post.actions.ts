@@ -8,6 +8,7 @@ import {
   PostPaginatedResult,
   ReplyPaginatedResult,
 } from '@/utils/models';
+import { revalidatePath } from 'next/cache';
 
 type GetPostsParams = {
   newerThan?: string;
@@ -25,6 +26,9 @@ export const GetPosts = async (queryParams?: GetPostsParams) => {
     '/posts',
     {
       method: 'GET',
+      next: {
+        revalidate: 3600,
+      },
     },
     queryParams
   );
@@ -62,6 +66,8 @@ export const CreatePost = async (data: FormData) => {
     method: 'POST',
     body: data,
   });
+
+  revalidatePath('/', 'page');
 };
 
 export const UpdatePost = async (id: string, data: FormData) => {

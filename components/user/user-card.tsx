@@ -16,7 +16,7 @@ export const UserCard = ({ user }: { user: TUser }) => {
       <div className='mb-font-label-l'>
         {user.firstname} {user.lastname}
       </div>
-      <UserHandle name={user.username}></UserHandle>
+      <UserHandle name={user.username} id={user.id}></UserHandle>
       <Button
         color='primary'
         size='m'

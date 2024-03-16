@@ -1,32 +1,34 @@
 'use client';
 
-import { UserImage } from '../shared/user-image';
+import { PostReply } from '@/utils/models';
 import { InteractionStrip } from '../shared/interaction-strip';
 import { TimeDiff } from '../shared/time-diff';
-import { UserHandle } from '../user/user-handle';
-import NextImage from 'next/image';
-import { FullscreenIcon } from 'clada-storybook';
+import { UserImage } from '../shared/user-image';
 import ZoomImage from '../shared/zoom-image';
+import { UserHandle } from '../user/user-handle';
 
-export const Reply = ({ reply }: { reply: TPost }) => {
+export const Reply = ({ reply }: { reply: PostReply }) => {
   return (
-    <div className='relative w-full border-b-1 border-base-100 bg-white pb-l pl-xl pr-xl pt-l text-base-600'>
+    <div className='relative w-full border-t-1 border-base-100 bg-white text-base-600'>
       <div className='flex'>
         <div className='mr-xs'>
           <UserImage
             size='s'
             border={false}
-            url={reply?.creator.avatarUrl}
+            url={reply?.creator?.avatarUrl}
           ></UserImage>
         </div>
         <div>
           <div className='mb-xs mb-font-label-m'>John D. Mumble</div>
           <div className='flex'>
             <div>
-              <UserHandle name={reply.creator.username}></UserHandle>
+              <UserHandle
+                name={reply.creator.username}
+                id={reply.creator.id}
+              ></UserHandle>
             </div>
             <div className='ml-s'>
-              <TimeDiff postId={reply.id}></TimeDiff>
+              <TimeDiff ulid={reply.id}></TimeDiff>
             </div>
           </div>
         </div>

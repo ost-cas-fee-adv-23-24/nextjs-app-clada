@@ -1,5 +1,5 @@
+import { Post } from '@/utils/models';
 import { ReactNode } from 'react';
-import { UserImage } from '../shared/user-image';
 
 export const PostFrame = ({
   post,
@@ -7,7 +7,7 @@ export const PostFrame = ({
   showUser = true,
   children,
 }: {
-  post?: TPost;
+  post?: Post;
   hasHover?: boolean;
   showUser?: boolean;
   children: ReactNode;
@@ -17,11 +17,6 @@ export const PostFrame = ({
 
   return (
     <div className={containerClasses}>
-      {showUser && (
-        <div className='absolute -ml-[82px] -mt-xs'>
-          <UserImage border={true} url={post?.creator.avatarUrl}></UserImage>
-        </div>
-      )}
       <div>{children}</div>
     </div>
   );

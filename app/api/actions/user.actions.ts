@@ -3,11 +3,7 @@
 import { httpRequest } from '@/utils/api/request';
 import { validate } from '@/utils/api/validation';
 import { parseValidationError } from '@/utils/error';
-import {
-  PublicUser,
-  UpdateUserData,
-  UserPaginatedResult,
-} from '@/utils/models';
+import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>('/users', {
@@ -19,9 +15,12 @@ export const GetUsers = async (): Promise<UserPaginatedResult> => {
   return response;
 };
 
-export const GetUserById = async (id: string): Promise<PublicUser> => {
-  const response = await httpRequest<PublicUser>(`/users/${id}`, {
+export const GetUserById = async (id: string): Promise<User> => {
+  const response = await httpRequest<User>(`/users/${id}`, {
     method: 'GET',
+    next: {
+      revalidate: 3600,
+    },
   });
 
   // todo: check if needs revalidation

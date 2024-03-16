@@ -29,7 +29,7 @@ export interface LikeInfo {
    * The userid of the user that liked the post.
    * @example "179944860378202369"
    */
-  userId?: string | null;
+  userId?: string | undefined;
 }
 
 /**
@@ -43,28 +43,28 @@ export interface Post {
    * @format ulid
    * @example "01GDMMR85BEHP8AKV8ZGGM259K"
    */
-  id?: string;
+  id: string;
   /**
    * Public user information. This information is publicly available to everyone.
    * It contains basic information such as the ID.
    */
-  creator?: PublicUser;
+  creator: PublicUser;
   /**
-   * Text for the post. Can be null if the post is only a media post.
+   * Text for the post. Can be undefined if the post is only a media post.
    * Can contain hashtags and mentions.
    * @example "Hello World! #newpost."
    */
-  text?: string | null;
+  text?: string | undefined;
   /**
    * URL - if any - to the media object attached to this post.
    * @example "https://storage.googleapis.com/cas-fee-adv-mumble-api/1094b5e0-5f30-4f0b-a342-ae12936c42ff"
    */
-  mediaUrl?: string | null;
+  mediaUrl?: string | undefined;
   /**
    * If mediaUrl is set, this field contains the mime type of the media object.
    * @example "image/png"
    */
-  mediaType?: string | null;
+  mediaType?: string | undefined;
   /**
    * Number of total likes on this post.
    * @format int32
@@ -73,10 +73,10 @@ export interface Post {
   likes?: number;
   /**
    * Indicates if the current user liked this post. If the call was made unauthorized,
-   * this field is "null" or absent. Otherwise `true` indicates that the authorized user
+   * this field is "undefined" or absent. Otherwise `true` indicates that the authorized user
    * liked this post.
    */
-  likedBySelf?: boolean | null;
+  likedBySelf?: boolean | undefined;
   /**
    * Number of total replies for this post.
    * @format int32
@@ -99,21 +99,21 @@ export interface PostBase {
    */
   creator?: PublicUser;
   /**
-   * Text for the post. Can be null if the post is only a media post.
+   * Text for the post. Can be undefined if the post is only a media post.
    * Can contain hashtags and mentions.
    * @example "Hello World! #newpost."
    */
-  text?: string | null;
+  text?: string | undefined;
   /**
    * URL - if any - to the media object attached to this post.
    * @example "https://storage.googleapis.com/cas-fee-adv-mumble-api/1094b5e0-5f30-4f0b-a342-ae12936c42ff"
    */
-  mediaUrl?: string | null;
+  mediaUrl?: string | undefined;
   /**
    * If mediaUrl is set, this field contains the mime type of the media object.
    * @example "image/png"
    */
-  mediaType?: string | null;
+  mediaType?: string | undefined;
   /**
    * Number of total likes on this post.
    * @format int32
@@ -122,10 +122,10 @@ export interface PostBase {
   likes?: number;
   /**
    * Indicates if the current user liked this post. If the call was made unauthorized,
-   * this field is "null" or absent. Otherwise `true` indicates that the authorized user
+   * this field is "undefined" or absent. Otherwise `true` indicates that the authorized user
    * liked this post.
    */
-  likedBySelf?: boolean | null;
+  likedBySelf?: boolean | undefined;
 }
 
 /**
@@ -142,17 +142,17 @@ export interface PostPaginatedResult {
   /** The data for this given page. */
   data?: Post[];
   /**
-   * Link to next page. If this is null, there is no next page.
+   * Link to next page. If this is undefined, there is no next page.
    * The link will contain pagination information (offset, limit).
    * If returned by a search, the link will not contain the search parameters.
    */
-  next?: string | null;
+  next?: string | undefined;
   /**
-   * Link to previous page. If this is null, there is no next page.
+   * Link to previous page. If this is undefined, there is no next page.
    * The link will contain pagination information (offset, limit).
    * If returned by a search, the link will not contain the search parameters.
    */
-  previous?: string | null;
+  previous?: string | undefined;
 }
 
 /**
@@ -164,46 +164,46 @@ export interface PublicUser {
    * ID of the user who created the post.
    * @example "179944860378202369"
    */
-  id?: string | null;
+  id: string;
   /**
    * The username of the creator.
    * @example "max_muster"
    */
-  username?: string | null;
+  username: string;
   /** If set, points to the avatar of the user. */
-  avatarUrl?: string | null;
+  avatarUrl?: string | undefined;
 }
 
 /** A reply to a post. */
-export interface Reply {
+export interface PostReply {
   /**
    * ULID
    * ID of the post, defined in the ULID format.
    * @format ulid
    * @example "01GDMMR85BEHP8AKV8ZGGM259K"
    */
-  id?: string;
+  id: string;
   /**
    * Public user information. This information is publicly available to everyone.
    * It contains basic information such as the ID.
    */
-  creator?: PublicUser;
+  creator: PublicUser;
   /**
-   * Text for the post. Can be null if the post is only a media post.
+   * Text for the post. Can be undefined if the post is only a media post.
    * Can contain hashtags and mentions.
    * @example "Hello World! #newpost."
    */
-  text?: string | null;
+  text?: string | undefined;
   /**
    * URL - if any - to the media object attached to this post.
    * @example "https://storage.googleapis.com/cas-fee-adv-mumble-api/1094b5e0-5f30-4f0b-a342-ae12936c42ff"
    */
-  mediaUrl?: string | null;
+  mediaUrl?: string | undefined;
   /**
    * If mediaUrl is set, this field contains the mime type of the media object.
    * @example "image/png"
    */
-  mediaType?: string | null;
+  mediaType?: string | undefined;
   /**
    * Number of total likes on this post.
    * @format int32
@@ -212,10 +212,10 @@ export interface Reply {
   likes?: number;
   /**
    * Indicates if the current user liked this post. If the call was made unauthorized,
-   * this field is "null" or absent. Otherwise `true` indicates that the authorized user
+   * this field is "undefined" or absent. Otherwise `true` indicates that the authorized user
    * liked this post.
    */
-  likedBySelf?: boolean | null;
+  likedBySelf?: boolean | undefined;
   /**
    * ULID
    * The ID of the parent post.
@@ -236,19 +236,19 @@ export interface ReplyPaginatedResult {
    */
   count?: number;
   /** The data for this given page. */
-  data?: Reply[];
+  data?: PostReply[];
   /**
-   * Link to next page. If this is null, there is no next page.
+   * Link to next page. If this is undefined, there is no next page.
    * The link will contain pagination information (offset, limit).
    * If returned by a search, the link will not contain the search parameters.
    */
-  next?: string | null;
+  next?: string | undefined;
   /**
-   * Link to previous page. If this is null, there is no next page.
+   * Link to previous page. If this is undefined, there is no next page.
    * The link will contain pagination information (offset, limit).
    * If returned by a search, the link will not contain the search parameters.
    */
-  previous?: string | null;
+  previous?: string | undefined;
 }
 
 /** Data that is used to patch a given post. */
@@ -257,17 +257,17 @@ export interface UpdatePostData {
    * Text for the post. If omitted, the text will not be updated.
    * If set to empty string, the text will be removed.
    */
-  text?: string | null;
+  text?: string | undefined;
 }
 
 /** Model to update user data. */
 export interface UpdateUserData extends FormData {
   /** If set, updates the firstname of the profile. */
-  firstname?: string | null;
+  firstname?: string | undefined;
   /** If set, updates the lastname of the profile. */
-  lastname?: string | null;
+  lastname?: string | undefined;
   /** If set, updates the username of the profile. */
-  username?: string | null;
+  username?: string | undefined;
 }
 
 /**
@@ -279,18 +279,18 @@ export interface User {
    * ID of the user who created the post.
    * @example "179944860378202369"
    */
-  id?: string | null;
+  id: string;
   /**
    * The username of the creator.
    * @example "max_muster"
    */
-  username?: string | null;
+  username: string;
   /** If set, points to the avatar of the user. */
-  avatarUrl?: string | null;
+  avatarUrl?: string | undefined;
   /** Firstname of the user. */
-  firstname?: string | null;
+  firstname?: string | undefined;
   /** Lastname of the user. */
-  lastname?: string | null;
+  lastname?: string | undefined;
 }
 
 /**
@@ -307,15 +307,15 @@ export interface UserPaginatedResult {
   /** The data for this given page. */
   data: User[];
   /**
-   * Link to next page. If this is null, there is no next page.
+   * Link to next page. If this is undefined, there is no next page.
    * The link will contain pagination information (offset, limit).
    * If returned by a search, the link will not contain the search parameters.
    */
-  next?: string | null;
+  next?: string | undefined;
   /**
-   * Link to previous page. If this is null, there is no next page.
+   * Link to previous page. If this is undefined, there is no next page.
    * The link will contain pagination information (offset, limit).
    * If returned by a search, the link will not contain the search parameters.
    */
-  previous?: string | null;
+  previous?: string | undefined;
 }

@@ -1,7 +1,8 @@
 'use client';
 
+import { CreatePost as createPost } from '@/app/api/actions/post.actions';
+import { Button, EyeIcon, Label, SendIcon, Textarea } from 'clada-storybook';
 import { PostFrame } from './post-frame';
-import { EyeIcon, Button, Textarea, SendIcon, Label } from 'clada-storybook';
 
 export const CreatePost = ({
   showUser = true,
@@ -14,9 +15,13 @@ export const CreatePost = ({
   label?: string;
   subtitle?: string;
 }) => {
+  const create = async (formData: FormData) => {
+    const result = await createPost(formData);
+  };
+
   return (
     <PostFrame hasHover={false} showUser={showUser}>
-      <div>
+      <form action={create}>
         {!subtitle ? (
           <Label size='xl' color='base'>
             {label}
@@ -25,6 +30,7 @@ export const CreatePost = ({
           <div className='mb-font-h3'>{label}</div>
         )}
         <div className='pt-xxs'></div>
+
         <div className='mb-fon-paragraph-m color-primary-200'>{subtitle}</div>
         {subtitle && <div className='pt-s'></div>}
         <div className='pt-xs'></div>
@@ -47,7 +53,7 @@ export const CreatePost = ({
             onClick={() => false}
           ></Button>
         </div>
-      </div>
+      </form>
     </PostFrame>
   );
 };
