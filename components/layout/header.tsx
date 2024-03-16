@@ -1,10 +1,10 @@
 // import { Logo, SettingsIcon } from 'clada-storybook';
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import LoginButton from '../login-button';
-import LogoutButton from '../logout-button';
+import LoginButton from '../shared/button/login-button';
+import LogoutButton from '../shared/button/logout-button';
+import SettingsButton from '../shared/button/settings-button';
 import { UserImage } from '../shared/user-image';
 import { LogO } from './logo';
-import { SettingsIcon } from 'clada-storybook';
 
 export const Header = async () => {
   const session = await auth();
@@ -19,10 +19,7 @@ export const Header = async () => {
           <div className='ml-auto flex pt-xxs'>
             <UserImage size='s'></UserImage>
             <div className='ml-l mr-l flex-col'>
-              <div className='flex justify-center self-center'>
-                <SettingsIcon color='white'></SettingsIcon>
-              </div>
-              <span className='text-white'>Settings</span>
+              <SettingsButton />
             </div>{' '}
             <div className='flex-col'>
               {session ? <LogoutButton /> : <LoginButton />}

@@ -1,6 +1,6 @@
 'use client';
 
-import { EyeIcon, Button, Textarea, SendIcon } from 'clada-storybook';
+import { Button, EyeIcon, SendIcon, Textarea } from 'clada-storybook';
 import { UserImage } from '../shared/user-image';
 import { UserHandle } from '../user/user-handle';
 
