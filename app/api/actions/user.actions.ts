@@ -15,15 +15,19 @@ export const GetUsers = async (): Promise<UserPaginatedResult> => {
   return response;
 };
 
-export const GetUserById = async (id: string): Promise<User> => {
+export const GetUserById = async (id?: string): Promise<User | undefined> => {
+  if (!id) {
+    return Promise.resolve(undefined);
+  }
+
+  console.log(id);
+
   const response = await httpRequest<User>(`/users/${id}`, {
     method: 'GET',
     next: {
       revalidate: 3600,
     },
   });
-
-  // todo: check if needs revalidation
 
   return response;
 };
@@ -64,7 +68,7 @@ export const GetUserFollowees = async (
   return response;
 };
 
-export const deleteUserAvatar = async (): Promise<void> => {
+export const DeleteUserAvatar = async (): Promise<void> => {
   await httpRequest<void>('/users/avatar', {
     method: 'DELETE',
   });
@@ -72,7 +76,7 @@ export const deleteUserAvatar = async (): Promise<void> => {
   // todo: check if needs revalidation
 };
 
-export const updateUserAvatar = async (data: FormData) => {
+export const UpdateUserAvatar = async (data: FormData) => {
   const validation = validate(data);
 
   if (!validation.success) {
@@ -87,7 +91,7 @@ export const updateUserAvatar = async (data: FormData) => {
   // todo: check if needs revalidation
 };
 
-export const updateUser = async (data: UpdateUserData) => {
+export const UpdateUser = async (data: UpdateUserData) => {
   const validation = validate(data);
 
   if (!validation.success) {
@@ -102,7 +106,7 @@ export const updateUser = async (data: UpdateUserData) => {
   // todo: check if needs revalidation
 };
 
-export const followUser = async (id: string) => {
+export const FollowUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
     method: 'PUT',
   });
@@ -110,7 +114,7 @@ export const followUser = async (id: string) => {
   // todo: check if needs revalidation
 };
 
-export const unfollowUser = async (id: string) => {
+export const UnfollowUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
     method: 'PUT',
   });

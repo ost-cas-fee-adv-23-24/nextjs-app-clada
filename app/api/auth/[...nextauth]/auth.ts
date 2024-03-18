@@ -1,5 +1,5 @@
 import { Config } from '@/config/env';
-import NextAuth, { Session, User } from 'next-auth';
+import NextAuth, { Session } from 'next-auth';
 import Zitadel from 'next-auth/providers/zitadel';
 
 export interface MSession extends Session {
@@ -29,6 +29,10 @@ export const {
   ],
   callbacks: {
     async jwt({ token, user, account }) {
+      console.log('TOKEN', token);
+      console.log('USER', user);
+      console.log('ACCOUNT', account);
+
       if (account) {
         token.accessToken = account.access_token;
         token.expiresAt = (account.expires_at ?? 0) * 1000;
@@ -40,11 +44,14 @@ export const {
 
       return token;
     },
-    session({ session, token }) {
+    async session({ session, token }) {
       const mSession: MSession = session;
 
       mSession.accessToken = token.accessToken as string;
-      mSession.user = token.user as User;
+      mSession.user = token.user!;
+
+      console.log('MSESH', mSession);
+      console.log('token', token);
 
       return mSession;
     },
