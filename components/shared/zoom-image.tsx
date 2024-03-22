@@ -68,20 +68,26 @@ const ZoomImage = ({ src }: { src?: string }) => {
           </div>
         </div>
       )}
-      {isPreviewOpen && (
+      {isPreviewOpen && src && (
         <div
           className='fixed inset-0 z-50 cursor-pointer flex items-center justify-center bg-primary-500 bg-opacity-75'
           onClick={() => setIsPreviewOpen(false)}
         >
-          <div className='absolute top-0 right-0 m-m'>
-            <CancelIcon color='white' size='m'></CancelIcon>
+          <div className='absolute top-0 right-0 m-4'>
+            <CancelIcon color='white' size='m' />
           </div>
 
-          <div className='max-w-3xl max-h-full overflow-auto rounded-m'>
-            <img
+          <div
+            className='bg-white rounded-lg overflow-auto'
+            style={{ maxWidth: '80%', maxHeight: '80%' }}
+          >
+            <NextImage
               src={src}
               alt='Expanded post image'
-              className='block max-w-full max-h-full'
+              layout='responsive'
+              width={800} // Adjust based on your image's aspect ratio
+              height={450} // Adjust based on your image's aspect ratio
+              className='block mx-auto' // Center image within the div
             />
           </div>
         </div>
