@@ -15,7 +15,7 @@ export const Reply = ({ reply }: { reply: PostReply }) => {
       <div className='mt-s text-black'>{reply.text}</div>
       <ZoomImage src={reply.mediaUrl}></ZoomImage>
       <div className='pt-s'></div>
-      <InteractionStrip post={reply} reduced='true'></InteractionStrip>
+      <InteractionStrip post={reply} reduced={true}></InteractionStrip>
     </div>
   );
 };
