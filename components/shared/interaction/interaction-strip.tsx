@@ -10,7 +10,7 @@ export const InteractionStrip = ({
   reduced = false,
 }: {
   post: Post;
-  reduced: boolean;
+  reduced?: boolean;
 }) => {
   return (
     <div className='flex -ml-s pl-xxs lg:gap-xl md:gap-l gap-xs'>
