@@ -2,6 +2,7 @@
 
 import { CreatePost as createPost } from '@/app/api/actions/post.actions';
 import { Button, EyeIcon, Label, SendIcon, Textarea } from 'clada-storybook';
+import { useRef } from 'react';
 import { PostFrame } from './post-frame';
 
 export const CreatePost = ({
@@ -15,13 +16,22 @@ export const CreatePost = ({
   label?: string;
   subtitle?: string;
 }) => {
-  const create = async (formData: FormData) => {
-    const result = await createPost(formData);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const create = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+
+      await createPost(formData);
+      formRef.current.reset();
+    }
   };
 
   return (
     <PostFrame hasHover={false} showUser={showUser}>
-      <form action={create}>
+      <form ref={formRef} onSubmit={create} method='post'>
         {!subtitle ? (
           <Label size='xl' color='base'>
             {label}
