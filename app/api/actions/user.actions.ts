@@ -10,7 +10,9 @@ export const GetUsers = async (): Promise<UserPaginatedResult> => {
     method: 'GET',
   });
 
-  // todo: check if needs revalidation
+  if (!response) {
+    throw new Error('No followers found');
+  }
 
   return response;
 };
@@ -41,7 +43,9 @@ export const GetUserFollowers = async (
     }
   );
 
-  // todo: check if needs revalidation
+  if (!response) {
+    throw new Error('No followers found');
+  }
 
   return response;
 };
@@ -59,7 +63,9 @@ export const GetUserFollowees = async (
     }
   );
 
-  // todo: check if needs revalidation
+  if (!response) {
+    throw new Error('No followers found');
+  }
 
   return response;
 };
