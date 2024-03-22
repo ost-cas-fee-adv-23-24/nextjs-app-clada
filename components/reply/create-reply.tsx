@@ -1,49 +1,29 @@
 'use client';
 
-import { Button, EyeIcon, SendIcon, Textarea } from 'clada-storybook';
-import { UserImage } from '../shared/user-image';
-import { UserHandle } from '../user/user-handle';
+import { CreateReply } from '@/app/api/actions/post.actions';
+import { Post } from '@/utils/models';
+import { useRef } from 'react';
+import { CreateContent } from '../post/create-content';
+import { UserHeader } from '../user/user-header';
 
-export const CreateReply = () => {
+export const CreateReplyComponent = ({ post }: { post: Post }) => {
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const createReply = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+
+      await CreateReply(post.id, formData);
+      formRef.current.reset();
+    }
+  };
+
   return (
-    <div>
-      <div className='flex'>
-        <div className='mr-xs'>
-          <UserImage size='s' border={false}></UserImage>
-        </div>
-        <div>
-          <div className='mb-xs mb-font-label-m'>John D. Mumble</div>
-          <div className='flex'>
-            <div>
-              <UserHandle name='John D. Mumble' id={'1'}></UserHandle>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className='pt-s'></div>
-      <Textarea
-        id='text'
-        name='text'
-        placeholder='Und was meinst du dazu?'
-      ></Textarea>
-      <div className='pt-s'></div>
-      <div className='flex'>
-        <Button
-          color='base'
-          Icon={EyeIcon}
-          label='Bild hochladen'
-          size='m'
-          onClick={() => false}
-        ></Button>
-        <div className='pr-s'></div>
-        <Button
-          color='primary'
-          Icon={SendIcon}
-          label='Absenden'
-          size='m'
-          onClick={() => false}
-        ></Button>
-      </div>
-    </div>
+    <form ref={formRef} onSubmit={createReply} method='post'>
+      <UserHeader post={post}></UserHeader>
+      <CreateContent></CreateContent>
+    </form>
   );
 };

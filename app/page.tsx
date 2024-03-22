@@ -14,13 +14,13 @@ export default async function Home() {
     <section>
       <h1 className='text-primary-600 mb-font-h2'>Willkommen bei Mumble!</h1>
       <h2 className='text-base-500 mb-font-h4'>
-        Das Vögellchen zwitschert nicht mehr wie bis anhin. Was sagst du uns
+        Das Vögelchen zwitschert nicht mehr wie bis anhin. Was sagst du uns
         heute dazu?.
       </h2>
       <div className='pt-l'></div>
       {session && <CreatePost />}
       <div className='pt-m'></div>
-      <PostList posts={posts} />
+      {posts && <PostList posts={posts} />}
     </section>
   );
 }

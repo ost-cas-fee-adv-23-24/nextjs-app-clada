@@ -63,7 +63,7 @@ export const httpRequest = async <T>(
   const authHeader = await getAuthHeader();
   const processedUrl = processSlug(slug, queryParams).toString();
 
-  const res = await fetch(processedUrl.toString(), {
+  const res = await fetch(processedUrl, {
     headers: {
       ...init?.headers,
       ...authHeader,
@@ -78,5 +78,11 @@ export const httpRequest = async <T>(
     handleRequestError(res);
   }
 
-  return res.json() as T;
+  const text = await res.text();
+
+  if (!text) {
+    return null;
+  }
+
+  return JSON.parse(text) as T;
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { getTimeDifferenceInMinutes } from '@/utils/utils';
-import { TimeIcon } from 'clada-storybook';
+import { IconButton, TimeIcon } from 'clada-storybook';
 import { useEffect, useState } from 'react';
 
 export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
@@ -44,12 +44,9 @@ export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
   return (
     <div>
       {timeDiff && (
-        <div className='flex'>
-          <TimeIcon color='base'></TimeIcon>
-          <span className='pl-xxs pr-xxs text-base-400 mb-font-label-s'>
-            {(text ? text : 'vor ') + timeDiff}
-          </span>
-        </div>
+        <IconButton Icon={TimeIcon} href='#' variant='base'>
+          {(text ? text : 'vor ') + timeDiff}
+        </IconButton>
       )}
     </div>
   );

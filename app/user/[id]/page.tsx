@@ -25,12 +25,13 @@ export default async function Home({ params }: { params: { id: string } }) {
       <UserTabs></UserTabs>
 
       <div className='pt-s'></div>
-      {userPosts.data?.map((post: Post, index: number) => (
-        <div key={index}>
-          <SinglePost post={post} />
-          <div className='pt-l'></div>
-        </div>
-      ))}
+      {userPosts &&
+        userPosts.data?.map((post: Post, index: number) => (
+          <div key={index}>
+            <SinglePost post={post} />
+            <div className='pt-l'></div>
+          </div>
+        ))}
     </div>
   );
 }

@@ -25,7 +25,7 @@ export const GetUserById = async (id: string): Promise<User> => {
 
   // todo: check if needs revalidation
 
-  return response;
+  return response as User;
 };
 
 export const GetUserFollowers = async (
