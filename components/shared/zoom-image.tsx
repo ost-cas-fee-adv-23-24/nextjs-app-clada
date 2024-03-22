@@ -78,16 +78,16 @@ const ZoomImage = ({ src }: { src?: string }) => {
           </div>
 
           <div
-            className='bg-white rounded-lg overflow-auto'
+            className='bg-white rounded-lg overflow-hidden rounded-m'
             style={{ maxWidth: '80%', maxHeight: '80%' }}
           >
             <NextImage
               src={src}
               alt='Expanded post image'
               layout='responsive'
-              width={800} // Adjust based on your image's aspect ratio
-              height={450} // Adjust based on your image's aspect ratio
-              className='block mx-auto' // Center image within the div
+              width={800}
+              height={450}
+              className='block mx-auto'
             />
           </div>
         </div>
