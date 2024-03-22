@@ -114,7 +114,7 @@ export const CreateReply = async (id: string, data: FormData) => {
     body: data,
   });
 
-  revalidatePath('/', `post/${id}`);
+  revalidatePath('/');
 };
 
 export const UpdateLike = async (
