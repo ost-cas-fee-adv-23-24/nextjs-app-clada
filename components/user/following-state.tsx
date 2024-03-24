@@ -1,8 +1,9 @@
 'use client';
 
+import { User } from '@/utils/models';
 import { Button, CancelIcon } from 'clada-storybook';
 
-export const FollowingState = ({ user }: { user: TUser }) => {
+export const FollowingState = ({ user }: { user: User }) => {
   return (
     <div className='flex justify-end gap-s'>
       <div className='self-center text-base-400'>

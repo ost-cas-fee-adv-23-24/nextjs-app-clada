@@ -1,11 +1,11 @@
 import { GetUserById } from '@/app/api/actions/user.actions';
 import { Post, PostReply } from '@/utils/models';
-import { Reply } from '../reply/reply';
-import { InteractionStrip } from '../shared/interaction-strip';
+import { InteractionStrip } from '../shared/interaction/interaction-strip';
 import { TimeDiff } from '../shared/time-diff';
 import { UserImage } from '../shared/user-image';
 import ZoomImage from '../shared/zoom-image';
 import { UserHandle } from '../user/user-handle';
+import { getName } from '../user/user-utils';
 
 export const PostContent = async ({
   post,
@@ -19,10 +19,7 @@ export const PostContent = async ({
   // TODO: refactor to use classnames npm package
   const textClasses = `mt-s text-black ${size === 'large' && 'text-[20px] tracking-normal leading-relaxed'}`;
   const user = await GetUserById(post?.creator?.id ?? '');
-  const displayedName =
-    !user.firstname || !user.lastname
-      ? user.username
-      : `${user?.firstname} ${user.lastname}`;
+  const displayedName = getName(user);
 
   return (
     <div>
@@ -41,19 +38,13 @@ export const PostContent = async ({
           <TimeDiff ulid={post.id}></TimeDiff>
         </div>
       </div>
-      <div className={textClasses}>{post?.text}</div>
+      <div className={textClasses}>
+        <a href={`/post/${post.id}`}>{post?.text}</a>
+      </div>
       <ZoomImage src={post?.mediaUrl}></ZoomImage>
       {post.mediaUrl && <div className='grid place-content-center'></div>}
+      <div className='pt-s'></div>
       <InteractionStrip post={post}></InteractionStrip>
-      {replies && (
-        <div className='mt-xl'>
-          {replies?.map((reply: PostReply) => (
-            <div key={reply.id}>
-              <Reply reply={reply} />
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

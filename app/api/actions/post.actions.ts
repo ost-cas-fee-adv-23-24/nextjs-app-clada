@@ -113,6 +113,8 @@ export const CreateReply = async (id: string, data: FormData) => {
     method: 'POST',
     body: data,
   });
+
+  revalidatePath('/');
 };
 
 export const UpdateLike = async (

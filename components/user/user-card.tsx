@@ -1,10 +1,11 @@
 'use client';
 
+import { User } from '@/utils/models';
 import { Button, MumbleIcon } from 'clada-storybook';
 import { UserImage } from '../shared/user-image';
 import { UserHandle } from './user-handle';
 
-export const UserCard = ({ user }: { user: TUser }) => {
+export const UserCard = ({ user }: { user: User }) => {
   return (
     <div className='flex min-w-[150px] flex-grow flex-col items-center gap-s rounded-m bg-white p-s'>
       <UserImage
