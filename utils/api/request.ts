@@ -1,4 +1,4 @@
-import { MSession, auth } from '@/app/api/auth/[...nextauth]/auth';
+import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { Config } from '@/config/env';
 import { signIn } from 'next-auth/react';
 import { URL } from 'url';
@@ -7,7 +7,7 @@ import { APIError, InternalServerError } from '../error';
 type SearchParams = Record<string, string | string[] | number | boolean>[];
 
 const getAuthHeader = async () => {
-  const session: MSession | null = await auth();
+  const session = await auth();
 
   if (!session) {
     return null;

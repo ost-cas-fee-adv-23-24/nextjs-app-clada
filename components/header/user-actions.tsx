@@ -3,6 +3,9 @@ import { auth } from '@/auth';
 import { SettingsModal } from '../modal/settings';
 import LoginButton from '../shared/button/login-button';
 import LogoutButton from '../shared/button/logout-button';
+import { UserImage } from '../shared/user-image';
+import Link from 'next/link';
+import { User } from '@/utils/models';
 
 export const HeaderUserActions = async () => {
   const session = await auth();
@@ -17,15 +20,17 @@ export const HeaderUserActions = async () => {
     );
   }
 
-  console.log(session);
-
   const user = await GetUserById(session?.user?.id);
+
+  console.log('USO', user)
 
   return (
     <div className='ml-auto flex pt-xxs'>
-      {/* <UserImage size='s' url={user.avatarUrl}></UserImage> */}
+      <Link href={'/user/' + user?.id}>
+        <UserImage size='s' url={user?.avatarUrl}></UserImage>
+      </Link>
       <div className='ml-l mr-l flex-col'>
-        <SettingsModal />
+        <SettingsModal user={user as User} />
       </div>{' '}
       <div className='flex-col'>
         <LogoutButton />

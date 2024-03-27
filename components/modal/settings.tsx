@@ -1,20 +1,32 @@
 'use client';
 
 import { Input, Label, SettingsIcon, Textarea } from 'clada-storybook';
-import { useState } from 'react';
+import { FormEvent, SyntheticEvent, useRef, useState } from 'react';
 import { ModalWindow } from './modal';
+import { UpdateUserData, User } from '@/utils/models';
+import { UpdateUser } from '@/app/api/actions/user.actions';
 
-export const SettingsModal = () => {
+export const SettingsModal = ({ user }: {user: User}) => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  console.log(user)
 
   const onClose = () => {
     setIsOpen(false);
-    alert('settings closed');
   };
 
-  const onSubmit = () => {
-    alert('settings submitted');
-    setIsOpen(false);
+  const formAction = async (event: SyntheticEvent) => {
+    event.preventDefault();
+
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+
+      console.log('FD', formData)
+
+      // await UpdateUser(formData);
+      // formRef.current.reset();
+    }
   };
 
   return (
@@ -29,45 +41,30 @@ export const SettingsModal = () => {
         title='Einstellungen'
         isOpen={isOpen}
         onClose={onClose}
-        onSubmit={onSubmit}
+        onSubmit={() => formRef?.current?.requestSubmit()}
       >
-        <Input
-          id='name'
-          type='text'
-          label='Name Vorname'
-          placeholder='Hans Muster'
-        ></Input>
-        <div className='pb-m'></div>
-        <Input
-          id='mail'
-          type='mail'
-          label='Email Adresse'
-          placeholder='hans.muster@mail.com'
-        ></Input>
-        <div className='pb-m'></div>
-        <Input
-          id='location'
-          type='text'
-          label='Ortschaft'
-          placeholder='Ortschaft'
-        ></Input>
-        <div className='pb-s'></div>
-        <Label size='s' color='base'>
-          Biografie
-        </Label>
-        <Textarea
-          id='biography'
-          name='biography'
-          placeholder='Biografie'
-        ></Textarea>
-        <div className='pb-l'></div>
-        <Label size='xl' color='base'>
-          Passwort ändern
-        </Label>
-        <div className='pb-s'></div>
-        <Input id='old-password' type='password' label='Altes Passwort'></Input>
-        <div className='pb-m'></div>
-        <Input id='new-password' type='password' label='Neues Passwort'></Input>
+        <form ref={formRef} onSubmit={formAction}>
+          <Input
+            id='lastname'
+            type='text'
+            label='Name'
+            defaultValue={user.lastname}
+          ></Input>
+          <div className='pb-l'></div>
+          <Input
+            id='firstname'
+            type='text'
+            label='Vorname'
+            defaultValue={user.firstname}
+          ></Input>
+          <div className='pb-l'></div>
+          <Input
+            id='username'
+            type='text'
+            label='Benutzername'
+            defaultValue={user.username}
+          ></Input>
+        </form>
       </ModalWindow>
     </>
   );

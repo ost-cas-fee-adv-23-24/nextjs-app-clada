@@ -1,9 +1,15 @@
 import { Config } from '@/config/env';
-import NextAuth, { Session } from 'next-auth';
+import NextAuth, { User } from 'next-auth';
 import Zitadel from 'next-auth/providers/zitadel';
 
-export interface MSession extends Session {
-  accessToken?: string;
+declare module 'next-auth' {
+  interface Session {
+    accessToken: string;
+    user: User;
+  }
+  interface User {
+    identifier: string;
+  }
 }
 
 export const {
@@ -29,31 +35,30 @@ export const {
   ],
   callbacks: {
     async jwt({ token, user, account }) {
-      console.log('TOKEN', token);
-      console.log('USER', user);
-      console.log('ACCOUNT', account);
-
-      if (account) {
-        token.accessToken = account.access_token;
-        token.expiresAt = (account.expires_at ?? 0) * 1000;
-      }
-
       if (user) {
         token.user = user;
+
+        if(account) {
+          (token.user as any).id = account.providerAccountId;
+        }
+
+        console.log('ACC:', account?.providerAccountId)
+      }
+
+      if (account) {
+        token.sub = account.providerAccountId;
+        token.accessToken = account.access_token;
+        token.expiresAt = (account.expires_at ?? 0) * 1000;
       }
 
       return token;
     },
     async session({ session, token }) {
-      const mSession: MSession = session;
+      (session as any).accessToken = token.accessToken as any;
+      // @ts-ignore
+      session.user.id = (token.user as User).id;
 
-      mSession.accessToken = token.accessToken as string;
-      mSession.user = token.user!;
-
-      console.log('MSESH', mSession);
-      console.log('token', token);
-
-      return mSession;
+      return session;
     },
   },
   secret: 'this-is-very-secret',

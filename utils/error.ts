@@ -16,16 +16,7 @@ export class InternalServerError extends Error {
 }
 
 export const parseValidationError = (
-  obj: SafeParseReturnType<
-    {
-      text: string;
-      media?: File | undefined;
-    },
-    {
-      text: string;
-      media?: File | undefined;
-    }
-  >
+  obj: any
 ) => {
   // @ts-ignore
   return { errors: obj.error.flatten().fieldErrors };

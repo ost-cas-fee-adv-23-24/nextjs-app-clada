@@ -41,7 +41,7 @@ export const CreatePost = ({
         )}
         <div className='pt-xxs'></div>
 
-        <div className='mb-fon-paragraph-m color-primary-200'>{subtitle}</div>
+        <div className='mb-font-paragraph-m color-primary-200'>{subtitle}</div>
         {subtitle && <div className='pt-s'></div>}
         <div className='pt-xs'></div>
         <Textarea id='text' name='text' placeholder={placeholder}></Textarea>

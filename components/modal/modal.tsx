@@ -1,7 +1,7 @@
 'use client';
 
 import { Modal } from 'clada-storybook';
-import { useEffect, useState } from 'react';
+import { FormEvent, RefObject, useEffect, useState } from 'react';
 
 export const ModalWindow = ({
   title,

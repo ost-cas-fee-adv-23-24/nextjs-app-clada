@@ -1,7 +1,8 @@
-'use server';
-// import { APIBase } from '@/utils/api/base';
+'use server'
+
 import { httpRequest } from '@/utils/api/request';
-import { validate } from '@/utils/api/validation';
+import { validate, validateUser } from '@/utils/api/validation';
+import { schemaUser } from '@/utils/api/validation.schema';
 import { parseValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
 
@@ -12,15 +13,13 @@ export const GetUsers = async (): Promise<UserPaginatedResult> => {
 
   // todo: check if needs revalidation
 
-  return response;
+  return response as UserPaginatedResult;
 };
 
 export const GetUserById = async (id?: string): Promise<User | undefined> => {
   if (!id) {
     return Promise.resolve(undefined);
   }
-
-  console.log(id);
 
   const response = await httpRequest<User>(`/users/${id}`, {
     method: 'GET',
@@ -83,7 +82,7 @@ export const DeleteUserAvatar = async (): Promise<void> => {
 };
 
 export const UpdateUserAvatar = async (data: FormData) => {
-  const validation = validate(data);
+  const validation = validateUser(data);
 
   if (!validation.success) {
     return Promise.reject(parseValidationError(validation));
@@ -98,7 +97,8 @@ export const UpdateUserAvatar = async (data: FormData) => {
 };
 
 export const UpdateUser = async (data: UpdateUserData) => {
-  const validation = validate(data);
+  console.log(JSON.stringify(data))
+  const validation = schemaUser.safeParse(data);
 
   if (!validation.success) {
     return Promise.reject(parseValidationError(validation));
