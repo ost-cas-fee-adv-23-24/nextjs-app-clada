@@ -1,7 +1,7 @@
-'use server'
+'use server';
 
 import { httpRequest } from '@/utils/api/request';
-import { validate, validateUser } from '@/utils/api/validation';
+import { validateUser } from '@/utils/api/validation';
 import { schemaUser } from '@/utils/api/validation.schema';
 import { parseValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
@@ -96,8 +96,10 @@ export const UpdateUserAvatar = async (data: FormData) => {
   // todo: check if needs revalidation
 };
 
-export const UpdateUser = async (data: UpdateUserData) => {
-  console.log(JSON.stringify(data))
+export const UpdateUser = async (
+  data: UpdateUserData
+): Promise<void | { errors: any }> => {
+  console.log(JSON.stringify(data));
   const validation = schemaUser.safeParse(data);
 
   if (!validation.success) {

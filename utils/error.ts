@@ -1,5 +1,3 @@
-import { SafeParseReturnType } from 'zod';
-
 export class APIError extends Error {
   constructor(
     message: string,
@@ -15,9 +13,7 @@ export class InternalServerError extends Error {
   }
 }
 
-export const parseValidationError = (
-  obj: any
-) => {
+export const parseValidationError = (obj: any) => {
   // @ts-ignore
   return { errors: obj.error.flatten().fieldErrors };
 };

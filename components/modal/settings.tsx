@@ -1,32 +1,44 @@
 'use client';
 
-import { Input, Label, SettingsIcon, Textarea } from 'clada-storybook';
-import { FormEvent, SyntheticEvent, useRef, useState } from 'react';
-import { ModalWindow } from './modal';
-import { UpdateUserData, User } from '@/utils/models';
 import { UpdateUser } from '@/app/api/actions/user.actions';
+import { UpdateUserData, User } from '@/utils/models';
+import { Input, Modal, SettingsIcon } from 'clada-storybook';
+import { FormEvent, useRef, useState } from 'react';
 
-export const SettingsModal = ({ user }: {user: User}) => {
-  const formRef = useRef<HTMLFormElement>(null);
+export const SettingsModal = ({ user }: { user: User }) => {
   const [isOpen, setIsOpen] = useState(false);
+  let formRef = useRef<HTMLFormElement>(null);
+  const [formState, setFormState] =
+    useState<Awaited<ReturnType<typeof UpdateUser>>>();
 
-  console.log(user)
+  const formAction = async (event: FormData) => {
+    // event.preventDefault();
 
-  const onClose = () => {
-    setIsOpen(false);
-  };
+    // console.log(new FormData())
 
-  const formAction = async (event: SyntheticEvent) => {
-    event.preventDefault();
+    // console.log(new FormData(event.target as HTMLFormElemen))
 
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-
-      console.log('FD', formData)
-
-      // await UpdateUser(formData);
-      // formRef.current.reset();
+    if(formRef.current) {
+      const data = new FormData(formRef.current)
+      console.log(data.get('username'))
     }
+
+    console.log(formRef.current)
+    console.log(event);
+
+    // if (user) {
+    //   const result = await UpdateUser({
+    //     firstname: formData.get('firstname') as string,
+    //     lastname: formData.get('lastname') as string,
+    //     username: formData.get('username') as string,
+    //   } as UpdateUserData);
+
+    //   setFormState(result);
+
+    //   if (!result?.errors) {
+    //     setIsOpen(false);
+    //   }
+    // }
   };
 
   return (
@@ -37,18 +49,20 @@ export const SettingsModal = ({ user }: {user: User}) => {
         </div>
         <span className='text-white'>Settings</span>
       </button>
-      <ModalWindow
+      <Modal
         title='Einstellungen'
+        width='m'
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => setIsOpen(false)}
         onSubmit={() => formRef?.current?.requestSubmit()}
       >
-        <form ref={formRef} onSubmit={formAction}>
+        <form ref={formRef} action={formAction}>
           <Input
-            id='lastname'
+            id='name'
             type='text'
             label='Name'
             defaultValue={user.lastname}
+            error={formState?.errors?.lastname?.[0]}
           ></Input>
           <div className='pb-l'></div>
           <Input
@@ -56,6 +70,7 @@ export const SettingsModal = ({ user }: {user: User}) => {
             type='text'
             label='Vorname'
             defaultValue={user.firstname}
+            error={formState?.errors?.firstname?.[0]}
           ></Input>
           <div className='pb-l'></div>
           <Input
@@ -63,9 +78,10 @@ export const SettingsModal = ({ user }: {user: User}) => {
             type='text'
             label='Benutzername'
             defaultValue={user.username}
+            error={formState?.errors?.username?.[0]}
           ></Input>
         </form>
-      </ModalWindow>
+      </Modal>
     </>
   );
 };

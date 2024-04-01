@@ -38,11 +38,11 @@ export const {
       if (user) {
         token.user = user;
 
-        if(account) {
+        if (account) {
           (token.user as any).id = account.providerAccountId;
         }
 
-        console.log('ACC:', account?.providerAccountId)
+        console.log('ACC:', account?.providerAccountId);
       }
 
       if (account) {

@@ -1,16 +1,18 @@
+'use server'
+
 import { GetUserById } from '@/app/api/actions/user.actions';
 import { auth } from '@/auth';
+import { User } from '@/utils/models';
+import Link from 'next/link';
 import { SettingsModal } from '../modal/settings';
 import LoginButton from '../shared/button/login-button';
 import LogoutButton from '../shared/button/logout-button';
 import { UserImage } from '../shared/user-image';
-import Link from 'next/link';
-import { User } from '@/utils/models';
 
 export const HeaderUserActions = async () => {
   const session = await auth();
 
-  if (!session) {
+  if (!!!session) {
     return (
       <div className='ml-auto flex pt-xxs'>
         <div className='flex-col'>
@@ -22,7 +24,7 @@ export const HeaderUserActions = async () => {
 
   const user = await GetUserById(session?.user?.id);
 
-  console.log('USO', user)
+  console.log('USO', user);
 
   return (
     <div className='ml-auto flex pt-xxs'>

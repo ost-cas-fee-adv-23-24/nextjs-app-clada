@@ -1,4 +1,4 @@
-import { schemaUser, schemaMumble } from './validation.schema';
+import { schemaUser } from './validation.schema';
 
 export const validate = (formData: FormData) => {
   const media = formData.get('media');
