@@ -10,7 +10,7 @@ import {
 } from '@/utils/models';
 import { revalidatePath } from 'next/cache';
 
-type GetPostsParams = {
+export type GetPostsParams = {
   newerThan?: string;
   olderThan?: string;
   text?: string;

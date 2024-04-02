@@ -1,10 +1,8 @@
 import { GetPosts } from '@/app/api/actions/post.actions';
-import { SinglePost } from '@/components/post/single-post';
 import { Profile } from '@/components/user/profile';
-import { UserTabs } from '@/components/user/user-tabs';
-import { Post } from '@/utils/models';
 import { GetUserById } from '../../api/actions/user.actions';
 import { auth } from '../../api/auth/[...nextauth]/auth';
+import { UserDashboardPosts } from './_user-posts';
 
 let fakeSrc =
   'https://storage.googleapis.com/mumble-api-data/55068752-3e6d-41d4-94d8-905edc23f0a5';
@@ -12,7 +10,9 @@ let fakeSrc =
 export default async function Home({ params }: { params: { id: string } }) {
   const session = await auth();
   const user = await GetUserById(params.id);
-  const userPosts = await GetPosts({ creators: [params.id] });
+  const postsResponse = await GetPosts({ creators: [params.id] });
+
+  const isPersonalUser = session?.user?.id === user.id;
 
   return (
     <div>
@@ -22,16 +22,12 @@ export default async function Home({ params }: { params: { id: string } }) {
 
       <div className='pt-l'></div>
 
-      <UserTabs></UserTabs>
-
-      <div className='pt-s'></div>
-      {userPosts &&
-        userPosts.data?.map((post: Post, index: number) => (
-          <div key={index}>
-            <SinglePost post={post} />
-            <div className='pt-l'></div>
-          </div>
-        ))}
+      <UserDashboardPosts
+        userId={params.id}
+        isPersonalUser={isPersonalUser}
+        postsPaginatedResult={postsResponse}
+        queryParams={{ creators: [params.id] }}
+      ></UserDashboardPosts>
     </div>
   );
 }
