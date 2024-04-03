@@ -1,6 +1,6 @@
+import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
 import { Suspense } from 'react';
 import HomepagePostsWrapper from './_home-posts-wrapper';
-import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
 
 export default function Home() {
   return (

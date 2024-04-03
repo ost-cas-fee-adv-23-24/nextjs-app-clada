@@ -1,11 +1,8 @@
-import { GetPosts } from '@/app/api/actions/post.actions';
+import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
 import { Profile } from '@/components/user/profile';
+import { Suspense } from 'react';
 import { GetUserById } from '../../api/actions/user.actions';
 import { auth } from '../../api/auth/[...nextauth]/auth';
-import { UserDashboardPosts } from './_user-posts';
-import { Suspense } from 'react';
-import PostSkeleton from '@/components/skeleton/post-skeleton';
-import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
 import UserPostsSuspense from './_user-posts-suspense';
 
 let fakeSrc =
