@@ -1,5 +1,6 @@
 export default function PostSkeleton() {
   return (
+    <>
     <div
       className='transition-all duration-300 hover:ring-2 hover:ring-base-200 relative w-full rounded-m border-base-200 bg-white pb-l pl-xl pr-xl pt-l text-base-600 animate-pulse'
       data-testid='single-post'
@@ -35,5 +36,7 @@ export default function PostSkeleton() {
         </div>
       </div>
     </div>
+  <div className="pt-l"></div>
+  </>
   );
 }

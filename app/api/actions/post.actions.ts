@@ -33,8 +33,6 @@ export const GetPosts = async (queryParams?: GetPostsParams) => {
     queryParams
   );
 
-  debugger;
-
   return response;
 };
 

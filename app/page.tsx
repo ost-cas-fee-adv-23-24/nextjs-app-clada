@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import HomepagePostsWrapper from './_home-posts-wrapper';
-import PostSkeleton from '@/components/skeleton/post-skeleton';
+import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
         heute dazu?.
       </h2>
       <div className='pt-l'></div>
-      <Suspense fallback={<PostSkeleton />}>
+      <Suspense fallback={<PostSkeletonList />}>
         <HomepagePostsWrapper />
       </Suspense>
     </section>
