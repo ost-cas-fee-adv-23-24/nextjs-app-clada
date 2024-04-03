@@ -6,6 +6,7 @@ import { SinglePost } from '../post/single-post';
 // inspiration from https://medium.com/@ferlat.simon/infinite-scroll-with-nextjs-server-actions-a-simple-guide-76a894824cfd
 import { Config } from '@/config/env';
 import { useInView } from 'react-intersection-observer';
+import PostSkeleton from '../skeleton/post-skeleton';
 
 type Props = {
   postsPaginatedResult: PostPaginatedResult | null;
@@ -64,7 +65,9 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
       ))}
       {!allPostsLoaded ? (
         <>
-          <div ref={ref}>Loading...</div>
+          <div ref={ref} data-testid='post-list-loading-indicator'>
+            <PostSkeleton />
+          </div>
         </>
       ) : (
         <>

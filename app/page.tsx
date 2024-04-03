@@ -1,15 +1,8 @@
-import PostList from '@/components/post-list/post-list';
-import { CreatePost } from '@/components/post/create-post';
-import { GetPosts } from './api/actions/post.actions';
-import { auth } from './api/auth/[...nextauth]/auth';
+import { Suspense } from 'react';
+import HomepagePostsWrapper from './_home-posts-wrapper';
+import PostSkeleton from '@/components/skeleton/post-skeleton';
 
-export default async function Home() {
-  const session = await auth();
-
-  const posts = await GetPosts({
-    limit: 10,
-  });
-
+export default function Home() {
   return (
     <section>
       <h1 className='text-primary-600 mb-font-h2'>Willkommen bei Mumble!</h1>
@@ -18,9 +11,9 @@ export default async function Home() {
         heute dazu?.
       </h2>
       <div className='pt-l'></div>
-      {session && <CreatePost />}
-      <div className='pt-m'></div>
-      {posts && <PostList postsPaginatedResult={posts} />}
+      <Suspense fallback={<PostSkeleton />}>
+        <HomepagePostsWrapper />
+      </Suspense>
     </section>
   );
 }

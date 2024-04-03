@@ -3,6 +3,9 @@ import { Profile } from '@/components/user/profile';
 import { GetUserById } from '../../api/actions/user.actions';
 import { auth } from '../../api/auth/[...nextauth]/auth';
 import { UserDashboardPosts } from './_user-posts';
+import { Suspense } from 'react';
+import PostSkeleton from '@/components/skeleton/post-skeleton';
+import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
 
 let fakeSrc =
   'https://storage.googleapis.com/mumble-api-data/55068752-3e6d-41d4-94d8-905edc23f0a5';
