@@ -16,7 +16,7 @@ export const PostFrame = ({
   const containerClasses = `${hasHover && hoverClasses} relative w-full rounded-m border-base-200 bg-white pb-l pl-xl pr-xl pt-l text-base-600 `;
 
   return (
-    <div className={containerClasses}>
+    <div className={containerClasses} data-testid='single-post'>
       <div>{children}</div>
     </div>
   );

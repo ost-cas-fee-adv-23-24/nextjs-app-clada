@@ -1,9 +1,15 @@
 import { Config } from '@/config/env';
-import NextAuth, { Session, User } from 'next-auth';
+import NextAuth, { User } from 'next-auth';
 import Zitadel from 'next-auth/providers/zitadel';
 
-export interface MSession extends Session {
-  accessToken?: string;
+declare module 'next-auth' {
+  interface Session {
+    accessToken: string;
+    user: User;
+  }
+  interface User {
+    identifier: string;
+  }
 }
 
 export const {
@@ -29,24 +35,28 @@ export const {
   ],
   callbacks: {
     async jwt({ token, user, account }) {
+      if (user) {
+        token.user = user;
+
+        if (account) {
+          (token.user as any).id = account.providerAccountId;
+        }
+      }
+
       if (account) {
+        token.sub = account.providerAccountId;
         token.accessToken = account.access_token;
         token.expiresAt = (account.expires_at ?? 0) * 1000;
       }
 
-      if (user) {
-        token.user = user;
-      }
-
       return token;
     },
-    session({ session, token }) {
-      const mSession: MSession = session;
+    async session({ session, token }) {
+      (session as any).accessToken = token.accessToken as any;
+      // @ts-ignore
+      session.user.id = (token.user as User).id;
 
-      mSession.accessToken = token.accessToken as string;
-      mSession.user = token.user as User;
-
-      return mSession;
+      return session;
     },
   },
   secret: 'this-is-very-secret',
