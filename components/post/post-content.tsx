@@ -1,13 +1,11 @@
-import { GetUserById } from '@/app/api/actions/user.actions';
 import { Post, PostReply } from '@/utils/models';
 import { InteractionStrip } from '../shared/interaction/interaction-strip';
 import { TimeDiff } from '../shared/time-diff';
 import { UserImage } from '../shared/user-image';
 import ZoomImage from '../shared/zoom-image';
 import { UserHandle } from '../user/user-handle';
-import { getName } from '../user/user-utils';
 
-export const PostContent = async ({
+export const PostContent = ({
   post,
   replies,
   size,
@@ -18,8 +16,9 @@ export const PostContent = async ({
 }) => {
   // TODO: refactor to use classnames npm package
   const textClasses = `mt-s text-black ${size === 'large' && 'text-[20px] tracking-normal leading-relaxed'}`;
-  const user = await GetUserById(post?.creator?.id ?? '');
-  const displayedName = getName(user);
+  // const user = await GetUserById(post?.creator?.id ?? '');
+  // const displayedName = getName(user);
+  const displayedName = post.creator.username;
 
   return (
     <div>

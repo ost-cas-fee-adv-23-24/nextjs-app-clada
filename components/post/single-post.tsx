@@ -9,7 +9,7 @@ type Props = {
 
 export const SinglePost = ({ post, replies }: Props) => {
   return (
-    <PostFrame post={post}>
+    <PostFrame post={post} data-testid='single-post'>
       <PostContent post={post} replies={replies}></PostContent>
     </PostFrame>
   );

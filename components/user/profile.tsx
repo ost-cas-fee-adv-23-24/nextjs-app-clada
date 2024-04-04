@@ -7,6 +7,7 @@ import { TimeDiff } from '../shared/time-diff';
 import { UserImage } from '../shared/user-image';
 import { Location } from './location';
 import { UserHandle } from './user-handle';
+import { getName } from './user-utils';
 
 export const Profile = ({
   user,
@@ -58,9 +59,7 @@ export const Profile = ({
       </div>
       <div className='pt-l'></div>
       <div className='flex gap-xs'>
-        <div className='mb-font-h3'>
-          {user.firstname} {user.lastname}
-        </div>
+        <div className='mb-font-h3'>{getName(user)}</div>
         <div className='self-center'>
           <SettingsIcon color='primary'></SettingsIcon>
         </div>
