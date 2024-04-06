@@ -1,8 +1,7 @@
 'use client';
 
-import { CreatePost as createPost } from '@/app/api/actions/post.actions';
-import { Button, EyeIcon, Label, SendIcon, Textarea } from 'clada-storybook';
-import { useRef } from 'react';
+import { Label } from 'clada-storybook';
+import { CreateContent } from './create-content';
 import { PostFrame } from './post-frame';
 
 export const CreatePost = ({
@@ -16,22 +15,9 @@ export const CreatePost = ({
   label?: string;
   subtitle?: string;
 }) => {
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const create = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-
-      await createPost(formData);
-      formRef.current.reset();
-    }
-  };
-
   return (
-    <PostFrame hasHover={false} showUser={showUser}>
-      <form ref={formRef} onSubmit={create} method='post'>
+    <>
+      <PostFrame hasHover={false} showUser={showUser}>
         {!subtitle ? (
           <Label size='xl' color='base'>
             {label}
@@ -44,26 +30,8 @@ export const CreatePost = ({
         <div className='mb-fon-paragraph-m color-primary-200'>{subtitle}</div>
         {subtitle && <div className='pt-s'></div>}
         <div className='pt-xs'></div>
-        <Textarea id='text' name='text' placeholder={placeholder}></Textarea>
-        <div className='pt-s'></div>
-        <div className='flex'>
-          <Button
-            color='base'
-            Icon={EyeIcon}
-            label='Bild hochladen'
-            size='m'
-            onClick={() => false}
-          ></Button>
-          <div className='pr-s'></div>
-          <Button
-            color='primary'
-            Icon={SendIcon}
-            label='Absenden'
-            size='m'
-            onClick={() => false}
-          ></Button>
-        </div>
-      </form>
-    </PostFrame>
+        <CreateContent placeholder={placeholder}></CreateContent>
+      </PostFrame>
+    </>
   );
 };
