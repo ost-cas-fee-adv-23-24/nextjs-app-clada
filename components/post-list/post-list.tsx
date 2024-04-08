@@ -57,8 +57,8 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
 
   return (
     <>
-      {posts.map((post, index: number) => (
-        <div key={index}>
+      {posts.map((post) => (
+        <div key={post.id}>
           <SinglePost post={post} />
           <div className='pt-l'></div>
         </div>
