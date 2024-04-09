@@ -2,7 +2,7 @@
 
 import { httpRequest } from '@/utils/api/request';
 import { validate } from '@/utils/api/validation';
-import { parseValidationError } from '@/utils/error';
+import { ValidationError, parseValidationError } from '@/utils/error';
 import {
   Post,
   PostPaginatedResult,
@@ -55,11 +55,11 @@ export const GetPostReplies = async (id: string) => {
   return response;
 };
 
-export const CreatePost = async (data: FormData) => {
+export const CreatePost = async (data: FormData): Promise<null | ValidationError> => {
   const validation = validate(data);
 
   if (!validation.success) {
-    return Promise.reject(parseValidationError(validation));
+    return parseValidationError(validation);
   }
 
   await httpRequest<void>('/posts', {
@@ -68,6 +68,8 @@ export const CreatePost = async (data: FormData) => {
   });
 
   revalidatePath('/', 'page');
+
+  return null;
 };
 
 export const UpdatePost = async (id: string, data: FormData) => {
@@ -102,11 +104,11 @@ export const DeletePost = async (id: string) => {
   });
 };
 
-export const CreateReply = async (id: string, data: FormData) => {
+export const CreateReply = async (id: string, data: FormData): Promise<null | ValidationError> => {
   const validation = validate(data);
 
   if (!validation.success) {
-    return Promise.reject(parseValidationError(validation));
+    return parseValidationError(validation);
   }
 
   await httpRequest<void>(`/posts/${id}/replies`, {
@@ -115,6 +117,8 @@ export const CreateReply = async (id: string, data: FormData) => {
   });
 
   revalidatePath('/');
+  
+  return null;
 };
 
 export const UpdateLike = async (

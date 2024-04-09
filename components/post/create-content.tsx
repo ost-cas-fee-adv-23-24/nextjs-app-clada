@@ -11,6 +11,7 @@ import {
 } from 'clada-storybook';
 import { useRef, useState } from 'react';
 import { ImageUpload } from '../modal/image-upload';
+import { ValidationError, hasError } from '@/utils/error';
 
 export const CreateContent = ({
   post,
@@ -22,6 +23,7 @@ export const CreateContent = ({
   const [isImageUploadModalOpen, setisImageUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imgSrc, setImgSrc] = useState('');
+  const [formState, setFormState] = useState<ValidationError | null>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -38,24 +40,34 @@ export const CreateContent = ({
       const textValue = formRef.current['text'].value;
       if (textValue.trim()) {
         formData.append('text', textValue);
-      } else {
-        // sending with empty text or without text leads to internal server error 500
-        return;
       }
     }
+
+    let response: ValidationError | null;
+
     if (post) {
-      await CreateReply(post.id, formData);
+      response = await CreateReply(post.id, formData);
     } else {
-      await CreatePost(formData);
+      response = await CreatePost(formData);
+    }
+
+    handleResponse(response);
+  };
+
+  const handleResponse = (response: ValidationError | null) => {
+    if (response && hasError(response)) {
+      setFormState(response)
+      return;
     }
 
     if (formRef.current) {
       formRef.current.reset();
     }
 
+    setFormState(null)
     setImgSrc('');
     setSelectedFile(null);
-  };
+  }
 
   const uploadImage = (event?: React.MouseEvent) => {
     event?.preventDefault();
@@ -95,7 +107,12 @@ export const CreateContent = ({
         )}
 
         <div className='pt-xs'></div>
-        <Textarea id='text' name='text' placeholder={placeholder}></Textarea>
+        <Textarea
+          id='text'
+          name='text'
+          placeholder={placeholder}
+          error={formState?.errors['text'].join(' ')}
+        />
         <div className='pt-s'></div>
         <div className='flex'>
           {!imgSrc && (
