@@ -27,7 +27,7 @@ export const GetPosts = async (queryParams?: GetPostsParams) => {
     {
       method: 'GET',
       next: {
-        revalidate: 3600,
+        revalidate: 1200,
       },
     },
     queryParams
