@@ -1,7 +1,7 @@
 'use client';
 
 import { CreatePost, CreateReply } from '@/app/api/actions/post.actions';
-import { Post } from '@/utils/models';
+import { Post, PostReply } from '@/utils/models';
 import {
   Button,
   CancelIcon,
@@ -11,7 +11,7 @@ import {
 } from 'clada-storybook';
 import { useRef, useState } from 'react';
 import { ImageUpload } from '../modal/image-upload';
-import { ValidationError, hasError } from '@/utils/error';
+import { ValidationError, isError } from '@/utils/error';
 
 export const CreateContent = ({
   post,
@@ -43,7 +43,7 @@ export const CreateContent = ({
       }
     }
 
-    let response: ValidationError | null;
+    let response: Post | PostReply | ValidationError;
 
     if (post) {
       response = await CreateReply(post.id, formData);
@@ -54,8 +54,8 @@ export const CreateContent = ({
     handleResponse(response);
   };
 
-  const handleResponse = (response: ValidationError | null) => {
-    if (response && hasError(response)) {
+  const handleResponse = (response: ValidationError | any) => {
+    if (response && isError(response)) {
       setFormState(response)
       return;
     }

@@ -37,6 +37,6 @@ export const parseValidationError = (
   return { errors: obj.error.flatten().fieldErrors } as ValidationError;
 };
 
-export const hasError = (data?: ValidationError) => {
+export const isError = (data?: ValidationError) => {
   return Object.keys(data?.errors ?? {}).length > 0;
 }
