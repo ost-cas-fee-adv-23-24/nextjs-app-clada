@@ -129,4 +129,6 @@ export const UpdateLike = async (
   await httpRequest(`/posts/${id}/likes`, {
     method: !isAlreadyLikedByUser ? 'PUT' : 'DELETE',
   });
+
+  revalidatePath('/');
 };
