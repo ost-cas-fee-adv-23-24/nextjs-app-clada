@@ -33,7 +33,7 @@ test.skip('loads 10 more on page scroll to bottom', async ({ page }) => {
 test('is not in logged in state', async ({ page }) => {
   await page.goto('http://localhost:3000/');
 
-  const loginButtonIsVisible = page.getByTestId('login-button').isVisible();
+  const loginButtonIsVisible = await page.getByTestId('login-button').isVisible();
 
   expect(loginButtonIsVisible).toBeTruthy();
 });
