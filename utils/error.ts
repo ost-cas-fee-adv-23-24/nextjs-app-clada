@@ -15,6 +15,12 @@ export class InternalServerError extends Error {
   }
 }
 
+export type ValidationError = {
+  errors: {
+    [key: string]: string[]
+  }
+}
+
 export const parseValidationError = (
   obj: SafeParseReturnType<
     {
@@ -28,5 +34,9 @@ export const parseValidationError = (
   >
 ) => {
   // @ts-ignore
-  return { errors: obj.error.flatten().fieldErrors };
+  return { errors: obj.error.flatten().fieldErrors } as ValidationError;
 };
+
+export const isError = (data?: ValidationError) => {
+  return Object.keys(data?.errors ?? {}).length > 0;
+}

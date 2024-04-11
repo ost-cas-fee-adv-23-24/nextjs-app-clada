@@ -1,6 +1,5 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth';
+import { auth, signIn } from '@/app/api/auth/[...nextauth]/auth';
 import { Config } from '@/config/env';
-import { signIn } from 'next-auth/react';
 import { URL } from 'url';
 import { APIError, InternalServerError } from '../error';
 

@@ -3,8 +3,8 @@ import { GetPosts, GetPostsParams } from '@/app/api/actions/post.actions';
 import { Post, PostPaginatedResult } from '@/utils/models';
 import { useEffect, useState } from 'react';
 import { SinglePost } from '../post/single-post';
-// inspiration from https://medium.com/@ferlat.simon/infinite-scroll-with-nextjs-server-actions-a-simple-guide-76a894824cfd
 import { Config } from '@/config/env';
+// inspiration from https://medium.com/@ferlat.simon/infinite-scroll-with-nextjs-server-actions-a-simple-guide-76a894824cfd
 import { useInView } from 'react-intersection-observer';
 import PostSkeleton from '../skeleton/post-skeleton';
 
@@ -20,23 +20,20 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
   const [posts, setPosts] = useState<Post[]>(
     postsPaginatedResult?.data as Post[]
   );
-  const [offset, setOffset] = useState<number>(0);
+  
   const { ref, inView } = useInView();
   const [allPostsLoaded, setAllPostsLoaded] = useState<boolean>(false);
 
   const loadMorePosts = async () => {
     if (!allPostsLoaded) {
       const apiPosts = await GetPosts({
-        offset: offset,
+        olderThan: posts[posts.length - 1].id,
         limit: Config.defaultPageSize,
         ...queryParams,
       });
 
-      const newOffset = offset + Config.defaultOffset;
-
       setPosts([...posts, ...(apiPosts?.data as Post[])]);
-      setOffset(newOffset);
-      setAllPostsLoaded(newOffset > maxPostsCount);
+      setAllPostsLoaded(posts.length === maxPostsCount);
     }
   };
 
