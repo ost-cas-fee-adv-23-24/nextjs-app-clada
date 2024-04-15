@@ -1,4 +1,8 @@
+'use client';
+
 import { Post, PostReply } from '@/utils/models';
+import { replaceTags } from '@/utils/tags';
+import { useRouter } from 'next/navigation';
 import { InteractionStrip } from '../shared/interaction/interaction-strip';
 import { TimeDiff } from '../shared/time-diff';
 import { UserImage } from '../shared/user-image';
@@ -19,14 +23,18 @@ export const PostContent = ({
   // const user = await GetUserById(post?.creator?.id ?? '');
   // const displayedName = getName(user);
   const displayedName = post.creator.username;
+  const router = useRouter();
 
   return (
-    <div>
+    <div
+      className='hover:cursor-pointer'
+      onClick={() => router.push(`/post/${post.id}`)}
+    >
       <div className='absolute -ml-[82px] -mt-xs'>
         <UserImage border={true} url={post?.creator?.avatarUrl}></UserImage>
       </div>
       <div className='mb-xs mb-font-label-l'>{displayedName}</div>
-      <div className='flex'>
+      <div className='flex' onClick={(e) => e.stopPropagation()}>
         <div>
           <UserHandle
             name={post?.creator?.username || ''}
@@ -37,8 +45,8 @@ export const PostContent = ({
           <TimeDiff ulid={post.id}></TimeDiff>
         </div>
       </div>
-      <div className={textClasses}>
-        <a href={`/post/${post.id}`}>{post?.text}</a>
+      <div className={textClasses} onClick={(e) => e.stopPropagation()}>
+        <p dangerouslySetInnerHTML={{ __html: replaceTags(post.text)! }}></p>
       </div>
       <ZoomImage src={post?.mediaUrl}></ZoomImage>
       {post.mediaUrl && <div className='grid place-content-center'></div>}

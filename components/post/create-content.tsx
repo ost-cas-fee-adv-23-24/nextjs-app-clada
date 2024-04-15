@@ -1,6 +1,7 @@
 'use client';
 
 import { CreatePost, CreateReply } from '@/app/api/actions/post.actions';
+import { ValidationError, isError } from '@/utils/error';
 import { Post, PostReply } from '@/utils/models';
 import {
   Button,
@@ -11,7 +12,6 @@ import {
 } from 'clada-storybook';
 import { useRef, useState } from 'react';
 import { ImageUpload } from '../modal/image-upload';
-import { ValidationError, isError } from '@/utils/error';
 
 export const CreateContent = ({
   post,
@@ -56,7 +56,7 @@ export const CreateContent = ({
 
   const handleResponse = (response: ValidationError | any) => {
     if (response && isError(response)) {
-      setFormState(response)
+      setFormState(response);
       return;
     }
 
@@ -64,10 +64,10 @@ export const CreateContent = ({
       formRef.current.reset();
     }
 
-    setFormState(null)
+    setFormState(null);
     setImgSrc('');
     setSelectedFile(null);
-  }
+  };
 
   const uploadImage = (event?: React.MouseEvent) => {
     event?.preventDefault();
