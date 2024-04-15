@@ -28,8 +28,8 @@ export default async function Detail({
           </div>
 
           {replies &&
-            replies.data?.map((post: Post, index: number) => (
-              <Reply key='index' reply={post}></Reply>
+            replies.data?.map((post: Post) => (
+              <Reply key={post.id} reply={post}></Reply>
             ))}
         </div>
       )}

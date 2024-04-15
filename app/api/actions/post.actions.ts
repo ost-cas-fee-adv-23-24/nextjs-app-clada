@@ -2,15 +2,16 @@
 
 import { httpRequest } from '@/utils/api/request';
 import { validate } from '@/utils/api/validation';
-import { parseValidationError } from '@/utils/error';
+import { ValidationError, parseValidationError } from '@/utils/error';
 import {
   Post,
   PostPaginatedResult,
+  PostReply,
   ReplyPaginatedResult,
 } from '@/utils/models';
 import { revalidatePath } from 'next/cache';
 
-type GetPostsParams = {
+export type GetPostsParams = {
   newerThan?: string;
   olderThan?: string;
   text?: string;
@@ -27,7 +28,7 @@ export const GetPosts = async (queryParams?: GetPostsParams) => {
     {
       method: 'GET',
       next: {
-        revalidate: 3600,
+        revalidate: 1200,
       },
     },
     queryParams
@@ -55,19 +56,21 @@ export const GetPostReplies = async (id: string) => {
   return response;
 };
 
-export const CreatePost = async (data: FormData) => {
+export const CreatePost = async (data: FormData): Promise<Post | ValidationError> => {
   const validation = validate(data);
 
   if (!validation.success) {
-    return Promise.reject(parseValidationError(validation));
+    return parseValidationError(validation);
   }
 
-  await httpRequest<void>('/posts', {
+  const post = await httpRequest<Post>('/posts', {
     method: 'POST',
     body: data,
   });
 
   revalidatePath('/', 'page');
+
+  return post as Post;
 };
 
 export const UpdatePost = async (id: string, data: FormData) => {
@@ -102,19 +105,21 @@ export const DeletePost = async (id: string) => {
   });
 };
 
-export const CreateReply = async (id: string, data: FormData) => {
+export const CreateReply = async (id: string, data: FormData): Promise<PostReply | ValidationError> => {
   const validation = validate(data);
 
   if (!validation.success) {
-    return Promise.reject(parseValidationError(validation));
+    return parseValidationError(validation);
   }
 
-  await httpRequest<void>(`/posts/${id}/replies`, {
+  const reply = await httpRequest<PostReply>(`/posts/${id}/replies`, {
     method: 'POST',
     body: data,
   });
 
   revalidatePath('/');
+  
+  return reply as PostReply;
 };
 
 export const UpdateLike = async (
@@ -124,4 +129,6 @@ export const UpdateLike = async (
   await httpRequest(`/posts/${id}/likes`, {
     method: !isAlreadyLikedByUser ? 'PUT' : 'DELETE',
   });
+
+  revalidatePath('/');
 };

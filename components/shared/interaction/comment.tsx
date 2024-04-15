@@ -15,7 +15,7 @@ export const Comment = ({ post }: { post: Post }) => {
     <Link href={`/post/${post.id}`}>
       <CommentButton
         count={post.replies ?? 0}
-        hasCommented={false}
+        hasCommented={!!post?.replies}
         labels={commentLabels}
         onClick={() => false}
       ></CommentButton>
