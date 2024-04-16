@@ -24,8 +24,6 @@ export const HeaderUserActions = async () => {
 
   const user = await GetUserById(session?.user?.id);
 
-  console.log('USO', user);
-
   return (
     <div className='ml-auto flex pt-xxs'>
       <Link href={'/user/' + user?.id}>

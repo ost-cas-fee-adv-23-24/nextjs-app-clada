@@ -16,11 +16,9 @@ export const SettingsModal = ({ user }: { user: User }) => {
 
     if(formRef.current) {
       const data = new FormData(formRef.current);
-      console.log(data.get('username'))
-
-      console.log(JSON.stringify(data))
-
       const response = await UpdateUser(data);
+
+      console.log(response)
 
       if(response && isError(response)) {
         setFormState(response)
@@ -53,7 +51,7 @@ export const SettingsModal = ({ user }: { user: User }) => {
             type='text'
             label='Name'
             defaultValue={user.lastname}
-            error={formState?.errors['lastname'].join(' ')}
+            error={formState?.errors['lastname']?.join(' ')}
           ></Input>
           <div className='pb-l'></div>
           <Input
@@ -62,7 +60,7 @@ export const SettingsModal = ({ user }: { user: User }) => {
             type='text'
             label='Vorname'
             defaultValue={user.firstname}
-            error={formState?.errors['firstname'].join(' ')}
+            error={formState?.errors['firstname']?.join(' ')}
           ></Input>
           <div className='pb-l'></div>
           <Input
@@ -71,7 +69,7 @@ export const SettingsModal = ({ user }: { user: User }) => {
             type='text'
             label='Benutzername'
             defaultValue={user.username}
-            error={formState?.errors['username'].join(' ')}
+            error={formState?.errors['username']?.join(' ')}
           ></Input>
         </form>
       </Modal>

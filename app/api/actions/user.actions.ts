@@ -1,9 +1,9 @@
 'use server';
 
 import { httpRequest } from '@/utils/api/request';
-import { validateUser } from '@/utils/api/validation';
+import { validateUser, validateUserAvatar } from '@/utils/api/validation';
 import { schemaUser } from '@/utils/api/validation.schema';
-import {parseValidationError, ValidationError} from '@/utils/error';
+import { parseValidationError, ValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
@@ -36,7 +36,7 @@ export const GetUserById = async (id?: string): Promise<User | undefined> => {
 };
 
 export const GetUserFollowers = async (
-  id: string
+  id: string,
 ): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>(
     `/users/${id}/followers`,
@@ -45,7 +45,7 @@ export const GetUserFollowers = async (
       next: {
         revalidate: 300,
       },
-    }
+    },
   );
 
   if (!response) {
@@ -56,7 +56,7 @@ export const GetUserFollowers = async (
 };
 
 export const GetUserFollowees = async (
-  id: string
+  id: string,
 ): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>(
     `/users/${id}/followees`,
@@ -65,7 +65,7 @@ export const GetUserFollowees = async (
       next: {
         revalidate: 300,
       },
-    }
+    },
   );
 
   if (!response) {
@@ -84,11 +84,11 @@ export const DeleteUserAvatar = async (): Promise<void> => {
 };
 
 export const UpdateUserAvatar = async (data: FormData) => {
-  // const validation = validateUser(data);
+  const validation = validateUserAvatar(data);
 
-  // if (!validation.success) {
-  //   return Promise.reject(parseValidationError(validation));
-  // }
+  if (!validation.success) {
+    return Promise.reject(parseValidationError(validation));
+  }
 
   await httpRequest<void>('/users/avatar', {
     method: 'PUT',
@@ -99,26 +99,25 @@ export const UpdateUserAvatar = async (data: FormData) => {
 };
 
 export const UpdateUser = async (
-  data: UpdateUserData
+  data: UpdateUserData,
 ): Promise<void | ValidationError> => {
-  console.log('DADA', data.get('username'));
   const validation = validateUser(data);
 
   if (!validation.success) {
-    return validation.error.flatten().fieldErrors as ValidationError
+    return parseValidationError(validation);
   }
 
-  const res = await httpRequest('/users', {
+  await httpRequest('/users', {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: data,
+    body: JSON.stringify({
+      firstname: data.get('firstname') as string,
+      lastname: data.get('lastname') as string,
+      username: data.get('username') as string,
+    }),
   });
-
-  console.log('RES', res)
-
-  // todo: check if needs revalidation
 };
 
 export const FollowUser = async (id: string) => {

@@ -16,6 +16,15 @@ export const schemaMumble = z.object({
     .optional(),
 });
 
+export const schemaUserAvatar = z.object({
+  media: z
+    .instanceof(File)
+    .refine((file) => file.size < maxFileSize, {
+      message: 'Bild ist zu gross. (max: 5mb)',
+    })
+    .optional()
+})
+
 export const schemaUser = z.object({
   firstname: z
     .string({
