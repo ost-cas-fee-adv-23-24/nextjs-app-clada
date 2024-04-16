@@ -1,30 +1,28 @@
 'use client';
 
 import { UpdateUser } from '@/app/api/actions/user.actions';
-import {  User } from '@/utils/models';
+import { ValidationError, isError } from '@/utils/error';
+import { User } from '@/utils/models';
 import { Input, Modal, SettingsIcon } from 'clada-storybook';
 import { useRef, useState } from 'react';
-import {isError, ValidationError} from "@/utils/error";
 
 export const SettingsModal = ({ user }: { user: User }) => {
   const [isOpen, setIsOpen] = useState(false);
   let formRef = useRef<HTMLFormElement>(null);
-  const [formState, setFormState] =
-    useState<ValidationError | null>();
+  const [formState, setFormState] = useState<ValidationError | null>();
 
   const formAction = async (d: FormData) => {
-
-    if(formRef.current) {
+    if (formRef.current) {
       const data = new FormData(formRef.current);
       const response = await UpdateUser(data);
 
-      console.log(response)
+      console.log(response);
 
-      if(response && isError(response)) {
-        setFormState(response)
+      if (response && isError(response)) {
+        setFormState(response);
       } else {
-        setFormState(null)
-        setIsOpen(false)
+        setFormState(null);
+        setIsOpen(false);
       }
     }
   };

@@ -1,5 +1,9 @@
 import { UpdateUserData } from '../models';
-import { schemaMumble, schemaUser, schemaUserAvatar } from './validation.schema';
+import {
+  schemaMumble,
+  schemaUser,
+  schemaUserAvatar,
+} from './validation.schema';
 
 export const validate = (formData: FormData) => {
   const media = formData.get('media');
@@ -22,4 +26,4 @@ export const validateUserAvatar = (data: FormData) => {
   }
   const formValues = Object.fromEntries(data.entries());
   return schemaUserAvatar.safeParse(formValues);
-}
+};

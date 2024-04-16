@@ -56,7 +56,9 @@ export const GetPostReplies = async (id: string) => {
   return response;
 };
 
-export const CreatePost = async (data: FormData): Promise<Post | ValidationError> => {
+export const CreatePost = async (
+  data: FormData
+): Promise<Post | ValidationError> => {
   const validation = validate(data);
 
   if (!validation.success) {
@@ -105,7 +107,10 @@ export const DeletePost = async (id: string) => {
   });
 };
 
-export const CreateReply = async (id: string, data: FormData): Promise<PostReply | ValidationError> => {
+export const CreateReply = async (
+  id: string,
+  data: FormData
+): Promise<PostReply | ValidationError> => {
   const validation = validate(data);
 
   if (!validation.success) {
@@ -118,7 +123,7 @@ export const CreateReply = async (id: string, data: FormData): Promise<PostReply
   });
 
   revalidatePath('/');
-  
+
   return reply as PostReply;
 };
 

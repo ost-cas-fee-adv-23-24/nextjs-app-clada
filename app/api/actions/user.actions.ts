@@ -2,8 +2,7 @@
 
 import { httpRequest } from '@/utils/api/request';
 import { validateUser, validateUserAvatar } from '@/utils/api/validation';
-import { schemaUser } from '@/utils/api/validation.schema';
-import { parseValidationError, ValidationError } from '@/utils/error';
+import { ValidationError, parseValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
@@ -36,7 +35,7 @@ export const GetUserById = async (id?: string): Promise<User | undefined> => {
 };
 
 export const GetUserFollowers = async (
-  id: string,
+  id: string
 ): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>(
     `/users/${id}/followers`,
@@ -45,7 +44,7 @@ export const GetUserFollowers = async (
       next: {
         revalidate: 300,
       },
-    },
+    }
   );
 
   if (!response) {
@@ -56,7 +55,7 @@ export const GetUserFollowers = async (
 };
 
 export const GetUserFollowees = async (
-  id: string,
+  id: string
 ): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>(
     `/users/${id}/followees`,
@@ -65,7 +64,7 @@ export const GetUserFollowees = async (
       next: {
         revalidate: 300,
       },
-    },
+    }
   );
 
   if (!response) {
@@ -99,7 +98,7 @@ export const UpdateUserAvatar = async (data: FormData) => {
 };
 
 export const UpdateUser = async (
-  data: UpdateUserData,
+  data: UpdateUserData
 ): Promise<void | ValidationError> => {
   const validation = validateUser(data);
 

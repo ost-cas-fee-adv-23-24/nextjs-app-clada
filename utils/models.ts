@@ -261,7 +261,7 @@ export interface UpdatePostData {
 }
 
 /** Model to update user data. */
-export interface UpdateUserData extends FormData{
+export interface UpdateUserData extends FormData {
   /** If set, updates the firstname of the profile. */
   firstname?: string | undefined;
   /** If set, updates the lastname of the profile. */

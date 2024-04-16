@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import { GetUserById } from '@/app/api/actions/user.actions';
 import { auth } from '@/auth';

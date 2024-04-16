@@ -22,8 +22,8 @@ export const schemaUserAvatar = z.object({
     .refine((file) => file.size < maxFileSize, {
       message: 'Bild ist zu gross. (max: 5mb)',
     })
-    .optional()
-})
+    .optional(),
+});
 
 export const schemaUser = z.object({
   firstname: z
