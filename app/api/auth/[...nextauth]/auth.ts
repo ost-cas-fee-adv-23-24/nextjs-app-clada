@@ -15,6 +15,7 @@ declare module 'next-auth' {
 export const {
   handlers: { GET, POST },
   auth,
+    signIn
 } = NextAuth({
   trustHost: true,
   providers: [
@@ -41,8 +42,6 @@ export const {
         if (account) {
           (token.user as any).id = account.providerAccountId;
         }
-
-        console.log('ACC:', account?.providerAccountId);
       }
 
       if (account) {

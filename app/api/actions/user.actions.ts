@@ -3,7 +3,7 @@
 import { httpRequest } from '@/utils/api/request';
 import { validateUser } from '@/utils/api/validation';
 import { schemaUser } from '@/utils/api/validation.schema';
-import { parseValidationError } from '@/utils/error';
+import {parseValidationError, ValidationError} from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
@@ -84,11 +84,11 @@ export const DeleteUserAvatar = async (): Promise<void> => {
 };
 
 export const UpdateUserAvatar = async (data: FormData) => {
-  const validation = validateUser(data);
+  // const validation = validateUser(data);
 
-  if (!validation.success) {
-    return Promise.reject(parseValidationError(validation));
-  }
+  // if (!validation.success) {
+  //   return Promise.reject(parseValidationError(validation));
+  // }
 
   await httpRequest<void>('/users/avatar', {
     method: 'PUT',
@@ -100,18 +100,23 @@ export const UpdateUserAvatar = async (data: FormData) => {
 
 export const UpdateUser = async (
   data: UpdateUserData
-): Promise<void | { errors: any }> => {
-  console.log(JSON.stringify(data));
-  const validation = schemaUser.safeParse(data);
+): Promise<void | ValidationError> => {
+  console.log('DADA', data.get('username'));
+  const validation = validateUser(data);
 
   if (!validation.success) {
-    return Promise.reject(parseValidationError(validation));
+    return validation.error.flatten().fieldErrors as ValidationError
   }
 
-  await httpRequest('/users', {
+  const res = await httpRequest('/users', {
     method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: data,
   });
+
+  console.log('RES', res)
 
   // todo: check if needs revalidation
 };

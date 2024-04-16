@@ -1,44 +1,34 @@
 'use client';
 
 import { UpdateUser } from '@/app/api/actions/user.actions';
-import { UpdateUserData, User } from '@/utils/models';
+import {  User } from '@/utils/models';
 import { Input, Modal, SettingsIcon } from 'clada-storybook';
-import { FormEvent, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import {isError, ValidationError} from "@/utils/error";
 
 export const SettingsModal = ({ user }: { user: User }) => {
   const [isOpen, setIsOpen] = useState(false);
   let formRef = useRef<HTMLFormElement>(null);
   const [formState, setFormState] =
-    useState<Awaited<ReturnType<typeof UpdateUser>>>();
+    useState<ValidationError | null>();
 
-  const formAction = async (event: FormData) => {
-    // event.preventDefault();
-
-    // console.log(new FormData())
-
-    // console.log(new FormData(event.target as HTMLFormElemen))
+  const formAction = async (d: FormData) => {
 
     if(formRef.current) {
-      const data = new FormData(formRef.current)
+      const data = new FormData(formRef.current);
       console.log(data.get('username'))
+
+      console.log(JSON.stringify(data))
+
+      const response = await UpdateUser(data);
+
+      if(response && isError(response)) {
+        setFormState(response)
+      } else {
+        setFormState(null)
+        setIsOpen(false)
+      }
     }
-
-    console.log(formRef.current)
-    console.log(event);
-
-    // if (user) {
-    //   const result = await UpdateUser({
-    //     firstname: formData.get('firstname') as string,
-    //     lastname: formData.get('lastname') as string,
-    //     username: formData.get('username') as string,
-    //   } as UpdateUserData);
-
-    //   setFormState(result);
-
-    //   if (!result?.errors) {
-    //     setIsOpen(false);
-    //   }
-    // }
   };
 
   return (
@@ -58,27 +48,30 @@ export const SettingsModal = ({ user }: { user: User }) => {
       >
         <form ref={formRef} action={formAction}>
           <Input
-            id='name'
+            id='lastname'
+            name='lastname'
             type='text'
             label='Name'
             defaultValue={user.lastname}
-            error={formState?.errors?.lastname?.[0]}
+            error={formState?.errors['lastname'].join(' ')}
           ></Input>
           <div className='pb-l'></div>
           <Input
             id='firstname'
+            name='firstname'
             type='text'
             label='Vorname'
             defaultValue={user.firstname}
-            error={formState?.errors?.firstname?.[0]}
+            error={formState?.errors['firstname'].join(' ')}
           ></Input>
           <div className='pb-l'></div>
           <Input
             id='username'
+            name='username'
             type='text'
             label='Benutzername'
             defaultValue={user.username}
-            error={formState?.errors?.username?.[0]}
+            error={formState?.errors['username'].join(' ')}
           ></Input>
         </form>
       </Modal>
