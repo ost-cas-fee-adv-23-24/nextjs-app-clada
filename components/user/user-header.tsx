@@ -1,49 +1,65 @@
 import { GetUserById } from '@/app/api/actions/user.actions';
-import { Post } from '@/utils/models';
+import { Post, PrivateUser, User } from '@/utils/models';
 import { useEffect, useState } from 'react';
 import { TimeDiff } from '../shared/time-diff';
 import { UserImage } from '../shared/user-image';
 import { UserHandle } from './user-handle';
-import { getName } from './user-utils';
+import { UserName } from './user-name';
 
 export const UserHeader = ({
   post,
+  currentUserId,
+  useCurrentUser = false,
   showTime = false,
+  useLarge = false,
 }: {
   post: Post;
+  currentUserId?: string;
+  useCurrentUser?: boolean;
   showTime?: boolean;
+  useLarge?: boolean;
 }) => {
-  const [displayedName, setDisplayedName] = useState('Loading...');
+  const [user, setUser] = useState<User | PrivateUser | undefined>(
+    !useCurrentUser ? post.creator : undefined
+  );
 
   useEffect(() => {
-    if (post?.creator?.id) {
-      GetUserById(post.creator.id)
+    if (currentUserId || (!useCurrentUser && post?.creator?.id)) {
+      GetUserById(
+        !useCurrentUser ? post.creator.id : currentUserId ? currentUserId : ''
+      )
         .then((user) => {
-          setDisplayedName(getName(user));
+          setUser(user);
         })
         .catch((error) => {
           console.error('Failed to fetch user', error);
-          setDisplayedName('Unknown User');
         });
     }
-  }, [post?.creator?.id]);
+  }, [currentUserId, post?.creator?.id]);
 
   return (
-    <div className='flex'>
-      <div className='mr-xs'>
-        <UserImage size='s' border={false} url={post?.creator?.avatarUrl} />
-      </div>
-      <div>
-        <div className='mb-xs mb-font-label-m'>{displayedName}</div>
+    <div className='min-h-[44px]'>
+      {user && (
         <div className='flex'>
-          <UserHandle name={post.creator.username} id={post.creator.id} />
-        </div>
-        {showTime && (
-          <div className='ml-s'>
-            <TimeDiff ulid={post.id}></TimeDiff>
+          {!useLarge && (
+            <div className='mr-xs'>
+              <UserImage size='s' border={false} url={user.avatarUrl} />
+            </div>
+          )}
+          <div>
+            <UserName user={user} useLarge={useLarge}></UserName>
+            <div className='flex'>
+              <UserHandle name={user.username} id={user.id} />
+
+              {showTime && (
+                <div className='ml-s'>
+                  <TimeDiff ulid={post.id}></TimeDiff>
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

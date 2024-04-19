@@ -4,6 +4,7 @@ import { httpRequest } from '@/utils/api/request';
 import { validate } from '@/utils/api/validation';
 import { parseValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
+import { revalidatePath } from 'next/cache';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>('/users', {
@@ -117,9 +118,9 @@ export const followUser = async (id: string) => {
 };
 
 export const unfollowUser = async (id: string) => {
-  await httpRequest(`/users/${id}/followers`, {
-    method: 'PUT',
+  await httpRequest<void>(`/users/${id}/followers`, {
+    method: 'DELETE',
   });
 
-  // todo: check if needs revalidation
+  revalidatePath('/');
 };

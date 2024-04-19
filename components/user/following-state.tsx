@@ -1,21 +1,45 @@
 'use client';
 
+import { followUser, unfollowUser } from '@/app/api/actions/user.actions';
 import { User } from '@/utils/models';
 import { Button, CancelIcon } from 'clada-storybook';
+import { useState } from 'react';
 
-export const FollowingState = ({ user }: { user: User }) => {
+export const FollowingState = ({
+  user,
+  isFollowingUser,
+}: {
+  user: User;
+  isFollowingUser: boolean;
+}) => {
+  const [isFollowing, setIsFollowing] = useState(isFollowingUser);
+
+  const toggleFollowing = () => {
+    if (isFollowing) {
+      unfollowUser(user.id).then(() => setIsFollowing(false));
+    } else {
+      followUser(user.id).then(() => setIsFollowing(true));
+    }
+
+    setIsFollowing(!isFollowing);
+  };
+
   return (
     <div className='flex justify-end gap-s'>
       <div className='self-center text-base-400'>
-        Du folgst {user.firstname} {user.lastname}
+        {isFollowing && (
+          <span>
+            Du folgst {user.firstname} {user.lastname}
+          </span>
+        )}
       </div>
       <div className='flex shrink'>
         <Button
           size='m'
           color='base'
-          onClick={() => ''}
-          label='Unfollow'
-          Icon={CancelIcon}
+          onClick={toggleFollowing}
+          label={isFollowing ? 'Unfollow' : 'Follow'}
+          Icon={isFollowing ? CancelIcon : undefined}
         ></Button>
       </div>
     </div>

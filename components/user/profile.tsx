@@ -68,10 +68,10 @@ export const Profile = ({
       <div className='flex gap-xs'>
         <UserHandle name={user.username} id={user.id}></UserHandle>
         <Location name='fake location'></Location>
-        <TimeDiff ulid={user.id} text='Mitglied seit '></TimeDiff>
+        {user.id && <TimeDiff ulid={user.id} text='Mitglied seit '></TimeDiff>}
       </div>
       <div className='pt-s'></div>
-      <div className='text-base-400'>
+      <div className='text-base-400 mb-font-paragraph-m'>
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
         voluptua. At vero eos et accusam et justo duo dolores et ea rebum.

@@ -3,7 +3,6 @@
 import { UpdateLike } from '@/app/api/actions/post.actions';
 import { Post } from '@/utils/models';
 import { LikeButton } from 'clada-storybook';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 const likeLabels = {
@@ -13,12 +12,9 @@ const likeLabels = {
   plural: 'Likes',
 };
 
-export const Like = ({ post }: { post: Post }) => {
+export const Like = ({ post, disabled }: { post: Post; disabled: boolean }) => {
   const [likes, setLikes] = useState(post.likes ?? 0);
   const [likedBySelf, setLikedBySelf] = useState(post.likedBySelf ?? false);
-
-  const { data: session, status } = useSession();
-  const isButtonDisabled = status !== 'authenticated';
 
   const like = async () => {
     setLikedBySelf(!likedBySelf);
@@ -36,7 +32,7 @@ export const Like = ({ post }: { post: Post }) => {
     <LikeButton
       count={likes}
       labels={likeLabels}
-      isDisabled={isButtonDisabled}
+      isDisabled={disabled}
       isAlreadyLiked={likedBySelf}
       onClick={like}
     ></LikeButton>
