@@ -57,7 +57,8 @@ const processSlug = (slug: string, queryParams?: SearchParams) => {
 export const httpRequest = async <T>(
   slug: string,
   init?: RequestInit,
-  queryParams?: SearchParams | any
+  queryParams?: SearchParams | any,
+  parseResponse: boolean = true
 ) => {
   const authHeader = await getAuthHeader();
   const processedUrl = processSlug(slug, queryParams).toString();
@@ -77,10 +78,13 @@ export const httpRequest = async <T>(
     handleRequestError(res);
   }
 
-  const text = await res.text();
-  if (!text) {
-    return null;
-  }
+  if (parseResponse) {
+    const text = await res.text();
+    if (!text) {
+      return null;
+    }
 
-  return JSON.parse(text) as T;
+    return JSON.parse(text) as T;
+  }
+  return null;
 };

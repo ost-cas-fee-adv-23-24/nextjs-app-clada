@@ -79,19 +79,25 @@ export const deleteUserAvatar = async (): Promise<void> => {
   // todo: check if needs revalidation
 };
 
-export const updateUserAvatar = async (data: FormData) => {
+export const updateUserAvatar = async (data: FormData, path: string) => {
   const validation = validate(data);
 
   if (!validation.success) {
     return Promise.reject(parseValidationError(validation));
   }
 
-  await httpRequest<void>('/users/avatar', {
-    method: 'PUT',
-    body: data,
-  });
+  await httpRequest<void>(
+    '/users/avatar',
+    {
+      method: 'PUT',
+      body: data,
+    },
+    undefined,
+    false
+  );
 
-  // todo: check if needs revalidation
+  revalidatePath(path);
+  revalidatePath('/');
 };
 
 export const updateUser = async (data: UpdateUserData) => {
