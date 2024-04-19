@@ -1,7 +1,4 @@
-'use client';
-import { GetUserById } from '@/app/api/actions/user.actions';
-import { Post, User } from '@/utils/models';
-import { useEffect, useState } from 'react';
+import { Post } from '@/utils/models';
 import { InteractionStrip } from '../shared/interaction/interaction-strip';
 import { UserImage } from '../shared/user-image';
 import ZoomImage from '../shared/zoom-image';
@@ -10,20 +7,6 @@ import { UserHeader } from '../user/user-header';
 export const PostContent = ({ post, size }: { post: Post; size?: 'large' }) => {
   // TODO: refactor to use classnames npm package
   const textClasses = `mt-s text-black ${size === 'large' && 'text-[20px] tracking-normal leading-relaxed'}`;
-
-  const [user, setUser] = useState<User | undefined>(undefined);
-
-  useEffect(() => {
-    if (post?.creator?.id) {
-      GetUserById(post.creator.id)
-        .then((user) => {
-          setUser(user);
-        })
-        .catch((error) => {
-          console.error('Failed to fetch user', error);
-        });
-    }
-  }, [post?.creator?.id]);
 
   return (
     <div>

@@ -1,3 +1,4 @@
+'use client';
 import { PrivateUser, User } from '@/utils/models';
 import { useEffect, useState } from 'react';
 import { getName } from './user-utils';
@@ -15,13 +16,7 @@ export const UserName = ({
     setDisplayedName(getName(user));
   }, [user]);
 
-  return (
-    <div>
-      {useLarge ? (
-        <div className='mb-xs mb-font-label-l'>{displayedName}</div>
-      ) : (
-        <div className='mb-xs mb-font-label-m'>{displayedName}</div>
-      )}
-    </div>
-  );
+  const className = `mb-xs ${useLarge ? 'mb-font-label-l' : 'mb-font-label-m'}`;
+
+  return <div className={className}>{displayedName}</div>;
 };
