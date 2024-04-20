@@ -2,6 +2,7 @@
 
 import { getTimeDifferenceInMinutes } from '@/utils/utils';
 import { IconButton, TimeIcon } from 'clada-storybook';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
@@ -46,7 +47,12 @@ export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
   return (
     <div>
       {timeDiff && (
-        <IconButton Icon={TimeIcon} href='#' variant='base'>
+        <IconButton
+          Icon={TimeIcon}
+          href={`/post/${ulid}`}
+          variant='base'
+          linkComponent={Link}
+        >
           {(text ? text : intro) + timeDiff}
         </IconButton>
       )}

@@ -69,7 +69,7 @@ export const Profile = ({
       <div className='pt-xs'></div>
       <div className='flex gap-xs'>
         <UserHandle name={user.username} id={user.id}></UserHandle>
-        <Location name='fake location'></Location>
+        <Location name='Rapperswil'></Location>
         {user.id && (
           <TimeDiff
             ulid={fakeULID ?? user.id.slice(0, 1)}
