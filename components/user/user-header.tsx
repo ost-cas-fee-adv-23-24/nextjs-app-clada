@@ -29,7 +29,7 @@ const UserInfoDisplay = ({
         <UserHandle name={user.username} id={user.id} />
         {showTime && (
           <div className='ml-s'>
-            <TimeDiff ulid={postId}></TimeDiff>
+            <TimeDiff ulid={postId} href={`/post/${postId}`}></TimeDiff>
           </div>
         )}
       </div>

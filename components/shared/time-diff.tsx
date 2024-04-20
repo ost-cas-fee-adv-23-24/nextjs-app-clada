@@ -5,7 +5,15 @@ import { IconButton, TimeIcon } from 'clada-storybook';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
+export const TimeDiff = ({
+  ulid,
+  href,
+  text,
+}: {
+  ulid: string;
+  href: string;
+  text?: string;
+}) => {
   const [timeDiff, setTimeDiff] = useState('');
   const [intro, setIntro] = useState('vor ');
 
@@ -49,7 +57,7 @@ export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
       {timeDiff && (
         <IconButton
           Icon={TimeIcon}
-          href={`/post/${ulid}`}
+          href={href}
           variant='base'
           linkComponent={Link}
         >

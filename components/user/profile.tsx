@@ -74,6 +74,7 @@ export const Profile = ({
           <TimeDiff
             ulid={fakeULID ?? user.id.slice(0, 1)}
             text='Mitglied seit '
+            href={`/user/${user.id}`}
           ></TimeDiff>
         )}
       </div>
