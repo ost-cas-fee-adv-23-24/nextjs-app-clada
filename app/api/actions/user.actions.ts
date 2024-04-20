@@ -4,6 +4,7 @@ import { httpRequest } from '@/utils/api/request';
 import { validateUser, validateUserAvatar } from '@/utils/api/validation';
 import { ValidationError, parseValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
+import { revalidatePath } from 'next/cache';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>('/users', {
@@ -25,7 +26,7 @@ export const GetUserById = async (id?: string): Promise<User | undefined> => {
   const response = await httpRequest<User>(`/users/${id}`, {
     method: 'GET',
     next: {
-      revalidate: 3600,
+      revalidate: 60,
     },
   });
 
@@ -106,7 +107,7 @@ export const UpdateUser = async (
     return parseValidationError(validation);
   }
 
-  await httpRequest('/users', {
+  const user = await httpRequest('/users', {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -117,6 +118,9 @@ export const UpdateUser = async (
       username: data.get('username') as string,
     }),
   });
+
+  revalidatePath('/user/[id]', 'layout')
+  revalidatePath('/', 'layout')
 };
 
 export const FollowUser = async (id: string) => {
