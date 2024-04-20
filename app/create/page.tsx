@@ -1,6 +1,6 @@
 import { CreatePost } from '@/components/post/create-post';
 import { Profile } from '@/components/user/profile';
-import { RecommendedUsers } from '@/components/user/recommended-users';
+import { UserList } from '@/components/user/user-list';
 import { User } from '@/utils/models';
 import {
   GetUserById,
@@ -31,11 +31,6 @@ export default async function Home() {
     ? (await GetUserFollowees(user?.id)).data
     : [];
 
-  // keep showing following state for users for debugging
-  /*   const recommendedUsers = users.filter(
-    (x) => x.id !== user.id && !followees.find((y) => y.id === x.id)
-  ); */
-
   return (
     <div>
       <div className='pt-m'></div>
@@ -51,7 +46,11 @@ export default async function Home() {
       ></CreatePost>
 
       <div className='pt-s'></div>
-      <RecommendedUsers users={users} followees={followees}></RecommendedUsers>
+      <UserList
+        users={users}
+        followees={followees}
+        title='Empfohlene User'
+      ></UserList>
       <div className='pt-s'></div>
     </div>
   );

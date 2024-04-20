@@ -1,11 +1,10 @@
 'use client';
 
 import { GetPosts, GetPostsParams } from '@/app/api/actions/post.actions';
-import { GetUserFollowees, GetUsers } from '@/app/api/actions/user.actions';
 import PostList from '@/components/post-list/post-list';
-import { RecommendedUsers } from '@/components/user/recommended-users';
+import { Friends } from '@/components/user/friends';
 import { Config } from '@/config/env';
-import { PostPaginatedResult, User } from '@/utils/models';
+import { PostPaginatedResult } from '@/utils/models';
 import { Tabs } from 'clada-storybook';
 import { useState } from 'react';
 import { UserPageSection } from './const';
@@ -19,7 +18,7 @@ type Props = {
 
 type QueryParam = (GetPostsParams & Omit<GetPostsParams, 'offset'>) | undefined;
 
-export const UserDashboardPosts = ({
+export const UserDashboard = ({
   userId,
   isPersonalUser,
   postsPaginatedResult,
@@ -31,8 +30,6 @@ export const UserDashboardPosts = ({
     useState<QueryParam>(queryParams);
 
   const [showFriends, setShowFriends] = useState(false);
-  const [users, setUsers] = useState<Array<User>>([]);
-  const [followees, setFollowees] = useState<Array<User>>([]);
 
   const onSectionChange = async (section: UserPageSection) => {
     const temporaryQueryParam: QueryParam = {};
@@ -47,7 +44,9 @@ export const UserDashboardPosts = ({
         handleSearch(temporaryQueryParam);
         break;
       case UserPageSection.Friends:
-        handleFriends();
+        if (!showFriends) {
+          setShowFriends(true);
+        }
         break;
     }
   };
@@ -64,21 +63,6 @@ export const UserDashboardPosts = ({
 
     if (showFriends) {
       setShowFriends(false);
-    }
-  };
-
-  const handleFriends = async () => {
-    const loadedUsers = (await GetUsers()).data
-      .filter((x) => x.id !== userId)
-      .slice(-6);
-
-    setUsers(loadedUsers as Array<User>);
-
-    const loadedFollowees = userId ? (await GetUserFollowees(userId)).data : [];
-    setFollowees(loadedFollowees);
-
-    if (!showFriends) {
-      setShowFriends(true);
     }
   };
 
@@ -106,13 +90,8 @@ export const UserDashboardPosts = ({
         </>
       )}
       {isPersonalUser && showFriends ? (
-        <div>
-          <div className='pt-s'></div>
-          <RecommendedUsers
-            users={users}
-            followees={followees}
-          ></RecommendedUsers>
-          <div className='pt-s'></div>
+        <div className='min-h-[680px]'>
+          <Friends userId={userId}></Friends>
         </div>
       ) : (
         <PostList
