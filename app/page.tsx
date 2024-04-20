@@ -4,7 +4,7 @@ import HomepagePostsWrapper from './_home-posts-wrapper';
 
 export default function Home() {
   return (
-    <section>
+    <section className='w-full'>
       <h1 className='text-primary-600 mb-font-h2'>Willkommen bei Mumble!</h1>
       <h2 className='text-base-500 mb-font-h4'>
         Das Vögelchen zwitschert nicht mehr wie bis anhin. Was sagst du uns

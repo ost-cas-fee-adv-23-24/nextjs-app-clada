@@ -1,21 +1,9 @@
-import { z } from 'zod';
-
-// max file size 5mb
-const maxFileSize = 5242880;
-
-export const schema = z.object({
-  text: z
-    .string({
-      required_error: 'Text darf nicht leer sein.',
-    })
-    .min(1, { message: 'Text darf nicht leer sein.' }),
-  media: z
-    .instanceof(File)
-    .refine((file) => file.size < maxFileSize, {
-      message: 'Bild ist zu gross. (max: 5mb)',
-    })
-    .optional(),
-});
+import { UpdateUserData } from '../models';
+import {
+  schemaMumble,
+  schemaUser,
+  schemaUserAvatar,
+} from './validation.schema';
 
 export const validate = (formData: FormData) => {
   const media = formData.get('media');
@@ -23,5 +11,19 @@ export const validate = (formData: FormData) => {
     formData.delete('media');
   }
   const formValues = Object.fromEntries(formData.entries());
-  return schema.safeParse(formValues);
+  return schemaMumble.safeParse(formValues);
+};
+
+export const validateUser = (data: UpdateUserData) => {
+  const formValues = Object.fromEntries(data.entries());
+  return schemaUser.safeParse(formValues);
+};
+
+export const validateUserAvatar = (data: FormData) => {
+  const media = data.get('media');
+  if (media instanceof File && media.size === 0) {
+    data.delete('media');
+  }
+  const formValues = Object.fromEntries(data.entries());
+  return schemaUserAvatar.safeParse(formValues);
 };

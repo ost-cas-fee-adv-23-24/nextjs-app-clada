@@ -111,7 +111,7 @@ export const CreateContent = ({
           id='text'
           name='text'
           placeholder={placeholder}
-          error={formState?.errors['text'].join(' ')}
+          error={formState?.errors['text']?.join(' ')}
         />
         <div className='pt-s'></div>
         <div className='flex'>

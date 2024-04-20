@@ -1,6 +1,7 @@
 import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
 import { FollowingState } from '@/components/user/following-state';
 import { Profile } from '@/components/user/profile';
+import { User } from '@/utils/models';
 import { Suspense } from 'react';
 import {
   GetUserById,
@@ -24,13 +25,13 @@ export default async function Home({ params }: { params: { id: string } }) {
     (followers) => session?.user?.id && followers.id === session?.user?.id
   );
 
-  const isPersonalUser = session?.user?.id === user.id;
+  const isPersonalUser = session?.user?.id === user?.id;
 
   return (
     <div>
       <div className='pt-m'></div>
 
-      <Profile user={user} editable={isPersonalUser} imgUrl={fakeSrc}></Profile>
+      <Profile user={user as  } editable={isPersonalUser} imgUrl={fakeSrc}></Profile>
 
       <div className='pt-l'></div>
       {!isPersonalUser && (
@@ -44,7 +45,10 @@ export default async function Home({ params }: { params: { id: string } }) {
       )}
 
       <Suspense fallback={<PostSkeletonList count={10} />}>
-        <UserPostsSuspense isPersonalUser={isPersonalUser} user={user} />
+        <UserPostsSuspense
+          isPersonalUser={isPersonalUser}
+          user={user as User}
+        />
       </Suspense>
     </div>
   );
