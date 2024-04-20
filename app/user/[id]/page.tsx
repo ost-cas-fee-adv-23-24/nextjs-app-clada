@@ -11,7 +11,7 @@ import { auth } from '../../api/auth/[...nextauth]/auth';
 import UserPostsSuspense from './_user-posts-suspense';
 
 let fakeSrc =
-  'https://storage.googleapis.com/mumble-api-data/55068752-3e6d-41d4-94d8-905edc23f0a5';
+  'https://storage.googleapis.com/mumble-api-data/87945da0-e263-4fff-b188-f0aa878d3316';
 
 export default async function Home({ params }: { params: { id: string } }) {
   const session = await auth();

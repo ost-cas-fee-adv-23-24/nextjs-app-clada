@@ -9,6 +9,8 @@ import { Location } from './location';
 import { UserHandle } from './user-handle';
 import { getName } from './user-utils';
 
+const fakeULID = '01HGX50H2SXXPE51S60Q7QY29M';
+
 export const Profile = ({
   user,
   editable = false,
@@ -68,7 +70,12 @@ export const Profile = ({
       <div className='flex gap-xs'>
         <UserHandle name={user.username} id={user.id}></UserHandle>
         <Location name='fake location'></Location>
-        {user.id && <TimeDiff ulid={user.id} text='Mitglied seit '></TimeDiff>}
+        {user.id && (
+          <TimeDiff
+            ulid={fakeULID ?? user.id.slice(0, 1)}
+            text='Mitglied seit '
+          ></TimeDiff>
+        )}
       </div>
       <div className='pt-s'></div>
       <div className='text-base-400 mb-font-paragraph-m'>

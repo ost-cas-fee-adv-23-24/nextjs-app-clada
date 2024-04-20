@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
   const [timeDiff, setTimeDiff] = useState('');
+  const [intro, setIntro] = useState('vor ');
 
   useEffect(() => {
     const updateTimeDiff = () => {
@@ -28,6 +29,7 @@ export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
       } else if (minutes > 0) {
         formattedTimeDiff = `${minutes} ${minutes === 1 ? 'Minute' : 'Minuten'}`;
       } else {
+        setIntro('');
         formattedTimeDiff = 'Gerade jetzt';
       }
 
@@ -45,7 +47,7 @@ export const TimeDiff = ({ ulid, text }: { ulid: string; text?: string }) => {
     <div>
       {timeDiff && (
         <IconButton Icon={TimeIcon} href='#' variant='base'>
-          {(text ? text : 'vor ') + timeDiff}
+          {(text ? text : intro) + timeDiff}
         </IconButton>
       )}
     </div>
