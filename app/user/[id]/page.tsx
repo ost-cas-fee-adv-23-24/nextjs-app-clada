@@ -31,13 +31,17 @@ export default async function Home({ params }: { params: { id: string } }) {
     <div>
       <div className='pt-m'></div>
 
-      <Profile user={user as  } editable={isPersonalUser} imgUrl={fakeSrc}></Profile>
+      <Profile
+        user={user as User}
+        editable={isPersonalUser}
+        imgUrl={fakeSrc}
+      ></Profile>
 
       <div className='pt-l'></div>
       {!isPersonalUser && (
         <div>
           <FollowingState
-            user={user}
+            user={user as User}
             isFollowingUser={!!isFollowed}
           ></FollowingState>
           <div className='pt-s'></div>

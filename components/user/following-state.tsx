@@ -1,6 +1,6 @@
 'use client';
 
-import { followUser, unfollowUser } from '@/app/api/actions/user.actions';
+import { FollowUser, UnFollowUser } from '@/app/api/actions/user.actions';
 import { User } from '@/utils/models';
 import { Button, CancelIcon } from 'clada-storybook';
 import { useState } from 'react';
@@ -16,9 +16,9 @@ export const FollowingState = ({
 
   const toggleFollowing = () => {
     if (isFollowing) {
-      unfollowUser(user.id).then(() => setIsFollowing(false));
+      UnFollowUser(user.id).then(() => setIsFollowing(false));
     } else {
-      followUser(user.id).then(() => setIsFollowing(true));
+      FollowUser(user.id).then(() => setIsFollowing(true));
     }
 
     setIsFollowing(!isFollowing);

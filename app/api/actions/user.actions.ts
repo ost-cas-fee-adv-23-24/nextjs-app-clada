@@ -137,7 +137,7 @@ export const FollowUser = async (id: string) => {
   // todo: check if needs revalidation
 };
 
-export const UnfollowUser = async (id: string) => {
+export const UnFollowUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
     method: 'PUT',
   });

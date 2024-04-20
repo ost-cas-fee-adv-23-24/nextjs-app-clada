@@ -1,6 +1,6 @@
 'use client';
 
-import { followUser, unfollowUser } from '@/app/api/actions/user.actions';
+import { FollowUser, UnFollowUser } from '@/app/api/actions/user.actions';
 import { User } from '@/utils/models';
 import { Button, MumbleIcon } from 'clada-storybook';
 import Link from 'next/link';
@@ -19,9 +19,9 @@ export const UserCard = ({
 
   const toggleFollowing = (userId: string) => {
     if (isFollowing) {
-      unfollowUser(userId).then(() => setIsFollowing(false));
+      UnFollowUser(userId).then(() => setIsFollowing(false));
     } else {
-      followUser(userId).then(() => setIsFollowing(true));
+      FollowUser(userId).then(() => setIsFollowing(true));
     }
 
     setIsFollowing(!isFollowing);
