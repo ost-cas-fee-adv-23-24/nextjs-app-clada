@@ -12,7 +12,7 @@ import { UserImage } from '../shared/user-image';
 export const HeaderUserActions = async () => {
   const session = await auth();
 
-  if (!!!session) {
+  if (!session) {
     return (
       <div className='ml-auto flex pt-xxs'>
         <div className='flex-col'>
