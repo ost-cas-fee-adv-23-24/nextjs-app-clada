@@ -1,5 +1,3 @@
-import { SafeParseReturnType } from 'zod';
-
 export class APIError extends Error {
   constructor(
     message: string,
@@ -17,26 +15,15 @@ export class InternalServerError extends Error {
 
 export type ValidationError = {
   errors: {
-    [key: string]: string[]
-  }
-}
+    [key: string]: string[];
+  };
+};
 
-export const parseValidationError = (
-  obj: SafeParseReturnType<
-    {
-      text: string;
-      media?: File | undefined;
-    },
-    {
-      text: string;
-      media?: File | undefined;
-    }
-  >
-) => {
+export const parseValidationError = (obj: any) => {
   // @ts-ignore
   return { errors: obj.error.flatten().fieldErrors } as ValidationError;
 };
 
 export const isError = (data?: ValidationError) => {
   return Object.keys(data?.errors ?? {}).length > 0;
-}
+};

@@ -16,20 +16,20 @@ export const metadata: Metadata = {
   authors: [
     {
       url: 'https://github.com/claudio-OST',
-      name: 'Claudio Steffen'
+      name: 'Claudio Steffen',
     },
     {
       url: 'https://github.com/malinovic',
-      name: 'Danijel Malinovic'
-    }
+      name: 'Danijel Malinovic',
+    },
   ],
   keywords: [
     'Mumble',
     'Platform',
     'Team Clada',
     'Twitter / X Replacement',
-    'Much better than Twitter / X'
-  ]
+    'Much better than Twitter / X',
+  ],
 };
 
 export default function RootLayout({

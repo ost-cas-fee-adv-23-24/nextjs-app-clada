@@ -1,9 +1,10 @@
 'use server';
-// import { APIBase } from '@/utils/api/base';
+
 import { httpRequest } from '@/utils/api/request';
-import { validate } from '@/utils/api/validation';
-import { parseValidationError } from '@/utils/error';
+import { validateUser, validateUserAvatar } from '@/utils/api/validation';
+import { ValidationError, parseValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
+import { revalidatePath } from 'next/cache';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>('/users', {
@@ -14,14 +15,18 @@ export const GetUsers = async (): Promise<UserPaginatedResult> => {
     throw new Error('No followers found');
   }
 
-  return response;
+  return response as UserPaginatedResult;
 };
 
-export const GetUserById = async (id: string): Promise<User> => {
+export const GetUserById = async (id?: string): Promise<User | undefined> => {
+  if (!id) {
+    return Promise.resolve(undefined);
+  }
+
   const response = await httpRequest<User>(`/users/${id}`, {
     method: 'GET',
     next: {
-      revalidate: 3600,
+      revalidate: 60,
     },
   });
 
@@ -70,7 +75,7 @@ export const GetUserFollowees = async (
   return response;
 };
 
-export const deleteUserAvatar = async (): Promise<void> => {
+export const DeleteUserAvatar = async (): Promise<void> => {
   await httpRequest<void>('/users/avatar', {
     method: 'DELETE',
   });
@@ -78,8 +83,8 @@ export const deleteUserAvatar = async (): Promise<void> => {
   // todo: check if needs revalidation
 };
 
-export const updateUserAvatar = async (data: FormData) => {
-  const validation = validate(data);
+export const UpdateUserAvatar = async (data: FormData) => {
+  const validation = validateUserAvatar(data);
 
   if (!validation.success) {
     return Promise.reject(parseValidationError(validation));
@@ -93,22 +98,32 @@ export const updateUserAvatar = async (data: FormData) => {
   // todo: check if needs revalidation
 };
 
-export const updateUser = async (data: UpdateUserData) => {
-  const validation = validate(data);
+export const UpdateUser = async (
+  data: UpdateUserData
+): Promise<void | ValidationError> => {
+  const validation = validateUser(data);
 
   if (!validation.success) {
-    return Promise.reject(parseValidationError(validation));
+    return parseValidationError(validation);
   }
 
-  await httpRequest('/users', {
+  const user = await httpRequest('/users', {
     method: 'PATCH',
-    body: data,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      firstname: data.get('firstname') as string,
+      lastname: data.get('lastname') as string,
+      username: data.get('username') as string,
+    }),
   });
 
-  // todo: check if needs revalidation
+  revalidatePath('/user/[id]', 'layout')
+  revalidatePath('/', 'layout')
 };
 
-export const followUser = async (id: string) => {
+export const FollowUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
     method: 'PUT',
   });
@@ -116,7 +131,7 @@ export const followUser = async (id: string) => {
   // todo: check if needs revalidation
 };
 
-export const unfollowUser = async (id: string) => {
+export const UnfollowUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
     method: 'PUT',
   });
