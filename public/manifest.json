@@ -9,6 +9,9 @@
     "start_url": "/",
     "description": "Much better than Twitter / X",
     "id": "mumble-platform-clada",
+    "fallbacks": {
+        "document": "/offline"
+    },
     "icons": [
         {
             "src": "icons/icon-72x72.png",
