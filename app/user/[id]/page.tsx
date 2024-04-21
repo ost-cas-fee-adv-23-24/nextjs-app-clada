@@ -3,11 +3,7 @@ import { FollowingState } from '@/components/user/following-state';
 import { Profile } from '@/components/user/profile';
 import { User } from '@/utils/models';
 import { Suspense } from 'react';
-import {
-  GetUserById,
-  GetUserFollowees,
-  GetUserFollowers,
-} from '../../api/actions/user.actions';
+import { GetUserById, GetUserFollowers } from '../../api/actions/user.actions';
 import { auth } from '../../api/auth/[...nextauth]/auth';
 import UserPostsSuspense from './_user-posts-suspense';
 
@@ -18,11 +14,10 @@ export default async function Home({ params }: { params: { id: string } }) {
   const session = await auth();
   const user = await GetUserById(params.id);
 
-  const followers = await GetUserFollowers(params.id);
-  const followees = await GetUserFollowees(params.id);
+  const followers = await GetUserFollowers(user?.id || '');
 
-  const isFollowed = followers.data.find(
-    (followers) => session?.user?.id && followers.id === session?.user?.id
+  const isFollowed = followers?.data.find(
+    (follower: User) => session?.user?.id && follower.id === session?.user?.id
   );
 
   const isPersonalUser = session?.user?.id === user?.id;

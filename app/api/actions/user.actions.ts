@@ -62,14 +62,11 @@ export const GetUserFollowees = async (
     `/users/${id}/followees`,
     {
       method: 'GET',
-      next: {
-        revalidate: 300,
-      },
     }
   );
 
   if (!response) {
-    throw new Error('No followers found');
+    throw new Error('No followees found');
   }
 
   return response;
@@ -134,13 +131,13 @@ export const FollowUser = async (id: string) => {
     method: 'PUT',
   });
 
-  // todo: check if needs revalidation
+  revalidatePath(`/user/${id}`);
 };
 
 export const UnFollowUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
-    method: 'PUT',
+    method: 'DELETE',
   });
 
-  revalidatePath('/');
+  revalidatePath(`/user/${id}`);
 };

@@ -6,25 +6,53 @@ import { Button, MumbleIcon } from 'clada-storybook';
 import Link from 'next/link';
 import { useState } from 'react';
 import { UserImage } from '../shared/user-image';
+import {
+  FollowState,
+  useFollowState,
+  useFollowStateUpdate,
+} from './follow-state-context';
 import { UserHandle } from './user-handle';
 
 export const UserCard = ({
   user,
   isFollowingUser,
+  updateFunction,
 }: {
   user: User;
   isFollowingUser: boolean;
+  updateFunction?: () => void;
 }) => {
-  const [isFollowing, setIsFollowing] = useState(isFollowingUser);
+  const [loading, setLoading] = useState(false);
+  const followState = useFollowState();
+  const setFollowState = useFollowStateUpdate();
+  const isFollowing = followState[user.id] ?? isFollowingUser;
 
-  const toggleFollowing = (userId: string) => {
-    if (isFollowing) {
-      UnFollowUser(userId).then(() => setIsFollowing(false));
-    } else {
-      FollowUser(userId).then(() => setIsFollowing(true));
+  const toggleFollowing = async (userId: string) => {
+    if (loading) return;
+
+    setLoading(true);
+
+    const newState = !isFollowing;
+    try {
+      if (newState) {
+        await FollowUser(userId);
+      } else {
+        await UnFollowUser(userId);
+      }
+
+      if (updateFunction) {
+        updateFunction();
+      }
+
+      setFollowState((prevState: FollowState) => ({
+        ...prevState,
+        [userId]: newState,
+      }));
+    } catch (error) {
+      console.error('Failed to toggle follow state', error);
+    } finally {
+      setLoading(false);
     }
-
-    setIsFollowing(!isFollowing);
   };
 
   return (

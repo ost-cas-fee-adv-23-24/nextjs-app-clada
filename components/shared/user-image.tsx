@@ -1,6 +1,6 @@
 'use client';
 
-import { updateUserAvatar } from '@/app/api/actions/user.actions';
+import { UpdateUserAvatar } from '@/app/api/actions/user.actions';
 import { Avatar, AvatarEdit } from 'clada-storybook';
 import { useState } from 'react';
 import { ImageUpload } from '../modal/image-upload';
@@ -37,7 +37,7 @@ export const UserImage = ({
       formData.append('text', file.name);
 
       try {
-        await updateUserAvatar(formData, document.location.pathname);
+        await UpdateUserAvatar(formData, document.location.pathname);
       } catch (error) {
         console.error('Failed to update user:', error);
         setShowImageUpload(false);

@@ -30,6 +30,7 @@ export const Profile = ({
               alt='post image'
               width={680}
               height={320}
+              priority
               className='w-full transition-all duration-300 ease-in-out'
               style={{ aspectRatio: '68 / 32' }}
             />
