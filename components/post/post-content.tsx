@@ -38,7 +38,7 @@ export const PostContent = ({
         </div>
       </div>
       <div className={textClasses}>
-        <a href={`/post/${post.id}`}>{post?.text}</a>
+        <a className='break-words' href={`/post/${post.id}`}>{post?.text}</a>
       </div>
       <ZoomImage src={post?.mediaUrl}></ZoomImage>
       {post.mediaUrl && <div className='grid place-content-center'></div>}
