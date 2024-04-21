@@ -17,10 +17,8 @@ export const PostContent = ({ post, size }: { post: Post; size?: 'large' }) => {
         </Link>
       </div>
       <UserHeader post={post} showTime={true} useLarge={true}></UserHeader>
-      <div className={textClasses}>
-        <Link className='break-words' href={`/post/${post.id}`}>
-          {post?.text}
-        </Link>
+      <div className={textClasses} style={{ wordBreak: 'break-word' }}>
+        <Link href={`/post/${post.id}`}>{post?.text}</Link>
       </div>
       <ZoomImage src={post?.mediaUrl}></ZoomImage>
       {post.mediaUrl && <div className='grid place-content-center'></div>}
