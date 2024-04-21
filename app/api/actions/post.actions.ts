@@ -71,6 +71,7 @@ export const CreatePost = async (
   });
 
   revalidatePath('/', 'page');
+  revalidatePath('/tags', 'page')
 
   return post as Post;
 };

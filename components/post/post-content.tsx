@@ -4,6 +4,8 @@ import { TimeDiff } from '../shared/time-diff';
 import { UserImage } from '../shared/user-image';
 import ZoomImage from '../shared/zoom-image';
 import { UserHandle } from '../user/user-handle';
+import { useRouter } from 'next/navigation';
+import { replaceTags } from '@/utils/tags';
 
 export const PostContent = ({
   post,
