@@ -14,12 +14,14 @@ export const Friends = ({ userId }: { userId: string }) => {
           <UserList
             currentUserId={userId}
             title='Diesen Usern folgst du'
+            emptyText='Du folgst noch niemandem...'
           ></UserList>
           <div className='pt-s'></div>
           <UserList
             users={followers}
             currentUserId={userId}
             title='Diese User folgen dir'
+            emptyText='Im Moment folgt dir noch niemand...'
             filterFollowees={false}
           ></UserList>
           <div className='pt-s'></div>
@@ -27,6 +29,7 @@ export const Friends = ({ userId }: { userId: string }) => {
             users={users}
             currentUserId={userId}
             title='Empfohlene User'
+            emptyText='Du folgst bereits allen Usern...'
           ></UserList>
         </FollowStateProvider>
       </div>

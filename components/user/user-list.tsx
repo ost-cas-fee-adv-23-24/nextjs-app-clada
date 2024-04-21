@@ -11,11 +11,13 @@ export const UserList = ({
   users,
   currentUserId,
   title,
+  emptyText,
   filterFollowees = true,
 }: {
   users?: Array<User>;
   currentUserId: string;
   title: string;
+  emptyText: string;
   filterFollowees?: boolean;
 }) => {
   const [displayUsers, setDisplayUsers] = useState<Array<User>>([]);
@@ -32,11 +34,14 @@ export const UserList = ({
     if (filterFollowees) {
       setDisplayUsers(
         users
-          ?.filter((x) => !followees?.find((y) => y.id === x.id))
+          ?.filter((x) => x.id !== currentUserId)
+          .filter((x) => !followees?.find((y) => y.id === x.id))
           .slice(-6) as Array<User>
       );
     } else {
-      setDisplayUsers(users as Array<User>);
+      setDisplayUsers(
+        users?.filter((x) => x.id !== currentUserId) as Array<User>
+      );
     }
   }, [followees]);
 
@@ -58,6 +63,7 @@ export const UserList = ({
               updateFunction={() => update(currentUserId)}
             ></UserCard>
           ))}
+        {displayUsers && !displayUsers.length && <div>{emptyText}</div>}
         {!displayUsers &&
           followees &&
           followees.map((user) => (
@@ -68,6 +74,7 @@ export const UserList = ({
               updateFunction={() => update(currentUserId)}
             ></UserCard>
           ))}
+        {!displayUsers && !followees?.length && <div>{emptyText}</div>}
       </div>
     </div>
   );
