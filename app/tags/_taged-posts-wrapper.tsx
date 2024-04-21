@@ -2,15 +2,13 @@
 
 import PostList from '@/components/post-list/post-list';
 import { GetPosts } from '../api/actions/post.actions';
-import { auth } from '../api/auth/[...nextauth]/auth';
+import TagedPostsSearchForm from './_taged-posts-search-form';
 
 export default async function TagedPostsWrapper({
   searchParams,
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const session = await auth();
-
   const posts = await GetPosts({
     limit: 10,
     tags: Array.isArray(searchParams.tag)
