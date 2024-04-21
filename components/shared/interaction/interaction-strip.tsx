@@ -13,7 +13,7 @@ export const InteractionStrip = ({
   reduced?: boolean;
 }) => {
   return (
-    <div className='flex -ml-s pl-xxs lg:gap-xl md:gap-l gap-xs'>
+    <div className='flex -ml-s pl-xxs lg:gap-xl md:gap-l gap-xs' onClick={(e) => e.stopPropagation()}>
       {!reduced && <Comment post={post}></Comment>}
       <Like post={post}></Like>
       {!reduced && <CopyLink post={post}></CopyLink>}

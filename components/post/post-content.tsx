@@ -1,3 +1,5 @@
+'use client'
+
 import { Post, PostReply } from '@/utils/models';
 import { InteractionStrip } from '../shared/interaction/interaction-strip';
 import { TimeDiff } from '../shared/time-diff';
