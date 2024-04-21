@@ -10,6 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  manifest: '/manifest.json',
   title: 'Mumble',
   description: 'Mumble Web App 2024',
   applicationName: 'Mumble',
