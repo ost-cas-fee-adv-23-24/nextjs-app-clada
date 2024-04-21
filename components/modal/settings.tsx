@@ -1,66 +1,76 @@
 'use client';
 
-import { Input, Label, Textarea } from 'clada-storybook';
-import { useState } from 'react';
-import { ModalWindow } from './modal';
+import { UpdateUser } from '@/app/api/actions/user.actions';
+import { ValidationError, isError } from '@/utils/error';
+import { User } from '@/utils/models';
+import { Input, Modal, SettingsIcon } from 'clada-storybook';
+import { useRef, useState } from 'react';
 
-export const Settings = () => {
-  const [isOpen, setIsOpen] = useState(true);
+export const SettingsModal = ({ user }: { user: User }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  let formRef = useRef<HTMLFormElement>(null);
+  const [formState, setFormState] = useState<ValidationError | null>();
 
-  const onClose = () => {
-    setIsOpen(false);
-    alert('settings closed');
-  };
+  const formAction = async (d: FormData) => {
+    if (formRef.current) {
+      const data = new FormData(formRef.current);
+      const response = await UpdateUser(data);
 
-  const onSubmit = () => {
-    alert('settings submitted');
-    setIsOpen(false);
+      console.log(response);
+
+      if (response && isError(response)) {
+        setFormState(response);
+      } else {
+        setFormState(null);
+        setIsOpen(false);
+      }
+    }
   };
 
   return (
-    <ModalWindow
-      title='Einstellungen'
-      isOpen={isOpen}
-      onClose={onClose}
-      onSubmit={onSubmit}
-    >
-      <Input
-        id='name'
-        type='text'
-        label='Name Vorname'
-        placeholder='Hans Muster'
-      ></Input>
-      <div className='pb-m'></div>
-      <Input
-        id='mail'
-        type='mail'
-        label='Email Adresse'
-        placeholder='hans.muster@mail.com'
-      ></Input>
-      <div className='pb-m'></div>
-      <Input
-        id='location'
-        type='text'
-        label='Ortschaft'
-        placeholder='Ortschaft'
-      ></Input>
-      <div className='pb-s'></div>
-      <Label size='s' color='base'>
-        Biografie
-      </Label>
-      <Textarea
-        id='biography'
-        name='biography'
-        placeholder='Biografie'
-      ></Textarea>
-      <div className='pb-l'></div>
-      <Label size='xl' color='base'>
-        Passwort ändern
-      </Label>
-      <div className='pb-s'></div>
-      <Input id='old-password' type='password' label='Altes Passwort'></Input>
-      <div className='pb-m'></div>
-      <Input id='new-password' type='password' label='Neues Passwort'></Input>
-    </ModalWindow>
+    <>
+      <button onClick={() => setIsOpen(true)}>
+        <div className='flex justify-center self-center'>
+          <SettingsIcon color='white'></SettingsIcon>
+        </div>
+        <span className='text-white'>Settings</span>
+      </button>
+      <Modal
+        title='Einstellungen'
+        width='m'
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSubmit={() => formRef?.current?.requestSubmit()}
+      >
+        <form ref={formRef} action={formAction}>
+          <Input
+            id='lastname'
+            name='lastname'
+            type='text'
+            label='Name'
+            defaultValue={user.lastname}
+            error={formState?.errors['lastname']?.join(' ')}
+          ></Input>
+          <div className='pb-l'></div>
+          <Input
+            id='firstname'
+            name='firstname'
+            type='text'
+            label='Vorname'
+            defaultValue={user.firstname}
+            error={formState?.errors['firstname']?.join(' ')}
+          ></Input>
+          <div className='pb-l'></div>
+          <Input
+            id='username'
+            name='username'
+            type='text'
+            label='Benutzername'
+            defaultValue={user.username}
+            error={formState?.errors['username']?.join(' ')}
+          ></Input>
+        </form>
+      </Modal>
+    </>
   );
 };

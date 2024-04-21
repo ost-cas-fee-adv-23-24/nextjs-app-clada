@@ -1,5 +1,3 @@
-import { SafeParseReturnType } from 'zod';
-
 export class APIError extends Error {
   constructor(
     message: string,
@@ -21,18 +19,7 @@ export type ValidationError = {
   };
 };
 
-export const parseValidationError = (
-  obj: SafeParseReturnType<
-    {
-      text: string;
-      media?: File | undefined;
-    },
-    {
-      text: string;
-      media?: File | undefined;
-    }
-  >
-) => {
+export const parseValidationError = (obj: any) => {
   // @ts-ignore
   return { errors: obj.error.flatten().fieldErrors } as ValidationError;
 };

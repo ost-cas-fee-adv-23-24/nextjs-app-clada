@@ -1,8 +1,4 @@
-'use client';
-
 import { Post, PostReply } from '@/utils/models';
-import { replaceTags } from '@/utils/tags';
-import { useRouter } from 'next/navigation';
 import { InteractionStrip } from '../shared/interaction/interaction-strip';
 import { TimeDiff } from '../shared/time-diff';
 import { UserImage } from '../shared/user-image';

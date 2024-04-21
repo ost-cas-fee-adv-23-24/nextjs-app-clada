@@ -2,6 +2,6 @@
 
 import { Logo } from 'clada-storybook';
 
-export const LogO = () => {
+export const MumbleLogo = () => {
   return <Logo variant='white' href='/' />;
 };
