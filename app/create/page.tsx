@@ -48,8 +48,9 @@ export default async function Home() {
       <div className='pt-s'></div>
       <UserList
         users={users}
-        followees={followees}
+        currentUserId={session?.user.id as string}
         title='Empfohlene User'
+        emptyText='Du folgst bereits allen Usern...'
       ></UserList>
       <div className='pt-s'></div>
     </div>
