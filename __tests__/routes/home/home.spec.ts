@@ -40,7 +40,7 @@ test.describe('Homepage', () => {
         .scrollIntoViewIfNeeded();
     
       const updatedItemsCount = await page.getByTestId(MumbleTestIds.Post).count();
-      expect(await updatedItemsCount).toBe(20);
+      expect(updatedItemsCount).toBe(20);
     });
   })
 
