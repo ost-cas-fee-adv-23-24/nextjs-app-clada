@@ -2,6 +2,10 @@ name: Playwright Tests
 on:
   pull_request:
     branches: [main]
+
+env:
+  environment: CI
+
 jobs:
   test:
     timeout-minutes: 60
@@ -13,22 +17,20 @@ jobs:
           node-version: 20.11.x
       - name: Install dependencies
         run: npm ci
-      - name: Build
-        run: npm run build
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
         run: npx playwright test
+        env: 
+            ZITADEL_CLIENT_ID: ${{ env.ZITADEL_CLIENT_ID }}
+            API_URL: ${{ env.API_URL }}
+            DEFAULT_PAGE_SIZE: ${{ env.DEFAULT_PAGE_SIZE }}
+            DEFAULT_OFFSET: ${{ env.DEFAULT_OFFSET }}
+            TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
+            TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-          env: 
-            ZITADEL_CLIENT_ID: ${{ secrets.ZITADEL_CLIENT_ID }}
-            API_URL: ${{ secrets.API_URL }}
-            DEFAULT_PAGE_SIZE: ${{ secrets.DEFAULT_PAGE_SIZE }}
-            DEFAULT_OFFSET: ${{ secrets.DEFAULT_OFFSET }}
-            TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
-            TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
