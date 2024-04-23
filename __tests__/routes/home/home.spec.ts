@@ -6,48 +6,51 @@ test.describe('Homepage', () => {
   test.describe('Unauthenticated', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(DEFAULT_PAGE_URL)
-    })    
-    
+    })
+
     test('is not in logged in state', async ({ page }) => {
       const loginButtonIsVisible = await page
         .getByTestId(MumbleTestIds.LoginButton)
         .isVisible();
-    
+
       expect(loginButtonIsVisible).toBeTruthy();
     });
 
     test('has title', async ({ page }) => {
       await expect(page).toHaveTitle(/Mumble/);
     });
-  
+
     test('has h1', async ({ page }) => {
       const heading1 = await page.getByTestId(MumbleTestIds.H1);
       const innerText = await heading1.innerText();
-  
+
       await expect(innerText).toEqual('Willkommen bei Mumble!');
     });
-    
+
     test('has initially 10 posts', async ({ page }) => {
       const items = page.getByTestId(MumbleTestIds.Post);
       expect(await items.count()).toBe(10);
     });
-    
+
     test('loads 10 more on page scroll to bottom', async ({ page }) => {
+      await expect(page.getByTestId(MumbleTestIds.Post)).toHaveCount(10);
+
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    
+
       await page
         .getByTestId('post-list-loading-indicator')
         .scrollIntoViewIfNeeded();
-    
-      const updatedItemsCount = await page.getByTestId(MumbleTestIds.Post).count();
-      expect(updatedItemsCount).toBe(20);
+      // custom waiting
+      await page.waitForTimeout(5000);
+
+      await expect(page.getByTestId(MumbleTestIds.Post)).toHaveCount(20);
     });
   })
 
   test.describe('Authenticated', () => {
     let createMumbleText: string = ''
 
-    test.beforeAll( () => {
+    test.beforeAll(() => {
       createMumbleText = getCreateMumbleText()
     })
     test.beforeEach(async ({ page }) => {
@@ -57,7 +60,7 @@ test.describe('Homepage', () => {
       const formVisible = await page
         .getByTestId(MumbleTestIds.CreateContentCard)
         .isVisible();
-    
+
       expect(formVisible).toBeTruthy();
     })
     test('create and delete a mumble', async ({ page }) => {
