@@ -14,8 +14,6 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './.env.test', override: true });
 const testEnv = { ...process.env } as { [key: string]: string };
 
-console.warn(testEnv)
-
 export default defineConfig({
   testDir: './__tests__',
   fullyParallel: true,

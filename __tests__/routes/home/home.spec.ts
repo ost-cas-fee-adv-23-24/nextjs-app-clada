@@ -39,8 +39,8 @@ test.describe('Homepage', () => {
         .getByTestId('post-list-loading-indicator')
         .scrollIntoViewIfNeeded();
     
-      const updatedItems = page.getByTestId(MumbleTestIds.Post);
-      expect(await updatedItems.count()).toBe(20);
+      const updatedItemsCount = await page.getByTestId(MumbleTestIds.Post).count();
+      expect(await updatedItemsCount).toBe(20);
     });
   })
 
