@@ -25,6 +25,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+          secrets: inherit
           env: 
             ZITADEL_CLIENT_ID: ${{ secrets.ZITADEL_CLIENT_ID }}
             API_URL: ${{ secrets.API_URL }}
