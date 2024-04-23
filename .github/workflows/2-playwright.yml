@@ -26,7 +26,7 @@ jobs:
           path: playwright-report/
           retention-days: 30
           env: 
-            ZITADEL_CLIENT_ID: ${{secrets.ZITADEL_CLIENT_ID }}
+            ZITADEL_CLIENT_ID: ${{ secrets.ZITADEL_CLIENT_ID }}
             API_URL: ${{ secrets.API_URL }}
             DEFAULT_PAGE_SIZE: ${{ secrets.DEFAULT_PAGE_SIZE }}
             DEFAULT_OFFSET: ${{ secrets.DEFAULT_OFFSET }}
