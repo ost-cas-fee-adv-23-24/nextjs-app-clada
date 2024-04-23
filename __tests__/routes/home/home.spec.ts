@@ -2,7 +2,6 @@ import { MumbleTestIds } from '@/__tests__/helpers/selectors';
 import { DEFAULT_PAGE_URL, getCreateMumbleText, login } from '@/__tests__/helpers/utilities';
 import { expect, test } from '@playwright/test';
 
-
 test.describe('Homepage', () => {
   test.describe('Unauthenticated', () => {
     test.beforeEach(async ({ page }) => {
@@ -46,6 +45,11 @@ test.describe('Homepage', () => {
   })
 
   test.describe('Authenticated', () => {
+    let createMumbleText: string = ''
+
+    test.beforeAll( () => {
+      createMumbleText = getCreateMumbleText()
+    })
     test.beforeEach(async ({ page }) => {
       await login(page);
     })
@@ -57,14 +61,13 @@ test.describe('Homepage', () => {
       expect(formVisible).toBeTruthy();
     })
     test('create and delete a mumble', async ({ page }) => {
-      const mumbleText = getCreateMumbleText();
-
       await page.getByPlaceholder('Deine Meinung zählt!').click();
-      await page.getByPlaceholder('Deine Meinung zählt!').fill(mumbleText);
+      await page.getByPlaceholder('Deine Meinung zählt!').fill(createMumbleText);
       await page.getByRole('button', { name: 'Absenden' }).click();
 
-      const createdMumble = page.locator(`[data-testid="singple-post"]:has-text("${mumbleText}")`).isVisible()
-      await expect(createdMumble).toEqual(true)
+      // TODO: set test id to text area (update design system)
+      await expect(page.locator(MumbleTestIds.CreatePostTextArea), 'has reseted text area').toHaveValue('');
+      await expect(page.locator(`[data-testid="single-post"]:has-text("${createMumbleText}")`)).toBeVisible()
     })
   })
 })

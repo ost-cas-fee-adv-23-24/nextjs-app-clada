@@ -3,5 +3,7 @@ export enum MumbleTestIds {
     Post = 'single-post',
     LoginButton = 'login-button',
     LogoutButton = 'logout-button',
-    CreateContentCard = 'mumble-create-content'
+    CreateContentCard = 'mumble-create-content',
+    // CreatePostTextArea='create-post-text-area'
+    CreatePostTextArea='[data-testid="mumble-create-content"] textarea'
 }

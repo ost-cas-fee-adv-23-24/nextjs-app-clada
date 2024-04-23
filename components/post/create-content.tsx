@@ -112,6 +112,7 @@ export const CreateContent = ({
           name='text'
           placeholder={placeholder}
           error={formState?.errors['text']?.join(' ')}
+          data-testid='create-post-text-area'
         />
         <div className='pt-s'></div>
         <div className='flex'>
