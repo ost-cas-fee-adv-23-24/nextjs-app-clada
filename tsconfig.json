@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@/auth": ["./app/api/auth/[...nextauth]/auth"]
+      "@/auth": ["./app/api/auth/[...nextauth]/auth"],
+      "@/testhelpers": ["./__tests__/helpers"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

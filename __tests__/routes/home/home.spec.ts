@@ -1,45 +1,70 @@
 import { MumbleTestIds } from '@/__tests__/helpers/selectors';
+import { DEFAULT_PAGE_URL, getCreateMumbleText, login } from '@/__tests__/helpers/utilities';
 import { expect, test } from '@playwright/test';
 
-const url = 'http://localhost:3000/'
 
-test.describe('Homepage Posts', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto(url)
+test.describe('Homepage', () => {
+  test.describe('Unauthenticated', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(DEFAULT_PAGE_URL)
+    })    
+    
+    test('is not in logged in state', async ({ page }) => {
+      const loginButtonIsVisible = await page
+        .getByTestId(MumbleTestIds.LoginButton)
+        .isVisible();
+    
+      expect(loginButtonIsVisible).toBeTruthy();
+    });
+
+    test('has title', async ({ page }) => {
+      await expect(page).toHaveTitle(/Mumble/);
+    });
+  
+    test('has h1', async ({ page }) => {
+      const heading1 = await page.getByTestId(MumbleTestIds.H1);
+      const innerText = await heading1.innerText();
+  
+      await expect(innerText).toEqual('Willkommen bei Mumble!');
+    });
+    
+    test('has initially 10 posts', async ({ page }) => {
+      const items = page.getByTestId(MumbleTestIds.Post);
+      expect(await items.count()).toBe(10);
+    });
+    
+    test('loads 10 more on page scroll to bottom', async ({ page }) => {
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    
+      await page
+        .getByTestId('post-list-loading-indicator')
+        .scrollIntoViewIfNeeded();
+    
+      const updatedItems = page.getByTestId(MumbleTestIds.Post);
+      expect(await updatedItems.count()).toBe(20);
+    });
   })
-  test('has title', async ({ page }) => {
-    await expect(page).toHaveTitle(/Mumble/);
-  });
 
-  test('has h1', async ({ page }) => {
-    const heading1 = await page.getByTestId(MumbleTestIds.H1);
-    const innerText = await heading1.innerText();
+  test.describe('Authenticated', () => {
+    test.beforeEach(async ({ page }) => {
+      await login(page);
+    })
+    test('has create content form visible', async ({ page }) => {
+      const formVisible = await page
+        .getByTestId(MumbleTestIds.CreateContentCard)
+        .isVisible();
+    
+      expect(formVisible).toBeTruthy();
+    })
+    test('create and delete a mumble', async ({ page }) => {
+      const mumbleText = getCreateMumbleText();
 
-    await expect(innerText).toEqual('Willkommen bei Mumble!');
+      await page.getByPlaceholder('Deine Meinung zählt!').click();
+      await page.getByPlaceholder('Deine Meinung zählt!').fill(mumbleText);
+      await page.getByRole('button', { name: 'Absenden' }).click();
+
+      const createdMumble = page.locator(`[data-testid="singple-post"]:has-text("${mumbleText}")`).isVisible()
+      await expect(createdMumble).toEqual(true)
+    })
   })
-  
-  test('has initially 10 posts', async ({ page }) => {
-    const items = page.getByTestId(MumbleTestIds.Post);
-    expect(await items.count()).toBe(10);
-  });
-  
-  // TODO: shall be updated in a later stage
-  test('loads 10 more on page scroll to bottom', async ({ page }) => {
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  
-    await page
-      .getByTestId('post-list-loading-indicator')
-      .scrollIntoViewIfNeeded();
-  
-    const updatedItems = page.getByTestId(MumbleTestIds.Post);
-    expect(await updatedItems.count()).toBe(20);
-  });
-  
-  test('is not in logged in state', async ({ page }) => {
-    const loginButtonIsVisible = await page
-      .getByTestId(MumbleTestIds.LoginButton)
-      .isVisible();
-  
-    expect(loginButtonIsVisible).toBeTruthy();
-  });  
 })

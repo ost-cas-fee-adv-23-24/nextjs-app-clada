@@ -94,7 +94,7 @@ export const CreateContent = ({
   };
 
   return (
-    <div>
+    <div data-testid='mumble-create-content'>
       <form ref={formRef} onSubmit={create} method='post'>
         {imgSrc && (
           <div className='relative w-full flex-col max-w-[586px] h-[304px] rounded-m overflow-hidden'>
