@@ -106,8 +106,8 @@ export const DeletePost = async (id: string, userId: string) => {
     method: 'DELETE',
   });
 
-  revalidatePath('/');
-  revalidatePath(`/posts/${userId}`);
+  revalidatePath('/', 'page');
+  revalidatePath(`/user/${userId}`, 'page');
 };
 
 export const CreateReply = async (
@@ -125,7 +125,7 @@ export const CreateReply = async (
     body: data,
   });
 
-  revalidatePath('/');
+  revalidatePath('/', 'page');
 
   return reply as PostReply;
 };
