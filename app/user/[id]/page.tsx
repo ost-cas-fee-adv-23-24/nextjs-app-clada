@@ -7,7 +7,7 @@ import { GetUserById, GetUserFollowers } from '../../api/actions/user.actions';
 import { auth } from '../../api/auth/[...nextauth]/auth';
 import UserPostsSuspense from './_user-posts-suspense';
 
-let fakeSrc =
+const fakeSrc =
   'https://storage.googleapis.com/mumble-api-data/87945da0-e263-4fff-b188-f0aa878d3316';
 
 export default async function Home({ params }: { params: { id: string } }) {

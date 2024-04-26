@@ -97,6 +97,7 @@ export const UserDashboard = ({
         <PostList
           postsPaginatedResult={currentPaginatedResult}
           queryParams={currentQueryParams}
+          isPersonalUser={isPersonalUser}
         />
       )}
     </>
