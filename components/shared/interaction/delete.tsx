@@ -10,8 +10,8 @@ const copyLinkLabels = {
 };
 
 export const DeleteUserPost = ({ post }: { post: Post }) => {
-  const deletePost = () => {
-    DeletePost(post.id, post.creator.id);
+  const deletePost = async () => {
+    await DeletePost(post.id, post.creator.id);
   };
 
   return (
