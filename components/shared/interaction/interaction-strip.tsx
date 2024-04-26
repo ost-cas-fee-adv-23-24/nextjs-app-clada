@@ -14,15 +14,14 @@ export const InteractionStrip = ({
   post: Post;
   reduced?: boolean;
 }) => {
-  const { data: session, status } = useSession();
-  const isAuthenticated = status === 'authenticated';
+  const { data: session } = useSession();
   const isCreator = session?.user.id === post.creator.id;
 
   return (
     <div className='flex -ml-s pl-xxs md:gap-l gap-xs sm:flex-row flex-col'>
       <div className='flex flex-row pl-xxs md:gap-l gap-xs'>
         {!reduced && <Comment post={post}></Comment>}
-        <Like post={post} disabled={!isAuthenticated}></Like>
+        <Like post={post}></Like>
       </div>
       <div className='flex flex-row pl-xxs md:gap-l gap-xs'>
         {!reduced && <CopyLink post={post}></CopyLink>}

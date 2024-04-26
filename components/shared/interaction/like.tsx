@@ -12,7 +12,7 @@ const likeLabels = {
   plural: 'Likes',
 };
 
-export const Like = ({ post, disabled }: { post: Post; disabled: boolean }) => {
+export const Like = ({ post }: { post: Post }) => {
   const [likes, setLikes] = useState(post.likes ?? 0);
   const [likedBySelf, setLikedBySelf] = useState(post.likedBySelf ?? false);
 
@@ -32,7 +32,6 @@ export const Like = ({ post, disabled }: { post: Post; disabled: boolean }) => {
     <LikeButton
       count={likes}
       labels={likeLabels}
-      isDisabled={disabled}
       isAlreadyLiked={likedBySelf}
       onClick={like}
     ></LikeButton>
