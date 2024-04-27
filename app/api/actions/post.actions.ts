@@ -23,7 +23,16 @@ export type GetPostsParams = {
 };
 
 export const GetPosts = async (queryParams?: GetPostsParams) => {
-  const tag = queryParams?.toString() ?? 'never';
+  let tag = '';
+  if (Object.keys(queryParams ?? {}).find((x) => x === 'creators')) {
+    console.log('queryParams?.creators', queryParams?.creators);
+    tag = `creators-${queryParams?.creators}`;
+  }
+
+  if (Object.keys(queryParams ?? {}).find((x) => x === 'likedBy')) {
+    console.log('queryParams?.likedBy', queryParams?.likedBy);
+    tag = `likedBy-${queryParams?.likedBy}`;
+  }
 
   const response = await httpRequest<PostPaginatedResult>(
     '/posts',
@@ -74,9 +83,7 @@ export const CreatePost = async (
     body: data,
   });
 
-  revalidatePath('/', 'page');
-
-  revalidatePosts(userId);
+  revalidatePosts(userId ?? '');
 
   return post as Post;
 };
@@ -113,6 +120,7 @@ export const DeletePost = async (id: string, userId: string) => {
   });
 
   revalidatePosts(userId);
+  revalidateTag(`likedBy-${userId}`);
 };
 
 export const CreateReply = async (
@@ -137,15 +145,20 @@ export const CreateReply = async (
 
 export const UpdateLike = async (
   id: string,
-  isAlreadyLikedByUser: boolean = false
+  isAlreadyLikedByUser: boolean = false,
+  userId?: string
 ) => {
   await httpRequest(`/posts/${id}/likes`, {
     method: !isAlreadyLikedByUser ? 'PUT' : 'DELETE',
   });
+
+  if (userId) {
+    revalidateTag(`likedBy-${userId}`);
+  }
 };
 
 const revalidatePosts = (userId: string) => {
   revalidatePath('/', 'page');
-  revalidateTag({ creators: [userId] }.toString());
+  revalidateTag(`creators-${userId}`);
   revalidatePath(`/user/${userId}`, 'page');
 };
