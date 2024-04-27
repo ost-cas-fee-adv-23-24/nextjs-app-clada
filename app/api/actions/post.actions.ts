@@ -154,11 +154,14 @@ export const UpdateLike = async (
 
   if (userId) {
     revalidateTag(`likedBy-${userId}`);
+    revalidatePath('/', 'page');
   }
+  revalidatePath(`/user/${userId}`, 'page');
 };
 
 const revalidatePosts = (userId: string) => {
   revalidatePath('/', 'page');
   revalidateTag(`creators-${userId}`);
   revalidatePath(`/user/${userId}`, 'page');
+  revalidateTag(`likedBy-${userId}`);
 };
