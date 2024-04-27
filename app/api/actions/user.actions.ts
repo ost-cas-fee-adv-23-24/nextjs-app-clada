@@ -99,6 +99,7 @@ export const UpdateUserAvatar = async (data: FormData, path: string) => {
 
   revalidatePath(path, 'page');
   revalidatePath('/', 'page');
+  revalidatePath('/', 'layout');
 };
 
 export const UpdateUser = async (
