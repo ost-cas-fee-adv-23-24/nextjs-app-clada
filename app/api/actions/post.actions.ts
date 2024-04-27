@@ -154,6 +154,7 @@ export const UpdateLike = async (
 
   if (userId) {
     revalidateTag(`likedBy-${userId}`);
+    revalidateTag(`creators-${userId}`);
     revalidatePath('/', 'page');
   }
   revalidatePath(`/user/${userId}`, 'page');
