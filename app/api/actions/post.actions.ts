@@ -157,7 +157,6 @@ export const UpdateLike = async (
     revalidateTag(`creators-${userId}`);
     revalidatePath('/', 'page');
   }
-  revalidatePath(`/user/${userId}`, 'page');
 };
 
 const revalidatePosts = (userId: string) => {
