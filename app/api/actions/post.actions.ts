@@ -24,13 +24,11 @@ export type GetPostsParams = {
 
 export const GetPosts = async (queryParams?: GetPostsParams) => {
   let tag = '';
-  if (Object.keys(queryParams ?? {}).find((x) => x === 'creators')) {
-    console.log('queryParams?.creators', queryParams?.creators);
+  if (queryParams?.creators) {
     tag = `creators-${queryParams?.creators}`;
   }
 
-  if (Object.keys(queryParams ?? {}).find((x) => x === 'likedBy')) {
-    console.log('queryParams?.likedBy', queryParams?.likedBy);
+  if (queryParams?.likedBy) {
     tag = `likedBy-${queryParams?.likedBy}`;
   }
 
@@ -40,7 +38,7 @@ export const GetPosts = async (queryParams?: GetPostsParams) => {
       method: 'GET',
       next: {
         revalidate: 1200,
-        tags: [tag],
+        tags: tag ? [tag] : undefined,
       },
     },
     queryParams
