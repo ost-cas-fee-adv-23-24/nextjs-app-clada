@@ -6,7 +6,8 @@ import { Friends } from '@/components/user/friends';
 import { Config } from '@/config/env';
 import { PostPaginatedResult } from '@/utils/models';
 import { Tabs } from 'clada-storybook';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { UserPostsContext } from '../../../components/post/user-posts-context';
 import { UserPageSection } from './const';
 
 type Props = {
@@ -50,6 +51,12 @@ export const UserDashboard = ({
         break;
     }
   };
+
+  const { reloadTrigger } = useContext(UserPostsContext);
+
+  useEffect(() => {
+    handleSearch(currentQueryParams);
+  }, [reloadTrigger]);
 
   const handleSearch = async (param: QueryParam) => {
     const apiPosts = await GetPosts({

@@ -1,3 +1,4 @@
+'use server';
 import { GetPosts } from '@/app/api/actions/post.actions';
 import { User } from '@/utils/models';
 import { UserDashboard } from './_user-posts';
@@ -9,14 +10,14 @@ export default async function UserPostsSuspense({
   isPersonalUser: boolean;
   user: User;
 }) {
-  const postsResponse = await GetPosts({ creators: [user.id] });
+  const posts = await GetPosts({ creators: [user.id] });
 
   return (
     <div>
       <UserDashboard
         userId={user.id}
         isPersonalUser={isPersonalUser}
-        postsPaginatedResult={postsResponse}
+        postsPaginatedResult={posts}
         queryParams={{ creators: [user.id] }}
       ></UserDashboard>
     </div>

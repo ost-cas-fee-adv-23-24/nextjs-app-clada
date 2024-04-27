@@ -3,6 +3,7 @@ import { FollowingState } from '@/components/user/following-state';
 import { Profile } from '@/components/user/profile';
 import { User } from '@/utils/models';
 import { Suspense } from 'react';
+import { UserPostsProvider } from '../../../components/post/user-posts-context';
 import { GetUserById, GetUserFollowers } from '../../api/actions/user.actions';
 import { auth } from '../../api/auth/[...nextauth]/auth';
 import UserPostsSuspense from './_user-posts-suspense';
@@ -42,13 +43,14 @@ export default async function Home({ params }: { params: { id: string } }) {
           <div className='pt-s'></div>
         </div>
       )}
-
-      <Suspense fallback={<PostSkeletonList count={10} />}>
-        <UserPostsSuspense
-          isPersonalUser={isPersonalUser}
-          user={user as User}
-        />
-      </Suspense>
+      <UserPostsProvider>
+        <Suspense fallback={<PostSkeletonList count={10} />}>
+          <UserPostsSuspense
+            isPersonalUser={isPersonalUser}
+            user={user as User}
+          />
+        </Suspense>
+      </UserPostsProvider>
     </div>
   );
 }

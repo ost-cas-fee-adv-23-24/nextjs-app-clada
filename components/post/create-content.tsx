@@ -10,6 +10,7 @@ import {
   Textarea,
   UploadIcon,
 } from 'clada-storybook';
+import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 import { ImageUpload } from '../modal/image-upload';
 
@@ -25,6 +26,7 @@ export const CreateContent = ({
   const [imgSrc, setImgSrc] = useState('');
   const [formState, setFormState] = useState<ValidationError | null>(null);
 
+  const { data: session } = useSession();
   const formRef = useRef<HTMLFormElement>(null);
 
   const create = async (event: React.FormEvent) => {
@@ -48,7 +50,7 @@ export const CreateContent = ({
     if (post) {
       response = await CreateReply(post.id, formData);
     } else {
-      response = await CreatePost(formData);
+      response = await CreatePost(formData, session?.user.id);
     }
 
     handleResponse(response);

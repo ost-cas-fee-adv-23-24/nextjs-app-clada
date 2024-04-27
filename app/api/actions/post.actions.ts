@@ -9,7 +9,7 @@ import {
   PostReply,
   ReplyPaginatedResult,
 } from '@/utils/models';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export type GetPostsParams = {
   newerThan?: string;
@@ -23,12 +23,15 @@ export type GetPostsParams = {
 };
 
 export const GetPosts = async (queryParams?: GetPostsParams) => {
+  const tag = queryParams?.toString() ?? 'never';
+
   const response = await httpRequest<PostPaginatedResult>(
     '/posts',
     {
       method: 'GET',
       next: {
         revalidate: 1200,
+        tags: [tag],
       },
     },
     queryParams
@@ -57,7 +60,8 @@ export const GetPostReplies = async (id: string) => {
 };
 
 export const CreatePost = async (
-  data: FormData
+  data: FormData,
+  userId?: string
 ): Promise<Post | ValidationError> => {
   const validation = validate(data);
 
@@ -71,6 +75,8 @@ export const CreatePost = async (
   });
 
   revalidatePath('/', 'page');
+
+  revalidatePosts(userId);
 
   return post as Post;
 };
@@ -106,8 +112,7 @@ export const DeletePost = async (id: string, userId: string) => {
     method: 'DELETE',
   });
 
-  revalidatePath('/', 'page');
-  revalidatePath(`/user/${userId}`, 'page');
+  revalidatePosts(userId);
 };
 
 export const CreateReply = async (
@@ -137,4 +142,10 @@ export const UpdateLike = async (
   await httpRequest(`/posts/${id}/likes`, {
     method: !isAlreadyLikedByUser ? 'PUT' : 'DELETE',
   });
+};
+
+const revalidatePosts = (userId: string) => {
+  revalidatePath('/', 'page');
+  revalidateTag({ creators: [userId] }.toString());
+  revalidatePath(`/user/${userId}`, 'page');
 };
