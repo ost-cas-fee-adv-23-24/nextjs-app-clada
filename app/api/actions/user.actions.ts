@@ -97,8 +97,8 @@ export const UpdateUserAvatar = async (data: FormData, path: string) => {
     false
   );
 
-  revalidatePath(path);
-  revalidatePath('/');
+  revalidatePath(path, 'page');
+  revalidatePath('/', 'page');
 };
 
 export const UpdateUser = async (
@@ -131,7 +131,7 @@ export const FollowUser = async (id: string) => {
     method: 'PUT',
   });
 
-  revalidatePath(`/user/${id}`);
+  revalidatePath(`/user/${id}`, 'page');
 };
 
 export const UnFollowUser = async (id: string) => {
@@ -139,5 +139,5 @@ export const UnFollowUser = async (id: string) => {
     method: 'DELETE',
   });
 
-  revalidatePath(`/user/${id}`);
+  revalidatePath(`/user/${id}`, 'page');
 };
