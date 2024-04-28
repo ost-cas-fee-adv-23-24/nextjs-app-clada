@@ -10,7 +10,8 @@ export default async function Home({
 }) {
   return (
     <section className='w-full'>
-      <div className='pt-l'></div>
+      <p>Suchresultate für : #{searchParams['tag'] ?? '...'}</p>
+      <div className='pt-m'></div>
       <TagedPostsSearchForm />
       <Suspense fallback={<PostSkeletonList />}>
         <TagedPostsWrapper searchParams={searchParams} />
