@@ -68,6 +68,7 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
       loadMorePosts();
     }
   }, [inView]);
+
   useEffect(() => {
     setPosts(postsPaginatedResult?.data as Post[]);
     setMaxPostsCount(postsPaginatedResult?.count ?? 0);
