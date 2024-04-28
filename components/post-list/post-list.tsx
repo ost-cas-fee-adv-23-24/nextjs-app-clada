@@ -5,6 +5,8 @@ import { Post, PostPaginatedResult } from '@/utils/models';
 import { useEffect, useState } from 'react';
 import { SinglePost } from '../post/single-post';
 // inspiration from https://medium.com/@ferlat.simon/infinite-scroll-with-nextjs-server-actions-a-simple-guide-76a894824cfd
+import { IconButton, RepostIcon } from 'clada-storybook';
+import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
 import PostSkeleton from '../skeleton/post-skeleton';
 
@@ -21,8 +23,32 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
     postsPaginatedResult?.data as Post[]
   );
 
+  const [newPosts, setNewPosts] = useState<Array<Post>>([]);
+  const [hasNewPostData, setHasNewPostData] = useState(false);
+
   const { ref, inView } = useInView();
   const [allPostsLoaded, setAllPostsLoaded] = useState<boolean>(false);
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const evtSource = new EventSource(`${Config.apiUrl}/posts/_sse`);
+
+    evtSource.addEventListener('postCreated', (e) => {
+      const newPost: Post = JSON.parse(e.data) as Post;
+
+      if (newPost.creator.id === session?.user.id) {
+        setPosts((posts) => [newPost, ...posts]);
+      } else {
+        setNewPosts([newPost, ...newPosts]);
+        setHasNewPostData(true);
+      }
+    });
+
+    return () => {
+      evtSource.close();
+    };
+  }, [session?.user.id]);
 
   const loadMorePosts = async () => {
     if (!allPostsLoaded) {
@@ -42,11 +68,17 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
       loadMorePosts();
     }
   }, [inView]);
-
   useEffect(() => {
     setPosts(postsPaginatedResult?.data as Post[]);
     setMaxPostsCount(postsPaginatedResult?.count ?? 0);
   }, [postsPaginatedResult]);
+
+  const refresh = () => {
+    setPosts((posts) => [...newPosts, ...posts]);
+    setHasNewPostData(false);
+
+    return false;
+  };
 
   if (posts?.length === 0) {
     return <>No Results</>;
@@ -54,6 +86,20 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
 
   return (
     <>
+      {hasNewPostData && (
+        <div className='flex justify-end mt-[-32px]'>
+          <IconButton
+            Icon={RepostIcon}
+            href='javascript:void(0);'
+            variant='primary'
+            onClick={refresh}
+          >
+            Click to add brand new posts!
+          </IconButton>
+          <div className='pt-l'></div>
+        </div>
+      )}
+
       {posts.map((post) => (
         <div key={post.id}>
           <SinglePost post={post} />

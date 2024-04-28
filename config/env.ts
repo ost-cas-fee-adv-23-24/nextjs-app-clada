@@ -6,7 +6,8 @@ type Environment = {
 };
 
 export const Config: Readonly<Environment> = {
-  apiUrl: process.env.API_URL,
+  apiUrl:
+    process.env.API_URL ?? 'https://mumble-api-prod-4cxdci3drq-oa.a.run.app',
   zitadelClientId: process.env.ZITADEL_CLIENT_ID,
   defaultPageSize: process.env.DEFAULT_PAGE_SIZE
     ? +process.env.DEFAULT_PAGE_SIZE
