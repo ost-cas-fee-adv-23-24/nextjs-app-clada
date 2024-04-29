@@ -4,7 +4,7 @@ import { httpRequest } from '@/utils/api/request';
 import { validateUser, validateUserAvatar } from '@/utils/api/validation';
 import { ValidationError, parseValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>('/users', {
@@ -44,6 +44,7 @@ export const GetUserFollowers = async (
       method: 'GET',
       next: {
         revalidate: 300,
+        tags: [`followers-${id}`],
       },
     }
   );
@@ -132,7 +133,7 @@ export const FollowUser = async (id: string) => {
     method: 'PUT',
   });
 
-  revalidatePath(`/user/${id}`, 'page');
+  revalidateTag(`followers-${id}`);
 };
 
 export const UnFollowUser = async (id: string) => {
@@ -140,5 +141,5 @@ export const UnFollowUser = async (id: string) => {
     method: 'DELETE',
   });
 
-  revalidatePath(`/user/${id}`, 'page');
+  revalidateTag(`followers-${id}`);
 };
