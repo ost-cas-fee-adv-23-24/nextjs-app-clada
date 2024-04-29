@@ -2,7 +2,6 @@
 
 import PostList from '@/components/post-list/post-list';
 import { GetPosts } from '../api/actions/post.actions';
-import TagedPostsSearchForm from './_taged-posts-search-form';
 
 export default async function TagedPostsWrapper({
   searchParams,
