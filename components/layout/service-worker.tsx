@@ -12,7 +12,7 @@ export const ServiceWorker = () => {
         },
         function (err) {
           console.log('Service Worker registration failed: ', err);
-        },
+        }
       );
 
       window.addEventListener('offline', () => {

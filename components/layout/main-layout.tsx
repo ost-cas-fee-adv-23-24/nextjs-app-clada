@@ -1,8 +1,8 @@
+import { ServiceWorker } from '@/components/layout/service-worker';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 import { Footer } from './footer';
 import { Header } from './header';
-import { ServiceWorker } from '@/components/layout/service-worker';
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {
   return (

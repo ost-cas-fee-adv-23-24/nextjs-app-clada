@@ -13,14 +13,16 @@ export default async function TagedPostsWrapper({
     tags: Array.isArray(searchParams.tag)
       ? (searchParams.tag as string[])
       : [searchParams.tag as string],
-  }
+  };
 
   const posts = await GetPosts(queryParams);
 
   return (
     <>
       <div className='pt-m'></div>
-      {posts && <PostList postsPaginatedResult={posts} queryParams={queryParams} />}
+      {posts && (
+        <PostList postsPaginatedResult={posts} queryParams={queryParams} />
+      )}
     </>
   );
 }

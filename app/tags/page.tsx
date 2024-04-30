@@ -1,7 +1,7 @@
-import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
-import React, { Suspense } from 'react';
-import TagedPostsWrapper from './_taged-posts-wrapper';
 import TagedPostsSearchForm from '@/app/tags/_taged-posts-search-form';
+import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
+import { Suspense } from 'react';
+import TagedPostsWrapper from './_taged-posts-wrapper';
 
 export default async function Home({
   searchParams,
