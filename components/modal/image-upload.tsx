@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, EyeIcon } from 'clada-storybook';
+import { Button, UploadIcon } from 'clada-storybook';
 import { useEffect, useRef, useState } from 'react';
 import { ModalWindow } from './modal';
 
@@ -106,7 +106,7 @@ export const ImageUpload = ({
           style={!imgSrc ? {} : { display: 'none' }}
         >
           <div>
-            <EyeIcon size='l'></EyeIcon>
+            <UploadIcon size='l'></UploadIcon>
           </div>
           <div className='mb-font-paragraph-l text-base-600'>
             Datei hierhin ziehen ...
@@ -130,7 +130,7 @@ export const ImageUpload = ({
         <Button
           size='m'
           color='base'
-          Icon={EyeIcon}
+          Icon={UploadIcon}
           label='... oder Datei auswählen'
           onClick={handleFileSelectClick}
         ></Button>

@@ -1,49 +1,70 @@
-import { GetUserById } from '@/app/api/actions/user.actions';
-import { Post } from '@/utils/models';
-import { useEffect, useState } from 'react';
+'use client';
+import { useUser } from '@/utils/hooks/hooks';
+import { Post, User } from '@/utils/models';
 import { TimeDiff } from '../shared/time-diff';
 import { UserImage } from '../shared/user-image';
 import { UserHandle } from './user-handle';
-import { getName } from './user-utils';
+import { UserName } from './user-name';
 
-export const UserHeader = ({
-  post,
-  showTime = false,
+const UserInfoDisplay = ({
+  user,
+  useLarge,
+  showTime,
+  postId,
 }: {
-  post: Post;
-  showTime?: boolean;
-}) => {
-  const [displayedName, setDisplayedName] = useState('Loading...');
-
-  useEffect(() => {
-    if (post?.creator?.id) {
-      GetUserById(post.creator.id)
-        .then((user) => {
-          setDisplayedName(getName(user));
-        })
-        .catch((error) => {
-          console.error('Failed to fetch user', error);
-          setDisplayedName('Unknown User');
-        });
-    }
-  }, [post?.creator?.id]);
-
-  return (
-    <div className='flex'>
+  user: User;
+  useLarge: boolean;
+  showTime: boolean;
+  postId: string;
+}) => (
+  <div className='flex'>
+    {!useLarge && (
       <div className='mr-xs'>
-        <UserImage size='s' border={false} url={post?.creator?.avatarUrl} />
+        <UserImage size='s' border={false} url={user.avatarUrl} />
       </div>
-      <div>
-        <div className='mb-xs mb-font-label-m'>{displayedName}</div>
-        <div className='flex'>
-          <UserHandle name={post.creator.username} id={post.creator.id} />
-        </div>
+    )}
+    <div>
+      <UserName user={user} useLarge={useLarge}></UserName>
+      <div className='flex'>
+        <UserHandle name={user.username} id={user.id} />
         {showTime && (
           <div className='ml-s'>
-            <TimeDiff ulid={post.id}></TimeDiff>
+            <TimeDiff ulid={postId} href={`/post/${postId}`}></TimeDiff>
           </div>
         )}
       </div>
+    </div>
+  </div>
+);
+
+export const UserHeader = ({
+  post,
+  currentUserId,
+  useCurrentUser = false,
+  showTime = false,
+  useLarge = false,
+}: {
+  post: Post;
+  currentUserId?: string;
+  useCurrentUser?: boolean;
+  showTime?: boolean;
+  useLarge?: boolean;
+}) => {
+  const userId = useCurrentUser ? currentUserId : post.creator.id;
+  const { user, isLoading } = useUser(userId);
+
+  const displayUser = isLoading && !useCurrentUser ? post.creator : user;
+
+  return (
+    <div>
+      {displayUser && (
+        <UserInfoDisplay
+          user={displayUser}
+          useLarge={useLarge}
+          showTime={showTime}
+          postId={post.id}
+        />
+      )}
     </div>
   );
 };

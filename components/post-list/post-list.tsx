@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { SinglePost } from '../post/single-post';
 // inspiration from https://medium.com/@ferlat.simon/infinite-scroll-with-nextjs-server-actions-a-simple-guide-76a894824cfd
 import { useInView } from 'react-intersection-observer';
+import { CreatePost as FirstPost } from '../post/create-post';
 import PostSkeleton from '../skeleton/post-skeleton';
 
 type Props = {
@@ -13,7 +14,15 @@ type Props = {
   queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
 };
 
-export default function PostList({ postsPaginatedResult, queryParams }: Props) {
+export default function PostList({
+  postsPaginatedResult,
+  queryParams,
+  isPersonalUser = false,
+}: {
+  postsPaginatedResult: PostPaginatedResult | null;
+  queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
+  isPersonalUser?: boolean;
+}) {
   const [maxPostsCount, setMaxPostsCount] = useState(
     postsPaginatedResult?.count ?? 0
   );
@@ -49,7 +58,20 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
   }, [postsPaginatedResult]);
 
   if (posts?.length === 0) {
-    return <>No Results</>;
+    return (
+      <>
+        {isPersonalUser ? (
+          <FirstPost
+            label='Voll leer hier 😲'
+            subtitle='Verfasse deinen ersten Mumble oder folge anderen Usern!'
+            placeholder='Und was meinst du dazu?'
+            showUser={false}
+          ></FirstPost>
+        ) : (
+          <>No Results</>
+        )}
+      </>
+    );
   }
 
   return (
