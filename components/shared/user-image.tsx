@@ -1,6 +1,9 @@
 'use client';
 
+import { UpdateUserAvatar } from '@/app/api/actions/user.actions';
 import { Avatar, AvatarEdit } from 'clada-storybook';
+import { useState } from 'react';
+import { ImageUpload } from '../modal/image-upload';
 
 export const UserImage = ({
   border = false,
@@ -20,13 +23,38 @@ export const UserImage = ({
     noBorder: !border,
     ...(url && { imageProps: { alt: 'User Image', src: url } }),
   };
+  const [showImageUpload, setShowImageUpload] = useState(false);
 
   const onClick = () => {
-    alert('edit');
+    setShowImageUpload(true);
+  };
+
+  const handleCloseImageUpload = async (file?: File, imgSrc?: string) => {
+    const formData = new FormData();
+
+    if (file) {
+      formData.append('media', file);
+      formData.append('text', file.name);
+
+      try {
+        await UpdateUserAvatar(formData, document.location.pathname);
+      } catch (error) {
+        console.error('Failed to update user:', error);
+        setShowImageUpload(false);
+      }
+    }
+
+    setShowImageUpload(false);
   };
 
   return editable ? (
-    <AvatarEdit {...avatarProps} editOnClick={onClick} />
+    <div>
+      <AvatarEdit {...avatarProps} editOnClick={onClick} />
+      <ImageUpload
+        isShown={showImageUpload}
+        onClose={handleCloseImageUpload}
+      ></ImageUpload>
+    </div>
   ) : (
     <Avatar {...avatarProps} hoverEffect={hoverEffect ? 'all' : undefined} />
   );

@@ -9,7 +9,7 @@ import {
   PostReply,
   ReplyPaginatedResult,
 } from '@/utils/models';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export type GetPostsParams = {
   newerThan?: string;
@@ -23,12 +23,22 @@ export type GetPostsParams = {
 };
 
 export const GetPosts = async (queryParams?: GetPostsParams) => {
+  let tag = '';
+  if (queryParams?.creators) {
+    tag = `creators-${queryParams?.creators}`;
+  }
+
+  if (queryParams?.likedBy) {
+    tag = `likedBy-${queryParams?.likedBy}`;
+  }
+
   const response = await httpRequest<PostPaginatedResult>(
     '/posts',
     {
       method: 'GET',
       next: {
         revalidate: 1200,
+        tags: tag ? [tag] : undefined,
       },
     },
     queryParams
@@ -57,7 +67,8 @@ export const GetPostReplies = async (id: string) => {
 };
 
 export const CreatePost = async (
-  data: FormData
+  data: FormData,
+  userId?: string
 ): Promise<Post | ValidationError> => {
   const validation = validate(data);
 
@@ -70,8 +81,7 @@ export const CreatePost = async (
     body: data,
   });
 
-  revalidatePath('/', 'page');
-  revalidatePath('/tags', 'page')
+  revalidatePosts(userId ?? '');
 
   return post as Post;
 };
@@ -102,10 +112,13 @@ export const UpdateMedia = async (id: string, data: FormData) => {
   });
 };
 
-export const DeletePost = async (id: string) => {
+export const DeletePost = async (id: string, userId: string) => {
   await httpRequest<void>(`/posts/${id}`, {
     method: 'DELETE',
   });
+
+  revalidatePosts(userId);
+  revalidateTag(`likedBy-${userId}`);
 };
 
 export const CreateReply = async (
@@ -123,18 +136,30 @@ export const CreateReply = async (
     body: data,
   });
 
-  revalidatePath('/');
+  revalidatePath('/', 'page');
 
   return reply as PostReply;
 };
 
 export const UpdateLike = async (
   id: string,
-  isAlreadyLikedByUser: boolean = false
+  isAlreadyLikedByUser: boolean = false,
+  userId?: string
 ) => {
   await httpRequest(`/posts/${id}/likes`, {
     method: !isAlreadyLikedByUser ? 'PUT' : 'DELETE',
   });
 
-  revalidatePath('/');
+  if (userId) {
+    revalidateTag(`likedBy-${userId}`);
+    revalidateTag(`creators-${userId}`);
+    revalidatePath('/', 'page');
+  }
+};
+
+const revalidatePosts = (userId: string) => {
+  revalidatePath('/', 'page');
+  revalidateTag(`creators-${userId}`);
+  revalidatePath(`/user/${userId}`, 'page');
+  revalidateTag(`likedBy-${userId}`);
 };

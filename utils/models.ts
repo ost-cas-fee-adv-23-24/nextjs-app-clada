@@ -293,6 +293,8 @@ export interface User {
   lastname?: string | undefined;
 }
 
+export type PrivateUser = Omit<User, 'firstname' | 'lastname'>;
+
 /**
  * Paginated API result that contains arbitrary
  * data and an optional link for the next / previous page.
