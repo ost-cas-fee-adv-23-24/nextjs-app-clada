@@ -28,7 +28,7 @@ export default async function TagedPostsSearchForm() {
           </form>
           <div className='pt-m'></div>
           <Button label='Suchen' color='primary' size='m' onClick={() => {
-              formRef.current?.submit()
+              formRef.current?.requestSubmit()
           }} />
       </>
     )
