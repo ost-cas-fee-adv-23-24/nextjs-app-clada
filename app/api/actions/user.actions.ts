@@ -4,7 +4,7 @@ import { httpRequest } from '@/utils/api/request';
 import { validateUser, validateUserAvatar } from '@/utils/api/validation';
 import { ValidationError, parseValidationError } from '@/utils/error';
 import { UpdateUserData, User, UserPaginatedResult } from '@/utils/models';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export const GetUsers = async (): Promise<UserPaginatedResult> => {
   const response = await httpRequest<UserPaginatedResult>('/users', {
@@ -44,6 +44,7 @@ export const GetUserFollowers = async (
       method: 'GET',
       next: {
         revalidate: 300,
+        tags: [`followers-${id}`],
       },
     }
   );
@@ -62,14 +63,11 @@ export const GetUserFollowees = async (
     `/users/${id}/followees`,
     {
       method: 'GET',
-      next: {
-        revalidate: 300,
-      },
     }
   );
 
   if (!response) {
-    throw new Error('No followers found');
+    throw new Error('No followees found');
   }
 
   return response;
@@ -83,19 +81,26 @@ export const DeleteUserAvatar = async (): Promise<void> => {
   // todo: check if needs revalidation
 };
 
-export const UpdateUserAvatar = async (data: FormData) => {
+export const UpdateUserAvatar = async (data: FormData, path: string) => {
   const validation = validateUserAvatar(data);
 
   if (!validation.success) {
     return Promise.reject(parseValidationError(validation));
   }
 
-  await httpRequest<void>('/users/avatar', {
-    method: 'PUT',
-    body: data,
-  });
+  await httpRequest<void>(
+    '/users/avatar',
+    {
+      method: 'PUT',
+      body: data,
+    },
+    undefined,
+    false
+  );
 
-  // todo: check if needs revalidation
+  revalidatePath(path, 'page');
+  revalidatePath('/', 'page');
+  revalidatePath('/', 'layout');
 };
 
 export const UpdateUser = async (
@@ -119,8 +124,8 @@ export const UpdateUser = async (
     }),
   });
 
-  revalidatePath('/user/[id]', 'layout')
-  revalidatePath('/', 'layout')
+  revalidatePath('/user/[id]', 'layout');
+  revalidatePath('/', 'layout');
 };
 
 export const FollowUser = async (id: string) => {
@@ -128,13 +133,13 @@ export const FollowUser = async (id: string) => {
     method: 'PUT',
   });
 
-  // todo: check if needs revalidation
+  revalidateTag(`followers-${id}`);
 };
 
-export const UnfollowUser = async (id: string) => {
+export const UnFollowUser = async (id: string) => {
   await httpRequest(`/users/${id}/followers`, {
-    method: 'PUT',
+    method: 'DELETE',
   });
 
-  // todo: check if needs revalidation
+  revalidateTag(`followers-${id}`);
 };
