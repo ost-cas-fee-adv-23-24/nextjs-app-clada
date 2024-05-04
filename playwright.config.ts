@@ -23,15 +23,12 @@ export default defineConfig({
   reporter: 'html',
   use: {
     trace: 'on-first-retry',
+    permissions: ['clipboard-read', 'clipboard-write']
   },
   projects: [
     {
       name: 'chromium',
-      use: { 
-        contextOptions: {
-          permissions: ['clipboard-read', 'clipboard-write']
-        }
-       },
+      use: { ...devices['Desktop Chrome'] },
     },
   ],
   webServer: {
