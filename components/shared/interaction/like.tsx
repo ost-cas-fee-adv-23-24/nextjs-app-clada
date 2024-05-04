@@ -45,6 +45,7 @@ export const Like = ({ post }: { post: Post }) => {
       labels={likeLabels}
       isAlreadyLiked={likedBySelf}
       onClick={like}
+      testid='single-post-like'
     ></LikeButton>
   );
 };

@@ -6,11 +6,6 @@ import { Post } from '@/utils/models';
 import { CancelIcon, Toggle } from 'clada-storybook';
 import { useContext } from 'react';
 
-const copyLinkLabels = {
-  default: 'Copy Link',
-  active: 'Link copied',
-};
-
 export const DeleteUserPost = ({ post }: { post: Post }) => {
   const { reloadData } = useContext(UserPostsContext);
 
@@ -29,6 +24,7 @@ export const DeleteUserPost = ({ post }: { post: Post }) => {
       icon={<CancelIcon size='s' color='base' />}
       hoveredIcon={<CancelIcon size='s' color='error' />}
       toggledIcon={<CancelIcon size='s' color='error' />}
+      testid='single-post-delete'
     ></Toggle>
   );
 };

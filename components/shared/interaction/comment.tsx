@@ -18,6 +18,7 @@ export const Comment = ({ post }: { post: Post }) => {
         hasCommented={!!post?.replies}
         labels={commentLabels}
         onClick={() => false}
+        testid='single-post-comment'
       ></CommentButton>
     </Link>
   );

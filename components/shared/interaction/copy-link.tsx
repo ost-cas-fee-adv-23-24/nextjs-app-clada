@@ -20,6 +20,7 @@ export const CopyLink = ({ post }: { post: Post }) => {
     <CopyLinkButton
       labels={copyLinkLabels}
       onClick={copyToClipboard}
+      testid='single-post-copy-link'
     ></CopyLinkButton>
   );
 };

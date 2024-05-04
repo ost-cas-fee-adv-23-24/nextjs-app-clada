@@ -27,6 +27,4 @@ export const login = async (page: Page) => {
     expect(logoutButtonIsVisible).toBeTruthy(); 
 }
 
-export const getCreateMumbleText = () => {
-  return `${Date.now()} Created mumble from test. #test #team-clada-rocks`
-}
+export const createMumbleText = `abbf932a-46b9-487c-9563-2684696b44e6 Created mumble from test. #test #team-clada-rocks`;
