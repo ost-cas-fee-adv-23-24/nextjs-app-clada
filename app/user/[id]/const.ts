@@ -1,4 +1,5 @@
 export enum UserPageSection {
-  LikedByUser = 'liked',
   CreatedByUser = 'created',
+  LikedByUser = 'liked',
+  Friends = 'friends',
 }

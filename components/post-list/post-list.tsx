@@ -8,6 +8,7 @@ import { SinglePost } from '../post/single-post';
 import { IconButton, RepostIcon } from 'clada-storybook';
 import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
+import { CreatePost as FirstPost } from '../post/create-post';
 import PostSkeleton from '../skeleton/post-skeleton';
 
 type Props = {
@@ -15,7 +16,15 @@ type Props = {
   queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
 };
 
-export default function PostList({ postsPaginatedResult, queryParams }: Props) {
+export default function PostList({
+  postsPaginatedResult,
+  queryParams,
+  isPersonalUser = false,
+}: {
+  postsPaginatedResult: PostPaginatedResult | null;
+  queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
+  isPersonalUser?: boolean;
+}) {
   const [maxPostsCount, setMaxPostsCount] = useState(
     postsPaginatedResult?.count ?? 0
   );
@@ -82,7 +91,20 @@ export default function PostList({ postsPaginatedResult, queryParams }: Props) {
   };
 
   if (posts?.length === 0) {
-    return <>No Results</>;
+    return (
+      <>
+        {isPersonalUser ? (
+          <FirstPost
+            label='Voll leer hier 😲'
+            subtitle='Verfasse deinen ersten Mumble oder folge anderen Usern!'
+            placeholder='Und was meinst du dazu?'
+            showUser={false}
+          ></FirstPost>
+        ) : (
+          <>No Results</>
+        )}
+      </>
+    );
   }
 
   return (

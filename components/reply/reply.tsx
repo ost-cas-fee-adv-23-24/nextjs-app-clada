@@ -9,7 +9,7 @@ export const Reply = ({ reply }: { reply: PostReply }) => {
   return (
     <div className='pr-xl pl-xl  pt-l pb-l relative w-full border-b-1 border-base-100 bg-white text-base-600 last:rounded-b-m'>
       <div className='flex'>
-        <UserHeader post={reply}></UserHeader>
+        <UserHeader post={reply} showTime={true}></UserHeader>
       </div>
 
       <div className='mt-s text-black'>{reply.text}</div>
