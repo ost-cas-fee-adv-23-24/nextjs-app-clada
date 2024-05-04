@@ -41,9 +41,9 @@ export default function PostList({
   const { data: session } = useSession();
 
   useEffect(() => {
-    const evtSource = new EventSource(`${Config.apiUrl}/posts/_sse`);
+    const eventSource = new EventSource(`${Config.apiUrl}/posts/_sse`);
 
-    evtSource.addEventListener('postCreated', (e) => {
+    eventSource.addEventListener('postCreated', (e) => {
       const newPost: Post = JSON.parse(e.data) as Post;
 
       if (newPost.creator.id === session?.user.id) {
@@ -55,7 +55,7 @@ export default function PostList({
     });
 
     return () => {
-      evtSource.close();
+      eventSource.close();
     };
   }, [session?.user.id]);
 
@@ -87,6 +87,8 @@ export default function PostList({
     setPosts((posts) => [...newPosts, ...posts]);
     setHasNewPostData(false);
 
+    window.scrollTo(0, 0);
+
     return false;
   };
 
@@ -110,16 +112,19 @@ export default function PostList({
   return (
     <>
       {hasNewPostData && (
-        <div className='flex justify-end mt-[-32px]'>
-          <IconButton
-            Icon={RepostIcon}
-            href='javascript:void(0);'
-            variant='primary'
-            onClick={refresh}
-          >
-            Click to add brand new posts!
-          </IconButton>
-          <div className='pt-l'></div>
+        <div className='sticky top-[84px] z-50'>
+          <div className='flex justify-around mt-[-32px]'>
+            <div className='bg-base-100 p-xs rounded-full cursor-pointer'>
+              <IconButton
+                Icon={RepostIcon}
+                href='javascript:void(0);'
+                variant='primary'
+                onClick={refresh}
+              >
+                Refresh
+              </IconButton>
+            </div>
+          </div>
         </div>
       )}
 
