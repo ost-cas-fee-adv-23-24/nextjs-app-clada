@@ -23,7 +23,7 @@ export default defineConfig({
   reporter: 'html',
   use: {
     trace: 'on-first-retry',
-    permissions: ['clipboard-read', 'clipboard-write']
+    permissions: ['clipboard-read', 'clipboard-write'],
   },
   projects: [
     {

@@ -62,7 +62,7 @@ export const Profile = ({
       </div>
       <div className='pt-l'></div>
       <div className='flex gap-xs'>
-        <div className='mb-font-h3'>{getName(user)}</div>
+        <h1 className='mb-font-h3'>{getName(user)}</h1>
         <div className='self-center'>
           <SettingsIcon color='primary'></SettingsIcon>
         </div>

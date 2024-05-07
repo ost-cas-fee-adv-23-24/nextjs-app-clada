@@ -30,7 +30,9 @@ export const PostContent = ({ post, size }: { post: Post; size?: 'large' }) => {
       <div className={textClasses} onClick={(e) => e.stopPropagation()}>
         <p dangerouslySetInnerHTML={{ __html: replaceTags(post.text)! }}></p>
       </div>
-      <ZoomImage src={post?.mediaUrl}></ZoomImage>
+      <div onClick={(e) => e.stopPropagation()}>
+        <ZoomImage src={post?.mediaUrl}></ZoomImage>
+      </div>
       {post.mediaUrl && <div className='grid place-content-center'></div>}
       <div className='pt-s'></div>
       <div onClick={(e) => e.stopPropagation()}>

@@ -76,7 +76,7 @@ export const UserDashboard = ({
   return (
     <>
       {isPersonalUser && (
-        <>
+        <div data-testid='user-tabs'>
           <Tabs
             tabs={[
               {
@@ -94,7 +94,7 @@ export const UserDashboard = ({
             ]}
           />
           <div className='pt-l'></div>
-        </>
+        </div>
       )}
       {isPersonalUser && showFriends ? (
         <div className='min-h-[680px]'>

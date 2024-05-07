@@ -34,13 +34,13 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
       - name: Run Playwright tests
         run: npx playwright test
-        env: 
-            ZITADEL_CLIENT_ID: ${{ secrets.ZITADEL_CLIENT_ID }}
-            API_URL: ${{ secrets.API_URL }}
-            DEFAULT_PAGE_SIZE: ${{ secrets.DEFAULT_PAGE_SIZE }}
-            DEFAULT_OFFSET: ${{ secrets.DEFAULT_OFFSET }}
-            TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
-            TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+        env:
+          ZITADEL_CLIENT_ID: ${{ secrets.ZITADEL_CLIENT_ID }}
+          API_URL: ${{ secrets.API_URL }}
+          DEFAULT_PAGE_SIZE: ${{ secrets.DEFAULT_PAGE_SIZE }}
+          DEFAULT_OFFSET: ${{ secrets.DEFAULT_OFFSET }}
+          TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
