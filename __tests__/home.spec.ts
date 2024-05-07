@@ -51,7 +51,6 @@ test.describe('Homepage', () => {
 
   test.describe('Header', () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto(DEFAULT_PAGE_URL);
       await login(page);
     });
 
@@ -94,7 +93,6 @@ test.describe('Homepage', () => {
 
   test.describe('Posts', () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto(DEFAULT_PAGE_URL);
       await login(page);
     });
 
