@@ -9,16 +9,13 @@ test.describe('User Page', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(CLADA_TEST_USER_PAGE_URL);
     });
-
     test('has basic elements', async ({ page }) => {
       await expect(page.locator('h1')).toHaveText('CladaTestUser');
     });
-
     test('ensure that profile image is not editable', async ({ page }) => {
         await expect(page.locator(`[data-testid="${MumbleTestIds.UserAvatarNotEditable}"]`)).toBeVisible();
     })
   });
-
   test.describe('Logged In', () => {
     test.beforeEach(async ({ page }) => {
       await login(page, CLADA_TEST_USER_PAGE_URL);
