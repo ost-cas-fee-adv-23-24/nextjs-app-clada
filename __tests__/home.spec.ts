@@ -39,8 +39,6 @@ test.describe('Homepage', () => {
     test('loads 10 more on page scroll to bottom', async ({ page }) => {
       await expect(page.getByTestId(MumbleTestIds.Post)).toHaveCount(10);
 
-      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-
       await page
         .getByTestId('post-list-loading-indicator')
         .scrollIntoViewIfNeeded();
