@@ -2,8 +2,8 @@
 
 import { GetPosts } from '@/actions/post.actions';
 import { auth } from '@/auth';
-import PostList from '@/components/post-list/post-list';
-import { CreatePost } from '@/components/post/create-post';
+import { CreatePost } from '@/post/create-post';
+import PostList from '@/post/post-list/post-list';
 
 export default async function HomepagePostsWrapper() {
   const session = await auth();

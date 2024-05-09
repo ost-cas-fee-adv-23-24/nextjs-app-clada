@@ -1,7 +1,7 @@
 'use client';
-import { InteractionStrip } from '@/shared/interaction/interaction-strip';
-import { UserImage } from '@/shared/user-image';
-import ZoomImage from '@/shared/zoom-image';
+import { InteractionStrip } from '@/components/_shared/interaction/interaction-strip';
+import { UserImage } from '@/components/_shared/user-image';
+import ZoomImage from '@/components/_shared/zoom-image';
 import { UserHeader } from '@/user/user-header';
 import { Post } from '@/utils/models';
 import { createSnippet } from '@/utils/strings';

@@ -1,7 +1,7 @@
 import { GetPostById, GetPostReplies } from '@/actions/post.actions';
-import { PostContent } from '@/components/post/post-content';
-import { CreateReplyComponent } from '@/components/reply/create-reply';
-import { Reply } from '@/components/reply/reply';
+import { PostContent } from '@/post/post-content';
+import { CreateReplyComponent } from '@/post/reply/create-reply';
+import { Reply } from '@/post/reply/reply';
 import { Post } from '@/utils/models';
 
 export default async function Detail({
@@ -32,9 +32,9 @@ export default async function Detail({
             <CreateReplyComponent post={detailedPost}></CreateReplyComponent>
           </div>
 
-          {replies?.data?.length && <h2 className='sr-only'>Antworten</h2>}
+          {!!replies?.data?.length && <h2 className='sr-only'>Antworten</h2>}
 
-          {replies?.data?.length &&
+          {!!replies?.data?.length &&
             replies.data?.map((post: Post) => (
               <Reply key={post.id} reply={post}></Reply>
             ))}

@@ -2,10 +2,10 @@
 
 import { GetUserById } from '@/actions/user.actions';
 import { auth } from '@/auth';
-import { SettingsModal } from '@/components/modal/settings';
-import LoginButton from '@/shared/button/login-button';
-import LogoutButton from '@/shared/button/logout-button';
-import { UserImage } from '@/shared/user-image';
+import LoginButton from '@/components/_shared/button/login-button';
+import LogoutButton from '@/components/_shared/button/logout-button';
+import { UserImage } from '@/components/_shared/user-image';
+import { SettingsModal } from '@/components/modals/settings';
 import { User } from '@/utils/models';
 import Link from 'next/link';
 

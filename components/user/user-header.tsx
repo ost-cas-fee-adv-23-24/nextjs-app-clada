@@ -1,6 +1,6 @@
 'use client';
-import { TimeDiff } from '@/shared/time-diff';
-import { UserImage } from '@/shared/user-image';
+import { TimeDiff } from '@/components/_shared/time-diff';
+import { UserImage } from '@/components/_shared/user-image';
 import { UserHandle } from '@/user/user-handle';
 import { UserName } from '@/user/user-name';
 import { useUser } from '@/utils/hooks/hooks';

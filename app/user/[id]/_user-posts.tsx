@@ -1,9 +1,9 @@
 'use client';
 
 import { GetPosts, GetPostsParams } from '@/actions/post.actions';
-import PostList from '@/components/post-list/post-list';
+import PostList from '@/post/post-list/post-list';
 
-import { UserPostsContext } from '@/components/post/user-posts-context';
+import { UserPostsContext } from '@/post/user-posts-context';
 import { Friends } from '@/user/friends';
 import { PostPaginatedResult } from '@/utils/models';
 import { Tabs } from 'clada-storybook';

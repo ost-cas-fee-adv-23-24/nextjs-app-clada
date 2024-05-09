@@ -12,8 +12,8 @@ export const SettingsModal = ({
   showText = true,
 }: {
   user: User;
-  color: 'white' | 'primary';
-  showText: boolean;
+  color?: 'white' | 'primary';
+  showText?: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   let formRef = useRef<HTMLFormElement>(null);

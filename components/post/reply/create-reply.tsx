@@ -1,6 +1,6 @@
 'use client';
 
-import { CreateContent } from '@/components/post/create-content';
+import { CreateContent } from '@/post/create-content';
 import { UserHeader } from '@/user/user-header';
 import { Post } from '@/utils/models';
 import { useSession } from 'next-auth/react';

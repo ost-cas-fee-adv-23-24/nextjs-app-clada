@@ -1,7 +1,7 @@
 'use server';
 
 import { GetPosts } from '@/actions/post.actions';
-import PostList from '@/components/post-list/post-list';
+import PostList from '@/post/post-list/post-list';
 
 export default async function TagedPostsWrapper({
   searchParams,
