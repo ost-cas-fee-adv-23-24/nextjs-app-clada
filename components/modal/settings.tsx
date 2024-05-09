@@ -6,7 +6,15 @@ import { User } from '@/utils/models';
 import { Input, Modal, SettingsIcon } from 'clada-storybook';
 import { useRef, useState } from 'react';
 
-export const SettingsModal = ({ user }: { user: User }) => {
+export const SettingsModal = ({
+  user,
+  color = 'white',
+  showText = true,
+}: {
+  user: User;
+  color: 'white' | 'primary';
+  showText: boolean;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   let formRef = useRef<HTMLFormElement>(null);
   const [formState, setFormState] = useState<ValidationError | null>();
@@ -29,9 +37,9 @@ export const SettingsModal = ({ user }: { user: User }) => {
     <>
       <button onClick={() => setIsOpen(true)} aria-label='Settings'>
         <div className='flex justify-center self-center'>
-          <SettingsIcon color='white'></SettingsIcon>
+          <SettingsIcon color={color}></SettingsIcon>
         </div>
-        <span className='text-white'>Settings</span>
+        {showText && <span className='text-white'>Settings</span>}
       </button>
       <Modal
         title='Einstellungen'

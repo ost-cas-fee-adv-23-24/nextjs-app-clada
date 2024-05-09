@@ -49,7 +49,7 @@ export const UserList = ({
     <div>
       {followees && (
         <div>
-          <div className='mb-font-h3'>{title}</div>
+          <h3 className='mb-font-h3'>{title}</h3>
           <div className='pt-s'></div>
         </div>
       )}

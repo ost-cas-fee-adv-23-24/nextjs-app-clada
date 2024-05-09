@@ -32,9 +32,12 @@ export const UserDashboard = ({
     useState<QueryParam>(queryParams);
 
   const [showFriends, setShowFriends] = useState(false);
+  const [title, setTitle] = useState(UserPageSection.CreatedByUser);
 
   const onSectionChange = async (section: UserPageSection) => {
     const temporaryQueryParam: QueryParam = {};
+
+    setTitle(section);
 
     switch (section) {
       case UserPageSection.CreatedByUser:
@@ -78,6 +81,7 @@ export const UserDashboard = ({
     <>
       {isPersonalUser && (
         <>
+          <h2 className='sr-only'>{title}</h2>
           <Tabs
             tabs={[
               {

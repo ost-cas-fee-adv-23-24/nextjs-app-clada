@@ -6,8 +6,9 @@ import { Location } from '@/user/location';
 import { UserHandle } from '@/user/user-handle';
 import { getName } from '@/user/user-utils';
 import { User } from '@/utils/models';
-import { EditIcon, SettingsIcon } from 'clada-storybook';
+import { EditIcon } from 'clada-storybook';
 import NextImage from 'next/image';
+import { SettingsModal } from '../modal/settings';
 
 const fakeULID = '01HGX50H2SXXPE51S60Q7QY29M';
 
@@ -62,9 +63,13 @@ export const Profile = ({
       </div>
       <div className='pt-l'></div>
       <div className='flex gap-xs'>
-        <div className='mb-font-h3'>{getName(user)}</div>
+        <h1 className='mb-font-h3'>{getName(user)}</h1>
         <div className='self-center'>
-          <SettingsIcon color='primary'></SettingsIcon>
+          <SettingsModal
+            user={user}
+            color='primary'
+            showText={false}
+          ></SettingsModal>
         </div>
       </div>
       <div className='pt-xs'></div>
@@ -80,6 +85,8 @@ export const Profile = ({
         )}
       </div>
       <div className='pt-s'></div>
+
+      <h2 className='sr-only'>Biografie</h2>
       <div className='text-base-400 mb-font-paragraph-m'>
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
