@@ -19,9 +19,9 @@ export default async function Detail({
       {detailedPost && (
         <div>
           <div className='pt-s'></div>
-          <div className='relative w-full rounded-t-m bg-white pb-l pl-xl pr-xl pt-l text-base-600'>
+          <article className='relative w-full rounded-t-m bg-white pb-l pl-xl pr-xl pt-l text-base-600'>
             <PostContent post={detailedPost} size='large'></PostContent>
-          </div>
+          </article>
 
           <div className='relative w-full bg-white pb-l pl-xl pr-xl pt-l text-base-600 last:rounded-b-m'>
             <CreateReplyComponent post={detailedPost}></CreateReplyComponent>

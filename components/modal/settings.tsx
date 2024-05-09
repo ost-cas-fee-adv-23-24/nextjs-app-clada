@@ -16,8 +16,6 @@ export const SettingsModal = ({ user }: { user: User }) => {
       const data = new FormData(formRef.current);
       const response = await UpdateUser(data);
 
-      console.log(response);
-
       if (response && isError(response)) {
         setFormState(response);
       } else {
@@ -29,7 +27,7 @@ export const SettingsModal = ({ user }: { user: User }) => {
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)}>
+      <button onClick={() => setIsOpen(true)} aria-label='Settings'>
         <div className='flex justify-center self-center'>
           <SettingsIcon color='white'></SettingsIcon>
         </div>
