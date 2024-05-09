@@ -106,11 +106,13 @@ export const UserDashboard = ({
           <Friends userId={userId}></Friends>
         </div>
       ) : (
-        <PostList
-          postsPaginatedResult={currentPaginatedResult}
-          queryParams={currentQueryParams}
-          isPersonalUser={isPersonalUser}
-        />
+        <section>
+          <PostList
+            postsPaginatedResult={currentPaginatedResult}
+            queryParams={currentQueryParams}
+            isPersonalUser={isPersonalUser}
+          />
+        </section>
       )}
     </>
   );

@@ -46,7 +46,7 @@ export const UserList = ({
   }, [followees]);
 
   return (
-    <div>
+    <section>
       {followees && (
         <div>
           <h3 className='mb-font-h3'>{title}</h3>
@@ -76,6 +76,6 @@ export const UserList = ({
           ))}
         {!displayUsers && !followees?.length && <div>{emptyText}</div>}
       </div>
-    </div>
+    </section>
   );
 };

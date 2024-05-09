@@ -73,7 +73,8 @@ export const Profile = ({
         </div>
       </div>
       <div className='pt-xs'></div>
-      <div className='flex gap-xs'>
+
+      <section className='flex gap-xs'>
         <UserHandle name={user.username} id={user.id}></UserHandle>
         <Location name='Rapperswil'></Location>
         {user.id && (
@@ -83,15 +84,17 @@ export const Profile = ({
             href={`/user/${user.id}`}
           ></TimeDiff>
         )}
-      </div>
+      </section>
+
       <div className='pt-s'></div>
 
       <h2 className='sr-only'>Biografie</h2>
-      <div className='text-base-400 mb-font-paragraph-m'>
+
+      <section className='text-base-400 mb-font-paragraph-m'>
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
         voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-      </div>
+      </section>
     </div>
   );
 };

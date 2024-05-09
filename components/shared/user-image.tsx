@@ -29,7 +29,7 @@ export const UserImage = ({
     setShowImageUpload(true);
   };
 
-  const handleCloseImageUpload = async (file?: File, imgSrc?: string) => {
+  const handleCloseImageUpload = async (file?: File) => {
     const formData = new FormData();
 
     if (file) {
