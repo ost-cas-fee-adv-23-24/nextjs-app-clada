@@ -1,5 +1,5 @@
-import { MumbleLogo } from '@/components/header/logo';
-import { HeaderUserActions } from '@/components/header/user-actions';
+import { MumbleLogo } from '@/components/layout/header/logo';
+import { HeaderUserActions } from '@/components/layout/header/user-actions';
 
 export const Header = () => {
   return (
