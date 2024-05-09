@@ -1,7 +1,7 @@
-import { auth, signIn } from '@/app/api/auth/[...nextauth]/auth';
-import { Config } from '@/config/env';
+import { auth, signIn } from '@/auth';
+import { APIError, InternalServerError } from '@/utils/error';
+import { Config } from 'config/env';
 import { URL } from 'url';
-import { APIError, InternalServerError } from '../error';
 
 type SearchParams = Record<string, string | string[] | number | boolean>[];
 

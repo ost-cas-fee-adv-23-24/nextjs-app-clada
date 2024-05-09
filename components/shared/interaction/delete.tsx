@@ -1,6 +1,6 @@
 'use client';
 
-import { DeletePost } from '@/app/api/actions/post.actions';
+import { DeletePost } from '@/actions/post.actions';
 import { UserPostsContext } from '@/components/post/user-posts-context';
 import { Post } from '@/utils/models';
 import { CancelIcon, Toggle } from 'clada-storybook';

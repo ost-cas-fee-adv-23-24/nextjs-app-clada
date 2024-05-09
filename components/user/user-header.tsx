@@ -1,10 +1,10 @@
 'use client';
+import { TimeDiff } from '@/shared/time-diff';
+import { UserImage } from '@/shared/user-image';
+import { UserHandle } from '@/user/user-handle';
+import { UserName } from '@/user/user-name';
 import { useUser } from '@/utils/hooks/hooks';
 import { Post, User } from '@/utils/models';
-import { TimeDiff } from '../shared/time-diff';
-import { UserImage } from '../shared/user-image';
-import { UserHandle } from './user-handle';
-import { UserName } from './user-name';
 
 const UserInfoDisplay = ({
   user,

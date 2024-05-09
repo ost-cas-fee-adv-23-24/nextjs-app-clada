@@ -3,7 +3,7 @@ import {
   GetUserFollowees,
   GetUserFollowers,
   GetUsers,
-} from '@/app/api/actions/user.actions';
+} from '@/actions/user.actions';
 import useSWR from 'swr';
 
 export const useUser = (id: string | undefined) => {

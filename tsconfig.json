@@ -11,6 +11,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "baseUrl": ".",
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
@@ -19,7 +20,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
+      "@/actions/*": ["app/api/actions/*"],
+      "@/utils/*": ["utils/*"],
+      "@/components/*": ["components/*"],
+      "@/user/*": ["components/user/*"],
+      "@/shared/*": ["components/shared/*"],
       "@/auth": ["./app/api/auth/[...nextauth]/auth"]
     }
   },

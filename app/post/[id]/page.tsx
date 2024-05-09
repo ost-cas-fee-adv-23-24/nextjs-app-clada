@@ -1,4 +1,4 @@
-import { GetPostById, GetPostReplies } from '@/app/api/actions/post.actions';
+import { GetPostById, GetPostReplies } from '@/actions/post.actions';
 import { PostContent } from '@/components/post/post-content';
 import { CreateReplyComponent } from '@/components/reply/create-reply';
 import { Reply } from '@/components/reply/reply';

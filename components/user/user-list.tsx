@@ -1,11 +1,11 @@
 'use client';
 
-import { GetUserFollowees } from '@/app/api/actions/user.actions';
+import { GetUserFollowees } from '@/actions/user.actions';
+import { UserCard } from '@/user/user-card';
 import { useFollowees } from '@/utils/hooks/hooks';
 import { User } from '@/utils/models';
 import { useEffect, useState } from 'react';
 import { mutate } from 'swr';
-import { UserCard } from './user-card';
 
 export const UserList = ({
   users,

@@ -1,8 +1,8 @@
 'use client';
 
+import { CreateContent } from '@/components/post/create-content';
+import { PostFrame } from '@/components/post/post-frame';
 import { Label } from 'clada-storybook';
-import { CreateContent } from './create-content';
-import { PostFrame } from './post-frame';
 
 export const CreatePost = ({
   showUser = true,

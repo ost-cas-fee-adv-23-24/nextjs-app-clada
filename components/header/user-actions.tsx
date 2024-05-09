@@ -1,13 +1,13 @@
 'use server';
 
-import { GetUserById } from '@/app/api/actions/user.actions';
+import { GetUserById } from '@/actions/user.actions';
 import { auth } from '@/auth';
+import { SettingsModal } from '@/components/modal/settings';
+import LoginButton from '@/shared/button/login-button';
+import LogoutButton from '@/shared/button/logout-button';
+import { UserImage } from '@/shared/user-image';
 import { User } from '@/utils/models';
 import Link from 'next/link';
-import { SettingsModal } from '../modal/settings';
-import LoginButton from '../shared/button/login-button';
-import LogoutButton from '../shared/button/logout-button';
-import { UserImage } from '../shared/user-image';
 
 export const HeaderUserActions = async () => {
   const session = await auth();
