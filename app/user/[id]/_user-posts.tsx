@@ -11,13 +11,6 @@ import { Config } from 'config/env';
 import { useContext, useEffect, useState } from 'react';
 import { UserPageSection } from './const';
 
-type Props = {
-  userId: string;
-  isPersonalUser: boolean;
-  postsPaginatedResult: PostPaginatedResult | null;
-  queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
-};
-
 type QueryParam = (GetPostsParams & Omit<GetPostsParams, 'offset'>) | undefined;
 
 export const UserDashboard = ({
@@ -25,7 +18,12 @@ export const UserDashboard = ({
   isPersonalUser,
   postsPaginatedResult,
   queryParams,
-}: Props) => {
+}: {
+  userId: string;
+  isPersonalUser: boolean;
+  postsPaginatedResult: PostPaginatedResult | null;
+  queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
+}) => {
   const [currentPaginatedResult, setCurrentPaginatedResult] =
     useState<PostPaginatedResult | null>(postsPaginatedResult);
   const [currentQueryParams, setCurrentQueryParams] =
