@@ -1,9 +1,9 @@
 'use client';
 
-import { UpdateUserAvatar } from '@/app/api/actions/user.actions';
+import { UpdateUserAvatar } from '@/actions/user.actions';
+import { ImageUpload } from '@/components/modal/image-upload';
 import { Avatar, AvatarEdit } from 'clada-storybook';
 import { useState } from 'react';
-import { ImageUpload } from '../modal/image-upload';
 
 export const UserImage = ({
   border = false,

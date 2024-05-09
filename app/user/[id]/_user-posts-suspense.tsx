@@ -1,5 +1,5 @@
 'use server';
-import { GetPosts } from '@/app/api/actions/post.actions';
+import { GetPosts } from '@/actions/post.actions';
 import { User } from '@/utils/models';
 import { UserDashboard } from './_user-posts';
 

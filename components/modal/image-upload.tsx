@@ -1,8 +1,8 @@
 'use client';
 
+import { ModalWindow } from '@/components/modal/modal';
 import { Button, UploadIcon } from 'clada-storybook';
 import { useEffect, useRef, useState } from 'react';
-import { ModalWindow } from './modal';
 
 export const ImageUpload = ({
   isShown = false,

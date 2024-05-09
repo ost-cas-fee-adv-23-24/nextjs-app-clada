@@ -1,4 +1,4 @@
-import { Config } from '@/config/env';
+import { Config } from 'config/env';
 import NextAuth, { User } from 'next-auth';
 import Zitadel from 'next-auth/providers/zitadel';
 

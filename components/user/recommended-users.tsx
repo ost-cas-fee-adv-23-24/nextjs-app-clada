@@ -1,7 +1,7 @@
 'use client';
 
+import { UserCard } from '@/user/user-card';
 import { User } from '@/utils/models';
-import { UserCard } from './user-card';
 
 export const RecommendedUsers = ({
   users,

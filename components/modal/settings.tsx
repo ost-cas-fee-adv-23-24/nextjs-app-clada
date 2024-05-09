@@ -1,6 +1,6 @@
 'use client';
 
-import { UpdateUser } from '@/app/api/actions/user.actions';
+import { UpdateUser } from '@/actions/user.actions';
 import { ValidationError, isError } from '@/utils/error';
 import { User } from '@/utils/models';
 import { Input, Modal, SettingsIcon } from 'clada-storybook';

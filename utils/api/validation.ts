@@ -1,9 +1,9 @@
-import { UpdateUserData } from '../models';
 import {
   schemaMumble,
   schemaUser,
   schemaUserAvatar,
-} from './validation.schema';
+} from '@/utils/api/validation.schema';
+import { UpdateUserData } from '@/utils/models';
 
 export const validate = (formData: FormData) => {
   const media = formData.get('media');

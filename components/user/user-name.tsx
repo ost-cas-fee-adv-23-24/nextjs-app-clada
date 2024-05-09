@@ -1,7 +1,7 @@
 'use client';
+import { getName } from '@/user/user-utils';
 import { PrivateUser, User } from '@/utils/models';
 import { useEffect, useState } from 'react';
-import { getName } from './user-utils';
 
 export const UserName = ({
   user,

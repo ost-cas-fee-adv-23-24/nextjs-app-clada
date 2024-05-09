@@ -1,6 +1,6 @@
 'use client';
 
-import { UpdateLike } from '@/app/api/actions/post.actions';
+import { UpdateLike } from '@/actions/post.actions';
 import { UserPostsContext } from '@/components/post/user-posts-context';
 import { Post } from '@/utils/models';
 import { LikeButton } from 'clada-storybook';

@@ -1,6 +1,7 @@
 'use client';
 
-import { CreatePost, CreateReply } from '@/app/api/actions/post.actions';
+import { CreatePost, CreateReply } from '@/actions/post.actions';
+import { ImageUpload } from '@/components/modal/image-upload';
 import { ValidationError, isError } from '@/utils/error';
 import { Post, PostReply } from '@/utils/models';
 import {
@@ -12,7 +13,6 @@ import {
 } from 'clada-storybook';
 import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
-import { ImageUpload } from '../modal/image-upload';
 
 export const CreateContent = ({
   post,

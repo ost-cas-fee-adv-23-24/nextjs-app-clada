@@ -1,17 +1,17 @@
 'use client';
 
-import { FollowUser, UnFollowUser } from '@/app/api/actions/user.actions';
-import { User } from '@/utils/models';
-import { Button, MumbleIcon } from 'clada-storybook';
-import Link from 'next/link';
-import { useState } from 'react';
-import { UserImage } from '../shared/user-image';
+import { FollowUser, UnFollowUser } from '@/actions/user.actions';
+import { UserImage } from '@/shared/user-image';
 import {
   FollowState,
   useFollowState,
   useFollowStateUpdate,
-} from './follow-state-context';
-import { UserHandle } from './user-handle';
+} from '@/user/follow-state-context';
+import { UserHandle } from '@/user/user-handle';
+import { User } from '@/utils/models';
+import { Button, MumbleIcon } from 'clada-storybook';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export const UserCard = ({
   user,

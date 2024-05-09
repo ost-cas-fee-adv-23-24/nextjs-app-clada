@@ -1,6 +1,6 @@
+import { PostContent } from '@/components/post/post-content';
+import { PostFrame } from '@/components/post/post-frame';
 import { Post } from '@/utils/models';
-import { PostContent } from './post-content';
-import { PostFrame } from './post-frame';
 
 type Props = {
   post: Post;

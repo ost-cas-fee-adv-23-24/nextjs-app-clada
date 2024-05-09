@@ -1,13 +1,14 @@
 'use client';
 
-import { GetPosts, GetPostsParams } from '@/app/api/actions/post.actions';
+import { GetPosts, GetPostsParams } from '@/actions/post.actions';
 import PostList from '@/components/post-list/post-list';
-import { Friends } from '@/components/user/friends';
-import { Config } from '@/config/env';
+
+import { UserPostsContext } from '@/components/post/user-posts-context';
+import { Friends } from '@/user/friends';
 import { PostPaginatedResult } from '@/utils/models';
 import { Tabs } from 'clada-storybook';
+import { Config } from 'config/env';
 import { useContext, useEffect, useState } from 'react';
-import { UserPostsContext } from '../../../components/post/user-posts-context';
 import { UserPageSection } from './const';
 
 type Props = {

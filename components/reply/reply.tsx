@@ -1,9 +1,9 @@
 'use client';
 
+import { InteractionStrip } from '@/shared/interaction/interaction-strip';
+import ZoomImage from '@/shared/zoom-image';
+import { UserHeader } from '@/user/user-header';
 import { PostReply } from '@/utils/models';
-import { InteractionStrip } from '../shared/interaction/interaction-strip';
-import ZoomImage from '../shared/zoom-image';
-import { UserHeader } from '../user/user-header';
 
 export const Reply = ({ reply }: { reply: PostReply }) => {
   return (
