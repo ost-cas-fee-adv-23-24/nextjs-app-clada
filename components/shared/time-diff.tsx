@@ -1,6 +1,6 @@
 'use client';
 
-import { getTimeDifferenceInMinutes } from '@/utils/utils';
+import { getTimeDifferenceInMinutes } from '@/utils/time';
 import { IconButton, TimeIcon } from 'clada-storybook';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

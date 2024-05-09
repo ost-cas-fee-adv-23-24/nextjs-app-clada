@@ -4,6 +4,7 @@ import { InteractionStrip } from '@/shared/interaction/interaction-strip';
 import ZoomImage from '@/shared/zoom-image';
 import { UserHeader } from '@/user/user-header';
 import { PostReply } from '@/utils/models';
+import { createSnippet } from '@/utils/strings';
 
 export const Reply = ({ reply }: { reply: PostReply }) => {
   return (
@@ -11,6 +12,7 @@ export const Reply = ({ reply }: { reply: PostReply }) => {
       <div className='flex'>
         <UserHeader post={reply} showTime={true} noTimeLink={true}></UserHeader>
       </div>
+      <h3 className='sr-only'>{createSnippet(reply.text)}</h3>
 
       <div className='mt-s text-black'>{reply.text}</div>
       <ZoomImage src={reply.mediaUrl}></ZoomImage>
