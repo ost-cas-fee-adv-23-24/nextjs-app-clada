@@ -18,7 +18,7 @@ export default async function HomepagePostsWrapper() {
       {session && <CreatePost />}
       <div className='pt-m'></div>
       <h2 className='sr-only'>Aktuelle Beiträge</h2>
-      {posts && <PostList postsPaginatedResult={posts} />}
+      {posts && <PostList postsPaginatedResult={posts} showRefresh={true} />}
     </>
   );
 }

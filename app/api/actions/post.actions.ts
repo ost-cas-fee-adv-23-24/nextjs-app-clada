@@ -118,7 +118,6 @@ export const DeletePost = async (id: string, userId: string) => {
   });
 
   revalidatePosts(userId);
-  revalidateTag(`likedBy-${userId}`);
 };
 
 export const CreateReply = async (
@@ -159,7 +158,7 @@ export const UpdateLike = async (
 
 const revalidatePosts = (userId: string) => {
   revalidatePath('/', 'page');
-  revalidateTag(`creators-${userId}`);
   revalidatePath(`/user/${userId}`, 'page');
+  revalidateTag(`creators-${userId}`);
   revalidateTag(`likedBy-${userId}`);
 };
