@@ -11,11 +11,6 @@ import { IconButton, RepostIcon } from 'clada-storybook';
 import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
 
-type Props = {
-  postsPaginatedResult: PostPaginatedResult | null;
-  queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
-};
-
 export default function PostList({
   postsPaginatedResult,
   queryParams,
