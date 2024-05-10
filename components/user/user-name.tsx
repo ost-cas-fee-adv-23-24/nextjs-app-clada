@@ -16,7 +16,7 @@ export const UserName = ({
     setDisplayedName(getName(user));
   }, [user]);
 
-  const className = `mb-xs ${useLarge ? 'mb-font-label-l' : 'mb-font-label-m'}`;
+  const className = `mb-xs ${useLarge ? 'mb-font-label-l' : 'mb-font-label-m'} cursor-auto`;
 
   return <div className={className}>{displayedName}</div>;
 };

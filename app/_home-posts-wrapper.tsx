@@ -2,8 +2,8 @@
 
 import { GetPosts } from '@/actions/post.actions';
 import { auth } from '@/auth';
-import PostList from '@/components/post-list/post-list';
-import { CreatePost } from '@/components/post/create-post';
+import { CreatePost } from '@/post/create-post';
+import PostList from '@/post/post-list/post-list';
 
 export default async function HomepagePostsWrapper() {
   const session = await auth();
@@ -14,8 +14,10 @@ export default async function HomepagePostsWrapper() {
 
   return (
     <>
+      <h2 className='sr-only'>Erstelle einen Beitrag</h2>
       {session && <CreatePost />}
       <div className='pt-m'></div>
+      <h2 className='sr-only'>Aktuelle Beiträge</h2>
       {posts && <PostList postsPaginatedResult={posts} />}
     </>
   );

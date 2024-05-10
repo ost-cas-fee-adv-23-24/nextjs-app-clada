@@ -1,7 +1,7 @@
 'use client';
 
 import { FollowUser, UnFollowUser } from '@/actions/user.actions';
-import { UserImage } from '@/shared/user-image';
+import { UserImage } from '@/components/_shared/user-image';
 import {
   FollowState,
   useFollowState,

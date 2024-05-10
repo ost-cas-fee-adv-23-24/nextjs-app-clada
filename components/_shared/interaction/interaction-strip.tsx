@@ -1,9 +1,9 @@
 'use client';
 
-import { Comment } from '@/shared/interaction/comment';
-import { CopyLink } from '@/shared/interaction/copy-link';
-import { DeleteUserPost } from '@/shared/interaction/delete';
-import { Like } from '@/shared/interaction/like';
+import { Comment } from '@/components/_shared/interaction/comment';
+import { CopyLink } from '@/components/_shared/interaction/copy-link';
+import { DeleteUserPost } from '@/components/_shared/interaction/delete';
+import { Like } from '@/components/_shared/interaction/like';
 import { Post } from '@/utils/models';
 import { useSession } from 'next-auth/react';
 

@@ -24,7 +24,8 @@
       "@/utils/*": ["utils/*"],
       "@/components/*": ["components/*"],
       "@/user/*": ["components/user/*"],
-      "@/shared/*": ["components/shared/*"],
+      "@/post/*": ["components/post/*"],
+      "@/shared/*": ["components/_shared/*"],
       "@/auth": ["./app/api/auth/[...nextauth]/auth"]
     }
   },
