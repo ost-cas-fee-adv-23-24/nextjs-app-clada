@@ -2,13 +2,13 @@
 
 import { TimeDiff } from '@/components/_shared/time-diff';
 import { UserImage } from '@/components/_shared/user-image';
+import { SettingsModal } from '@/components/modals/settings';
 import { Location } from '@/user/location';
 import { UserHandle } from '@/user/user-handle';
 import { getName } from '@/user/user-utils';
 import { User } from '@/utils/models';
 import { EditIcon } from 'clada-storybook';
 import NextImage from 'next/image';
-import { SettingsModal } from '../modals/settings';
 
 const fakeULID = '01HGX50H2SXXPE51S60Q7QY29M';
 
