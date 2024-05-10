@@ -1,14 +1,14 @@
 'use client';
 import { GetPosts, GetPostsParams } from '@/actions/post.actions';
-import { SinglePost } from '@/components/post/single-post';
+import { SinglePost } from '@/post/single-post';
 import { Post, PostPaginatedResult } from '@/utils/models';
 import { Config } from 'config/env';
 import { useEffect, useState } from 'react';
 // inspiration from https://medium.com/@ferlat.simon/infinite-scroll-with-nextjs-server-actions-a-simple-guide-76a894824cfd
-import { CreatePost as FirstPost } from '@/components/post/create-post';
-import PostSkeleton from '@/components/skeleton/post-skeleton';
-import { useAuthSession } from '@/utils/hooks/swr-hooks';
+import { CreatePost as FirstPost } from '@/post/create-post';
+import PostSkeleton from '@/post/skeleton/post-skeleton';
 import { IconButton, RepostIcon } from 'clada-storybook';
+import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
 
 type Props = {
@@ -38,7 +38,7 @@ export default function PostList({
   const { ref, inView } = useInView();
   const [allPostsLoaded, setAllPostsLoaded] = useState<boolean>(false);
 
-  const { session: session } = useAuthSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     const eventSource = new EventSource(`${Config.apiUrl}/posts/_sse`);

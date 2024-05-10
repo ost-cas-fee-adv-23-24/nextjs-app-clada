@@ -1,6 +1,6 @@
 'use client';
 
-import { CreateContent } from '@/components/post/create-content';
+import { CreateContent } from '@/post/create-content';
 import { UserHeader } from '@/user/user-header';
 import { useAuthSession } from '@/utils/hooks/swr-hooks';
 import { Post } from '@/utils/models';

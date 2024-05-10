@@ -1,7 +1,7 @@
 'use client';
 
 import { CreatePost, CreateReply } from '@/actions/post.actions';
-import { ImageUpload } from '@/components/modal/image-upload';
+import { ImageUpload } from '@/components/modals/image-upload';
 import { ValidationError, isError } from '@/utils/error';
 
 import { useAuthSession } from '@/utils/hooks/swr-hooks';

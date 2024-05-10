@@ -1,4 +1,4 @@
-import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
+import PostSkeletonList from '@/post/skeleton/post-skeleton-list';
 import { Suspense } from 'react';
 import HomepagePostsWrapper from './_home-posts-wrapper';
 

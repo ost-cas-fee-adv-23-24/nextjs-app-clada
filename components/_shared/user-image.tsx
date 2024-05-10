@@ -1,7 +1,7 @@
 'use client';
 
 import { UpdateUserAvatar } from '@/actions/user.actions';
-import { ImageUpload } from '@/components/modal/image-upload';
+import { ImageUpload } from '@/components/modals/image-upload';
 import { Avatar, AvatarEdit } from 'clada-storybook';
 import { useState } from 'react';
 
@@ -29,7 +29,7 @@ export const UserImage = ({
     setShowImageUpload(true);
   };
 
-  const handleCloseImageUpload = async (file?: File, imgSrc?: string) => {
+  const handleCloseImageUpload = async (file?: File) => {
     const formData = new FormData();
 
     if (file) {

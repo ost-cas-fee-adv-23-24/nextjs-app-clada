@@ -1,12 +1,8 @@
-import { PostContent } from '@/components/post/post-content';
-import { PostFrame } from '@/components/post/post-frame';
+import { PostContent } from '@/post/post-content';
+import { PostFrame } from '@/post/post-frame';
 import { Post } from '@/utils/models';
 
-type Props = {
-  post: Post;
-};
-
-export const SinglePost = ({ post }: Props) => {
+export const SinglePost = ({ post }: { post: Post }) => {
   return (
     <PostFrame post={post} data-testid='single-post'>
       <PostContent post={post}></PostContent>

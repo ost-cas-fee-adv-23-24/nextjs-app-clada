@@ -1,6 +1,6 @@
 'use client';
 
-import { ModalWindow } from '@/components/modal/modal';
+import { ModalWindow } from '@/components/modals/modal';
 import { Button, UploadIcon } from 'clada-storybook';
 import { useEffect, useRef, useState } from 'react';
 

@@ -1,4 +1,4 @@
-import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
+import PostSkeletonList from '@/post/skeleton/post-skeleton-list';
 import { Suspense } from 'react';
 import TagedPostsSearchForm from './_taged-posts-search-form';
 import TagedPostsWrapper from './_taged-posts-wrapper';

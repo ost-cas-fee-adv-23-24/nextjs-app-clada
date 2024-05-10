@@ -1,7 +1,7 @@
 'use client';
 
-import { CreateContent } from '@/components/post/create-content';
-import { PostFrame } from '@/components/post/post-frame';
+import { CreateContent } from '@/post/create-content';
+import { PostFrame } from '@/post/post-frame';
 import { Label } from 'clada-storybook';
 
 export const CreatePost = ({

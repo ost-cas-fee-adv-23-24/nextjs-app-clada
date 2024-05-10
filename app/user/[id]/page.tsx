@@ -1,8 +1,8 @@
 import { GetUserById, GetUserFollowers } from '@/actions/user.actions';
 import { auth } from '@/auth';
-import { UserPostsProvider } from '@/components/post/user-posts-context';
-import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
 import { Profile } from '@/components/user/profile';
+import PostSkeletonList from '@/post/skeleton/post-skeleton-list';
+import { UserPostsProvider } from '@/post/user-posts-context';
 import { FollowingState } from '@/user/following-state';
 import { User } from '@/utils/models';
 import { Suspense } from 'react';
