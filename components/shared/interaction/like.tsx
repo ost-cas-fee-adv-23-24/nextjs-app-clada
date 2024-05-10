@@ -2,9 +2,9 @@
 
 import { UpdateLike } from '@/actions/post.actions';
 import { UserPostsContext } from '@/components/post/user-posts-context';
+import { useAuthSession } from '@/utils/hooks/swr-hooks';
 import { Post } from '@/utils/models';
 import { LikeButton } from 'clada-storybook';
-import { useSession } from 'next-auth/react';
 import { useContext, useState } from 'react';
 
 const likeLabels = {
@@ -20,7 +20,7 @@ export const Like = ({ post }: { post: Post }) => {
 
   const { reloadData, isProvided } = useContext(UserPostsContext);
 
-  const { data: session } = useSession();
+  const { session: session } = useAuthSession();
 
   const like = async () => {
     setLikedBySelf(!likedBySelf);

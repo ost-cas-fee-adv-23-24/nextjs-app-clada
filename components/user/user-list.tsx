@@ -2,7 +2,7 @@
 
 import { GetUserFollowees } from '@/actions/user.actions';
 import { UserCard } from '@/user/user-card';
-import { useFollowees } from '@/utils/hooks/hooks';
+import { useFollowees } from '@/utils/hooks/swr-hooks';
 import { User } from '@/utils/models';
 import { useEffect, useState } from 'react';
 import { mutate } from 'swr';

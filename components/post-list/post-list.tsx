@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 // inspiration from https://medium.com/@ferlat.simon/infinite-scroll-with-nextjs-server-actions-a-simple-guide-76a894824cfd
 import { CreatePost as FirstPost } from '@/components/post/create-post';
 import PostSkeleton from '@/components/skeleton/post-skeleton';
+import { useAuthSession } from '@/utils/hooks/swr-hooks';
 import { IconButton, RepostIcon } from 'clada-storybook';
-import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
 
 type Props = {
@@ -38,7 +38,7 @@ export default function PostList({
   const { ref, inView } = useInView();
   const [allPostsLoaded, setAllPostsLoaded] = useState<boolean>(false);
 
-  const { data: session } = useSession();
+  const { session: session } = useAuthSession();
 
   useEffect(() => {
     const eventSource = new EventSource(`${Config.apiUrl}/posts/_sse`);

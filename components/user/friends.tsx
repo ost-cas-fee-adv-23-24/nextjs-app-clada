@@ -1,6 +1,6 @@
 import { FollowStateProvider } from '@/user/follow-state-context';
 import { UserList } from '@/user/user-list';
-import { useFollowers, useUsers } from '@/utils/hooks/hooks';
+import { useFollowers, useUsers } from '@/utils/hooks/swr-hooks';
 
 export const Friends = ({ userId }: { userId: string }) => {
   const { users } = useUsers();

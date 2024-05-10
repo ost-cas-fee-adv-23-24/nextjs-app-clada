@@ -3,7 +3,7 @@ import { TimeDiff } from '@/shared/time-diff';
 import { UserImage } from '@/shared/user-image';
 import { UserHandle } from '@/user/user-handle';
 import { UserName } from '@/user/user-name';
-import { useUser } from '@/utils/hooks/hooks';
+import { useUser } from '@/utils/hooks/swr-hooks';
 import { Post, User } from '@/utils/models';
 
 const UserInfoDisplay = ({

@@ -4,8 +4,8 @@ import { Comment } from '@/shared/interaction/comment';
 import { CopyLink } from '@/shared/interaction/copy-link';
 import { DeleteUserPost } from '@/shared/interaction/delete';
 import { Like } from '@/shared/interaction/like';
+import { useAuthSession } from '@/utils/hooks/swr-hooks';
 import { Post } from '@/utils/models';
-import { useSession } from 'next-auth/react';
 
 export const InteractionStrip = ({
   post,
@@ -14,7 +14,7 @@ export const InteractionStrip = ({
   post: Post;
   reduced?: boolean;
 }) => {
-  const { data: session } = useSession();
+  const { session: session } = useAuthSession();
   const isCreator = session?.user.id === post.creator.id;
 
   return (
