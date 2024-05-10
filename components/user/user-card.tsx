@@ -9,9 +9,10 @@ import {
 } from '@/user/follow-state-context';
 import { UserHandle } from '@/user/user-handle';
 import { User } from '@/utils/models';
+import { createSnippet } from '@/utils/strings';
 import { Button, MumbleIcon } from 'clada-storybook';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const UserCard = ({
   user,
@@ -22,6 +23,14 @@ export const UserCard = ({
   isFollowingUser: boolean;
   updateFunction?: () => void;
 }) => {
+  const [displayUserName, setDisplayUserName] = useState(
+    createSnippet(user.username, 12)
+  );
+
+  useEffect(() => {
+    setDisplayUserName(createSnippet(user.username, 12));
+  }, [user]);
+
   const [loading, setLoading] = useState(false);
   const followState = useFollowState();
   const setFollowState = useFollowStateUpdate();
@@ -75,7 +84,7 @@ export const UserCard = ({
           : user.username}
       </a>
 
-      <UserHandle name={user.username} id={user.id}></UserHandle>
+      <UserHandle name={displayUserName} id={user.id}></UserHandle>
 
       <Button
         color='primary'
