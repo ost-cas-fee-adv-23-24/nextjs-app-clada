@@ -26,10 +26,17 @@ export const HeaderUserActions = async () => {
 
   return (
     <div className='ml-auto flex pt-xxs'>
-      <Link href={'/user/' + user?.id} aria-label='User'>
+      <Link
+        href={'/user/' + user?.id}
+        aria-label='User'
+        data-testid='header-user-image-button'
+      >
         <UserImage size='s' url={user?.avatarUrl}></UserImage>
       </Link>
-      <div className='ml-l mr-l flex-col'>
+      <div
+        className='ml-l mr-l flex-col'
+        data-testid='header-settings-modal-button'
+      >
         <SettingsModal user={user as User} />
       </div>{' '}
       <div className='flex-col'>

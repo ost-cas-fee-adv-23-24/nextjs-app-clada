@@ -2,7 +2,6 @@
 
 import { GetPosts, GetPostsParams } from '@/actions/post.actions';
 import PostList from '@/post/post-list/post-list';
-
 import { UserPostsContext } from '@/post/user-posts-context';
 import { Friends } from '@/user/friends';
 import { PostPaginatedResult } from '@/utils/models';
@@ -11,7 +10,9 @@ import { Config } from 'config/env';
 import { useContext, useEffect, useState } from 'react';
 import { UserPageSection } from './const';
 
-type QueryParam = (GetPostsParams & Omit<GetPostsParams, 'offset'>) | undefined;
+type QueryParams =
+  | (GetPostsParams & Omit<GetPostsParams, 'offset'>)
+  | undefined;
 
 export const UserDashboard = ({
   userId,
@@ -22,29 +23,29 @@ export const UserDashboard = ({
   userId: string;
   isPersonalUser: boolean;
   postsPaginatedResult: PostPaginatedResult | null;
-  queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
+  queryParams?: QueryParams;
 }) => {
   const [currentPaginatedResult, setCurrentPaginatedResult] =
     useState<PostPaginatedResult | null>(postsPaginatedResult);
   const [currentQueryParams, setCurrentQueryParams] =
-    useState<QueryParam>(queryParams);
+    useState<QueryParams>(queryParams);
 
   const [showFriends, setShowFriends] = useState(false);
   const [title, setTitle] = useState(UserPageSection.CreatedByUser);
 
   const onSectionChange = async (section: UserPageSection) => {
-    const temporaryQueryParam: QueryParam = {};
+    const temporaryQueryParam: QueryParams = {};
 
     setTitle(section);
 
     switch (section) {
       case UserPageSection.CreatedByUser:
         temporaryQueryParam.creators = [userId];
-        handleSearch(temporaryQueryParam);
+        await handleSearch(temporaryQueryParam);
         break;
       case UserPageSection.LikedByUser:
         temporaryQueryParam.likedBy = [userId];
-        handleSearch(temporaryQueryParam);
+        await handleSearch(temporaryQueryParam);
         break;
       case UserPageSection.Friends:
         if (!showFriends) {
@@ -60,7 +61,7 @@ export const UserDashboard = ({
     handleSearch(currentQueryParams);
   }, [reloadTrigger]);
 
-  const handleSearch = async (param: QueryParam) => {
+  const handleSearch = async (param: QueryParams) => {
     const apiPosts = await GetPosts({
       offset: 0,
       limit: Config.defaultPageSize,
@@ -78,7 +79,7 @@ export const UserDashboard = ({
   return (
     <>
       {isPersonalUser && (
-        <>
+        <div data-testid='user-tabs'>
           <h2 className='sr-only'>{title}</h2>
           <Tabs
             tabs={[
@@ -97,7 +98,7 @@ export const UserDashboard = ({
             ]}
           />
           <div className='pt-l'></div>
-        </>
+        </div>
       )}
       {isPersonalUser && showFriends ? (
         <div className='min-h-[680px]'>

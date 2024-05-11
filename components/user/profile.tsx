@@ -10,7 +10,7 @@ import { User } from '@/utils/models';
 import { EditIcon } from 'clada-storybook';
 import NextImage from 'next/image';
 
-/* 
+/*
 The design presents an element in the user profile that shows how long the user has been registered.
 The problem is that the userId is not an ULID and there is no way to get at this date.
 That is why i am faking it here. Much like we are faking the user profile background image (that cannot be stored or retrieved via API).
@@ -78,7 +78,6 @@ export const Profile = ({
         </div>
       </div>
       <div className='pt-xs'></div>
-
       <section className='flex gap-xs'>
         <UserHandle name={user.username} id={user.id}></UserHandle>
         <Location name='Rapperswil'></Location>
@@ -90,11 +89,8 @@ export const Profile = ({
           ></TimeDiff>
         )}
       </section>
-
       <div className='pt-s'></div>
-
       <h2 className='sr-only'>Biografie</h2>
-
       <section className='text-base-400 mb-font-paragraph-m'>
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam

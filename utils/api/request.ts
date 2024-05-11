@@ -40,7 +40,13 @@ const processSlug = (slug: string, queryParams?: SearchParams) => {
 
   if (queryParams) {
     for (const [key, value] of Object.entries(queryParams)) {
-      url.searchParams.append(key, value.toString());
+      if (Array.isArray(value)) {
+        value.forEach((valueItem) => {
+          url.searchParams.append(key, valueItem.toString());
+        });
+      } else {
+        url.searchParams.append(key, value.toString());
+      }
     }
   }
 
