@@ -1,8 +1,6 @@
-'use client';
-
 import { CancelIcon, FullscreenIcon } from 'clada-storybook';
 import NextImage from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const getScrollbarWidth = () => {
   const outer = document.createElement('div');
@@ -36,18 +34,42 @@ const toggleBodyScroll = (shouldPreventScroll: boolean) => {
 
 const ZoomImage = ({ src }: { src?: string }) => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const cancelRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLDivElement>(null);
+
+  const closePreview = () => {
+    setIsPreviewOpen(false);
+    openerRef.current?.focus(); // Focus is restored to the image that opened the modal
+  };
 
   useEffect(() => {
     toggleBodyScroll(isPreviewOpen);
+
+    if (isPreviewOpen) {
+      cancelRef.current?.focus();
+    }
+
     return () => {
       toggleBodyScroll(false);
     };
+  }, [isPreviewOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (isPreviewOpen) {
+        closePreview();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isPreviewOpen]);
 
   return (
     <>
       {src && (
         <div
+          ref={openerRef}
           className='group relative h-auto w-full cursor-pointer overflow-hidden rounded-s'
           onClick={() => setIsPreviewOpen(true)}
           onKeyDown={(e) => e.key === 'Enter' && setIsPreviewOpen(true)}
@@ -73,12 +95,13 @@ const ZoomImage = ({ src }: { src?: string }) => {
       {isPreviewOpen && src && (
         <div
           className='fixed inset-0 z-50 cursor-pointer flex items-center justify-center bg-primary-500 bg-opacity-75'
-          onClick={() => setIsPreviewOpen(false)}
+          onClick={closePreview}
         >
           <div
             className='absolute top-0 right-0 m-4 focus-white'
-            onKeyDown={(e) => e.key === 'Enter' && setIsPreviewOpen(false)}
+            onKeyDown={(e) => e.key === 'Enter' && closePreview()}
             tabIndex={0}
+            ref={cancelRef}
           >
             <CancelIcon color='white' size='m' />
           </div>
