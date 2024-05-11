@@ -2,8 +2,8 @@
 
 import { CreateContent } from '@/post/create-content';
 import { UserHeader } from '@/user/user-header';
+import { useAuthSession } from '@/utils/hooks/swr-hooks';
 import { Post } from '@/utils/models';
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 export const CreateReplyComponent = ({ post }: { post: Post }) => {
@@ -11,7 +11,7 @@ export const CreateReplyComponent = ({ post }: { post: Post }) => {
 
   const [currentUserId, setCurrentUserId] = useState('user');
 
-  const { data: session } = useSession();
+  const { session: session } = useAuthSession();
 
   useEffect(() => {
     if (session?.user.id) {

@@ -3,6 +3,8 @@
 import { CreatePost, CreateReply } from '@/actions/post.actions';
 import { ImageUpload } from '@/components/modals/image-upload';
 import { ValidationError, isError } from '@/utils/error';
+
+import { useAuthSession } from '@/utils/hooks/swr-hooks';
 import { Post, PostReply } from '@/utils/models';
 import {
   Button,
@@ -11,7 +13,6 @@ import {
   Textarea,
   UploadIcon,
 } from 'clada-storybook';
-import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 
 export const CreateContent = ({
@@ -26,11 +27,13 @@ export const CreateContent = ({
   const [imgSrc, setImgSrc] = useState('');
   const [formState, setFormState] = useState<ValidationError | null>(null);
 
-  const { data: session } = useSession();
+  const { session: session } = useAuthSession();
   const formRef = useRef<HTMLFormElement>(null);
 
   const create = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    useAuthSession;
 
     const formData = new FormData();
 
