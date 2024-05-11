@@ -11,19 +11,16 @@ import { IconButton, RepostIcon } from 'clada-storybook';
 import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
 
-type Props = {
-  postsPaginatedResult: PostPaginatedResult | null;
-  queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
-};
-
 export default function PostList({
   postsPaginatedResult,
   queryParams,
   isPersonalUser = false,
+  showRefresh = false,
 }: {
   postsPaginatedResult: PostPaginatedResult | null;
   queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
   isPersonalUser?: boolean;
+  showRefresh?: boolean;
 }) {
   const [maxPostsCount, setMaxPostsCount] = useState(
     postsPaginatedResult?.count ?? 0
@@ -41,6 +38,10 @@ export default function PostList({
   const { data: session } = useSession();
 
   useEffect(() => {
+    if (!showRefresh) {
+      return;
+    }
+
     const eventSource = new EventSource(`${Config.apiUrl}/posts/_sse`);
 
     eventSource.addEventListener('postCreated', (e) => {
@@ -111,7 +112,7 @@ export default function PostList({
 
   return (
     <>
-      {hasNewPostData && (
+      {hasNewPostData && showRefresh && (
         <div className='sticky top-[84px] z-50'>
           <div className='flex justify-around mt-[-32px]'>
             <div className='bg-base-100 p-xs rounded-full cursor-pointer'>

@@ -57,7 +57,7 @@ export const Profile = ({
           )}
         </div>
 
-        <div className='absolute right-0 -mt-[80px] mr-[25px]'>
+        <div className='absolute right-0 md:mt-[-80px] -mt-[152px]  md:mr-[25px] transform md:scale-100 scale-75'>
           <UserImage
             border={true}
             size='xl'
@@ -69,7 +69,7 @@ export const Profile = ({
       <div className='pt-l'></div>
       <div className='flex gap-xs'>
         <h1 className='mb-font-h3'>{getName(user)}</h1>
-        <div className='self-center'>
+        <div className='self-center mt-xxs'>
           <SettingsModal
             user={user}
             color='primary'

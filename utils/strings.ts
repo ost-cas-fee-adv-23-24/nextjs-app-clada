@@ -2,10 +2,10 @@ export const stripHtml = (html: string) => {
   return html.replace(/<[^>]*>/g, '');
 };
 
-export const createSnippet = (htmlString?: string) => {
+export const createSnippet = (htmlString?: string, limit?: number) => {
   htmlString = htmlString ?? '';
   const text = stripHtml(htmlString);
-  const limit = 100;
+  limit = limit ?? 100;
 
   if (text.length <= limit) {
     return text;
