@@ -17,6 +17,7 @@ export const PostContent = ({ post, size }: { post: Post; size?: 'large' }) => {
     <div
       className='hover:cursor-pointer'
       onClick={() => router.push(`/post/${post.id}`)}
+      data-testid='single-post-content'
     >
       <div
         className='absolute -ml-[82px] -mt-xs'

@@ -29,29 +29,29 @@ export default function PostList({
     postsPaginatedResult?.data as Post[]
   );
 
-  const [newPosts, setNewPosts] = useState<Array<Post>>([]);
-  const [hasNewPostData, setHasNewPostData] = useState(false);
+  const [allPostsLoaded, setAllPostsLoaded] = useState<boolean>(false);
+  const [staleEventSourcePosts, setStaleEventSourcePosts] = useState<
+    Array<Post>
+  >([]);
 
   const { ref, inView } = useInView();
-  const [allPostsLoaded, setAllPostsLoaded] = useState<boolean>(false);
 
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (!showRefresh) {
-      return;
-    }
-
     const eventSource = new EventSource(`${Config.apiUrl}/posts/_sse`);
 
     eventSource.addEventListener('postCreated', (e) => {
       const newPost: Post = JSON.parse(e.data) as Post;
 
-      if (newPost.creator.id === session?.user.id) {
-        setPosts((posts) => [newPost, ...posts]);
-      } else {
-        setNewPosts([newPost, ...newPosts]);
-        setHasNewPostData(true);
+      if (
+        newPost.creator.id !== session?.user?.id &&
+        (!queryParams ||
+          !queryParams?.creators ||
+          (queryParams.creators &&
+            queryParams.creators.includes(newPost.creator.id)))
+      ) {
+        setStaleEventSourcePosts((posts) => [newPost, ...posts]);
       }
     });
 
@@ -85,10 +85,13 @@ export default function PostList({
   }, [postsPaginatedResult]);
 
   const refresh = () => {
-    setPosts((posts) => [...newPosts, ...posts]);
-    setHasNewPostData(false);
+    setPosts([...staleEventSourcePosts, ...posts]);
+    setStaleEventSourcePosts([]);
 
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
 
     return false;
   };
@@ -98,7 +101,7 @@ export default function PostList({
       <>
         {isPersonalUser ? (
           <FirstPost
-            label='Voll leer hier 😲'
+            label='Voll leer hier... 🥹'
             subtitle='Verfasse deinen ersten Mumble oder folge anderen Usern!'
             placeholder='Und was meinst du dazu?'
             showUser={false}
@@ -112,7 +115,7 @@ export default function PostList({
 
   return (
     <>
-      {hasNewPostData && showRefresh && (
+      {staleEventSourcePosts.length > 0 && (
         <div className='sticky top-[84px] z-50'>
           <div className='flex justify-around mt-[-32px]'>
             <div className='bg-base-100 p-xs rounded-full cursor-pointer'>
@@ -122,7 +125,7 @@ export default function PostList({
                 variant='primary'
                 onClick={refresh}
               >
-                Refresh
+                Neue Posts laden
               </IconButton>
             </div>
           </div>
