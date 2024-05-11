@@ -33,8 +33,6 @@ export const CreateContent = ({
   const create = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    useAuthSession;
-
     const formData = new FormData();
 
     if (selectedFile) {
