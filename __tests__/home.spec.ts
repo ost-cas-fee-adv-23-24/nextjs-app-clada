@@ -1,10 +1,6 @@
-import { MumbleTestIds } from '@/__tests__/helpers/selectors';
-import {
-  DEFAULT_PAGE_URL,
-  createMumbleText,
-  login,
-} from '@/__tests__/helpers/utilities';
 import { expect, test } from '@playwright/test';
+import { MumbleTestIds } from './helpers/selectors';
+import { DEFAULT_PAGE_URL, login } from './helpers/utilities';
 
 test.describe('Homepage', () => {
   test.describe('Initial View', () => {

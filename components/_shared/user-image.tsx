@@ -48,7 +48,7 @@ export const UserImage = ({
   };
 
   return editable ? (
-    <div data-testid="user-avatar-with-image-upload">
+    <div data-testid='user-avatar-with-image-upload'>
       <AvatarEdit {...avatarProps} editOnClick={onClick} />
       <ImageUpload
         isShown={showImageUpload}
@@ -56,7 +56,7 @@ export const UserImage = ({
       ></ImageUpload>
     </div>
   ) : (
-    <div data-testid="user-avatar-without-image-upload">
+    <div data-testid='user-avatar-without-image-upload'>
       <Avatar {...avatarProps} hoverEffect={hoverEffect ? 'all' : undefined} />
     </div>
   );

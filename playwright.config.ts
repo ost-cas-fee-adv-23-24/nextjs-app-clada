@@ -24,7 +24,7 @@ export default defineConfig({
   use: {
     trace: 'on-first-retry',
     permissions: ['clipboard-read', 'clipboard-write'],
-    video: 'on-first-retry'
+    video: 'on-first-retry',
   },
   projects: [
     {

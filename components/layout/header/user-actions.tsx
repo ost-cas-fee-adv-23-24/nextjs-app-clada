@@ -8,10 +8,6 @@ import { UserImage } from '@/components/_shared/user-image';
 import { SettingsModal } from '@/components/modals/settings';
 import { User } from '@/utils/models';
 import Link from 'next/link';
-import { SettingsModal } from '../modal/settings';
-import LoginButton from '../shared/button/login-button';
-import LogoutButton from '../shared/button/logout-button';
-import { UserImage } from '../shared/user-image';
 
 export const HeaderUserActions = async () => {
   const session = await auth();
@@ -30,7 +26,11 @@ export const HeaderUserActions = async () => {
 
   return (
     <div className='ml-auto flex pt-xxs'>
-      <Link href={'/user/' + user?.id} aria-label='User' data-testid='header-user-image-button'>
+      <Link
+        href={'/user/' + user?.id}
+        aria-label='User'
+        data-testid='header-user-image-button'
+      >
         <UserImage size='s' url={user?.avatarUrl}></UserImage>
       </Link>
       <div

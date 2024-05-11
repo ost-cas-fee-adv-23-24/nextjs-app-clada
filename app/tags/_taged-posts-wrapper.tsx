@@ -10,7 +10,7 @@ export default async function TagedPostsWrapper({
 }) {
   const tags = Array.isArray(searchParams.tag)
     ? (searchParams.tag as string[])
-    : [searchParams.tag as string]
+    : [searchParams.tag as string];
 
   const queryParams = {
     limit: 10,
@@ -18,10 +18,12 @@ export default async function TagedPostsWrapper({
   };
 
   if (!searchParams.tag) {
-    return <>
-      <div className='pt-m'></div>
-      <p>Kein Tag angegeben</p>
-    </>
+    return (
+      <>
+        <div className='pt-m'></div>
+        <p>Kein Tag angegeben</p>
+      </>
+    );
   }
 
   const posts = await GetPosts(queryParams);

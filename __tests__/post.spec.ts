@@ -1,6 +1,6 @@
-import test, { expect } from "@playwright/test";
-import { MumbleTestIds } from "./helpers/selectors";
-import { login, createMumbleText } from "./helpers/utilities";
+import test, { expect } from '@playwright/test';
+import { MumbleTestIds } from './helpers/selectors';
+import { createMumbleText, login } from './helpers/utilities';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -16,9 +16,7 @@ test.describe('Posts', () => {
   });
   test('create a mumble', async ({ page }) => {
     await page.getByPlaceholder('Deine Meinung zählt!').click();
-    await page
-      .getByPlaceholder('Deine Meinung zählt!')
-      .fill(createMumbleText);
+    await page.getByPlaceholder('Deine Meinung zählt!').fill(createMumbleText);
     await page.getByRole('button', { name: 'Absenden' }).click();
 
     await expect(
@@ -32,9 +30,7 @@ test.describe('Posts', () => {
 
     await expect(createdMumble, 'is visible').toBeVisible();
   });
-  test('copy a link of a mumble and check if it is valid', async ({
-    page,
-  }) => {
+  test('copy a link of a mumble and check if it is valid', async ({ page }) => {
     const createdMumble = page.locator(
       `[data-testid="single-post"]:has-text("${createMumbleText}")`
     );
@@ -44,9 +40,7 @@ test.describe('Posts', () => {
 
     await copyLinkButton.click();
 
-    const clipboardText = await page.evaluate(
-      'navigator.clipboard.readText()'
-    );
+    const clipboardText = await page.evaluate('navigator.clipboard.readText()');
 
     await page.goto(clipboardText as string);
     await expect(page, 'page is the correct url').toHaveURL(
@@ -69,9 +63,7 @@ test.describe('Posts', () => {
 
     await likeButton.click();
 
-    await expect(likeButton, 'ensures that has one like').toHaveText(
-      '1 Like'
-    );
+    await expect(likeButton, 'ensures that has one like').toHaveText('1 Like');
 
     await likeButton.click();
 

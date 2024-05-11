@@ -1,10 +1,11 @@
 # NextJS-App-Clada
 
-*NEXTJS-App-Clada* is a social media platform built with nextjs, next-auth and tailwind.
+_NEXTJS-App-Clada_ is a social media platform built with nextjs, next-auth and tailwind.
 
 This project was built in the frame of the CAS Frontend Engineering Advanced course at the [OST Fachhochschule Rapperswil](https://www.ost.ch/de/).
 
 Authors / Developers:
+
 - [Claudio Steffen](https://github.com/claudio-OST)
 - [Danijel Malinovic](https://github.com/malinovic)
 
@@ -33,11 +34,11 @@ The application is automatically deployed to [netlify](https://mumble-platform-c
 ### Pull request deployment preview
 
 When creating pull request, netlify will automatically create deployment preview url's. For now, these do not work.
-We have agreed that we much rather work the *old fashioned way*, therefore checkout and test the PR locally instead of a configuration on the web.
+We have agreed that we much rather work the _old fashioned way_, therefore checkout and test the PR locally instead of a configuration on the web.
 
 ## Testing
 
-For testing, we use [playwright](https://playwright.dev/). When running tests locally, make sure your configuration is set accordingly to [this wiki page](https://github.com/ost-cas-fee-adv-23-24/nextjs-app-clada/wiki/Local-Env-Variables). 
+For testing, we use [playwright](https://playwright.dev/). When running tests locally, make sure your configuration is set accordingly to [this wiki page](https://github.com/ost-cas-fee-adv-23-24/nextjs-app-clada/wiki/Local-Env-Variables).
 
 Then run `npm run test`. You can also run `npm run test-interactive` to get playwrights visual interface.
 
