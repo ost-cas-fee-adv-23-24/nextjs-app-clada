@@ -2,7 +2,7 @@
 
 import { Post } from '@/utils/models';
 import { CommentButton } from 'clada-storybook';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const commentLabels = {
   zero: 'Comment',
@@ -11,14 +11,18 @@ const commentLabels = {
 };
 
 export const Comment = ({ post }: { post: Post }) => {
+  const router = useRouter();
+
+  const handleCommentClick = () => {
+    router.push(`/post/${post.id}`);
+  };
+
   return (
-    <Link href={`/post/${post.id}`}>
-      <CommentButton
-        count={post.replies ?? 0}
-        hasCommented={!!post?.replies}
-        labels={commentLabels}
-        onClick={() => false}
-      ></CommentButton>
-    </Link>
+    <CommentButton
+      count={post.replies ?? 0}
+      hasCommented={!!post?.replies}
+      labels={commentLabels}
+      onClick={handleCommentClick}
+    ></CommentButton>
   );
 };
