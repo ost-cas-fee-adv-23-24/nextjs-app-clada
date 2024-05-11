@@ -118,7 +118,11 @@ export default function PostList({
       {staleEventSourcePosts.length > 0 && (
         <div className='sticky top-[84px] z-50'>
           <div className='flex justify-around mt-[-32px]'>
-            <div className='bg-base-100 p-xs rounded-full cursor-pointer'>
+            <div
+              className='bg-base-100 p-xs rounded-full cursor-pointer'
+              aria-live='polite'
+              aria-atomic='true'
+            >
               <IconButton
                 Icon={RepostIcon}
                 href='javascript:void(0);'
