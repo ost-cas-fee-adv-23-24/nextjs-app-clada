@@ -83,10 +83,7 @@ const ZoomImage = ({ src }: { src?: string }) => {
             <CancelIcon color='white' size='m' />
           </div>
 
-          <div
-            className='bg-white rounded-lg overflow-hidden rounded-m'
-            style={{ maxWidth: '80%', maxHeight: '80%' }}
-          >
+          <div className='bg-white rounded-lg overflow-hidden rounded-m max-w-[90%] max-h-[90%] md:max-w-[80%] md:max-h-[80%]'>
             <NextImage
               src={src}
               alt='Expanded post image'
