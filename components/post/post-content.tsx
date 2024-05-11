@@ -23,9 +23,11 @@ export const PostContent = ({ post, size }: { post: Post; size?: 'large' }) => {
         className='absolute -ml-[82px] -mt-xs'
         onClick={(e) => e.stopPropagation()}
       >
-        <Link href={`/user/${post.creator.id}`}>
-          <UserImage border={true} url={post?.creator?.avatarUrl}></UserImage>
-        </Link>
+        <div className='focus-helper'>
+          <Link href={`/user/${post.creator.id}`}>
+            <UserImage border={true} url={post?.creator?.avatarUrl}></UserImage>
+          </Link>
+        </div>
       </div>
       <div onClick={(e) => e.stopPropagation()}>
         <UserHeader post={post} showTime={true} useLarge={true}></UserHeader>

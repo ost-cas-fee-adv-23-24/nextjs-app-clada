@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.keyboard-focus {
+  outline: 2px solid theme('colors.primary.500') !important;
+  outline-offset: 2px !important;
+}
+
+.focus-helper .keyboard-focus {
+  display: block;
+  border-radius: 50px;
+}
+
+header .keyboard-focus,
+.focus-white.keyboard-focus {
+  outline: 2px solid white !important;
+}

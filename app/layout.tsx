@@ -1,3 +1,4 @@
+import FlyingFocus from '@/components/layout/flying-focus';
 import { MainLayout } from '@/components/layout/main-layout';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
@@ -40,6 +41,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
+      <FlyingFocus />
       <body className={poppins.className}>
         <MainLayout>{children}</MainLayout>
       </body>
