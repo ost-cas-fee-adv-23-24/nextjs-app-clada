@@ -12,7 +12,7 @@
   border-radius: 50px;
 }
 
-header .keyboard-focus {
+header .keyboard-focus,
+.focus-white.keyboard-focus {
   outline: 2px solid white !important;
-  outline-offset: 2px !important;
 }

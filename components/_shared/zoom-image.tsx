@@ -50,6 +50,8 @@ const ZoomImage = ({ src }: { src?: string }) => {
         <div
           className='group relative h-auto w-full cursor-pointer overflow-hidden rounded-s'
           onClick={() => setIsPreviewOpen(true)}
+          onKeyDown={() => setIsPreviewOpen(true)}
+          tabIndex={0}
         >
           <NextImage
             src={src}
@@ -73,7 +75,11 @@ const ZoomImage = ({ src }: { src?: string }) => {
           className='fixed inset-0 z-50 cursor-pointer flex items-center justify-center bg-primary-500 bg-opacity-75'
           onClick={() => setIsPreviewOpen(false)}
         >
-          <div className='absolute top-0 right-0 m-4'>
+          <div
+            className='absolute top-0 right-0 m-4 focus-white'
+            onKeyDown={() => setIsPreviewOpen(false)}
+            tabIndex={0}
+          >
             <CancelIcon color='white' size='m' />
           </div>
 
