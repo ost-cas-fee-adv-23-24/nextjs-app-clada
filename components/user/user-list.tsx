@@ -1,11 +1,11 @@
 'use client';
 
-import { GetUserFollowees } from '@/app/api/actions/user.actions';
-import { useFollowees } from '@/utils/hooks/hooks';
+import { GetUserFollowees } from '@/actions/user.actions';
+import { UserCard } from '@/user/user-card';
+import { useFollowees } from '@/utils/hooks/swr-hooks';
 import { User } from '@/utils/models';
 import { useEffect, useState } from 'react';
 import { mutate } from 'swr';
-import { UserCard } from './user-card';
 
 export const UserList = ({
   users,
@@ -46,10 +46,10 @@ export const UserList = ({
   }, [followees]);
 
   return (
-    <div>
+    <section>
       {followees && (
         <div>
-          <div className='mb-font-h3'>{title}</div>
+          <h3 className='mb-font-h3'>{title}</h3>
           <div className='pt-s'></div>
         </div>
       )}
@@ -76,6 +76,6 @@ export const UserList = ({
           ))}
         {!displayUsers && !followees?.length && <div>{emptyText}</div>}
       </div>
-    </div>
+    </section>
   );
 };

@@ -1,5 +1,5 @@
-import PostSkeleton from '@/components/skeleton/post-skeleton';
-import { Config } from '@/config/env';
+import PostSkeleton from '@/post/skeleton/post-skeleton';
+import { Config } from 'config/env';
 
 export default function PostSkeletonList({ count }: { count?: number }) {
   const definiteCount = count ? count : Config.defaultPageSize;

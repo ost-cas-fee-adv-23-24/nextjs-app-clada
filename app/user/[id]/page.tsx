@@ -1,11 +1,11 @@
-import PostSkeletonList from '@/components/skeleton/post-skeleton-list';
-import { FollowingState } from '@/components/user/following-state';
+import { GetUserById, GetUserFollowers } from '@/actions/user.actions';
+import { auth } from '@/auth';
 import { Profile } from '@/components/user/profile';
+import PostSkeletonList from '@/post/skeleton/post-skeleton-list';
+import { UserPostsProvider } from '@/post/user-posts-context';
+import { FollowingState } from '@/user/following-state';
 import { User } from '@/utils/models';
 import { Suspense } from 'react';
-import { UserPostsProvider } from '../../../components/post/user-posts-context';
-import { GetUserById, GetUserFollowers } from '../../api/actions/user.actions';
-import { auth } from '../../api/auth/[...nextauth]/auth';
 import UserPostsSuspense from './_user-posts-suspense';
 
 const fakeSrc =

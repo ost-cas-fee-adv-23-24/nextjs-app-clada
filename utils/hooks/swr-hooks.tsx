@@ -3,8 +3,10 @@ import {
   GetUserFollowees,
   GetUserFollowers,
   GetUsers,
-} from '@/app/api/actions/user.actions';
-import useSWR from 'swr';
+} from '@/actions/user.actions';
+import { Session } from 'next-auth';
+import { useSession } from 'next-auth/react';
+import useSWR, { Fetcher } from 'swr';
 
 export const useUser = (id: string | undefined) => {
   const { data, error, isLoading } = useSWR(`user-${id}`, () => {
@@ -55,3 +57,25 @@ export const useFollowers = (id: string) => {
     isError: error,
   };
 };
+
+const fetcher: Fetcher<Session | null> = (url: string) =>
+  fetch(url).then((res) => res.json());
+
+export function useAuthSession() {
+  const { data: session, status } = useSession();
+
+  const { data: sessionData, error } = useSWR<Session | null>(
+    '/api/auth/session',
+    fetcher,
+    {
+      fallbackData: session,
+      revalidateOnFocus: true,
+    }
+  );
+
+  return {
+    session: sessionData,
+    isLoading: status === 'loading',
+    isError: !!error,
+  };
+}

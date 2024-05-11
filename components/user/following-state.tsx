@@ -1,6 +1,6 @@
 'use client';
 
-import { FollowUser, UnFollowUser } from '@/app/api/actions/user.actions';
+import { FollowUser, UnFollowUser } from '@/actions/user.actions';
 import { User } from '@/utils/models';
 import { Button, CancelIcon } from 'clada-storybook';
 import { useState } from 'react';

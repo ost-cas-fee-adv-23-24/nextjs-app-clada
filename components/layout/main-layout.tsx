@@ -1,8 +1,8 @@
+import { Footer } from '@/components/layout/footer';
+import { Header } from '@/components/layout/header';
 import { ServiceWorker } from '@/components/layout/service-worker';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
-import { Footer } from './footer';
-import { Header } from './header';
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {
   return (

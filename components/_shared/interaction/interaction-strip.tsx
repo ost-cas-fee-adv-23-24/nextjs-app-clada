@@ -1,11 +1,11 @@
 'use client';
 
+import { Comment } from '@/components/_shared/interaction/comment';
+import { CopyLink } from '@/components/_shared/interaction/copy-link';
+import { DeleteUserPost } from '@/components/_shared/interaction/delete';
+import { Like } from '@/components/_shared/interaction/like';
 import { Post } from '@/utils/models';
 import { useSession } from 'next-auth/react';
-import { Comment } from './comment';
-import { CopyLink } from './copy-link';
-import { DeleteUserPost } from './delete';
-import { Like } from './like';
 
 export const InteractionStrip = ({
   post,

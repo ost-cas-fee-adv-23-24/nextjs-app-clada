@@ -11,6 +11,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "baseUrl": ".",
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
@@ -19,9 +20,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@/auth": ["./app/api/auth/[...nextauth]/auth"],
-      "@/testhelpers": ["./__tests__/helpers"]
+      "@/actions/*": ["app/api/actions/*"],
+      "@/utils/*": ["utils/*"],
+      "@/components/*": ["components/*"],
+      "@/user/*": ["components/user/*"],
+      "@/post/*": ["components/post/*"],
+      "@/shared/*": ["components/_shared/*"],
+      "@/auth": ["./app/api/auth/[...nextauth]/auth"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -1,39 +1,40 @@
 'use client';
 
-import { GetPosts, GetPostsParams } from '@/app/api/actions/post.actions';
-import PostList from '@/components/post-list/post-list';
-import { Friends } from '@/components/user/friends';
-import { Config } from '@/config/env';
+import { GetPosts, GetPostsParams } from '@/actions/post.actions';
+import PostList from '@/post/post-list/post-list';
+import { UserPostsContext } from '@/post/user-posts-context';
+import { Friends } from '@/user/friends';
 import { PostPaginatedResult } from '@/utils/models';
 import { Tabs } from 'clada-storybook';
+import { Config } from 'config/env';
 import { useContext, useEffect, useState } from 'react';
-import { UserPostsContext } from '../../../components/post/user-posts-context';
 import { UserPageSection } from './const';
 
-type Props = {
-  userId: string;
-  isPersonalUser: boolean;
-  postsPaginatedResult: PostPaginatedResult | null;
-  queryParams?: GetPostsParams & Omit<GetPostsParams, 'offset'>;
-};
-
-type QueryParam = (GetPostsParams & Omit<GetPostsParams, 'offset'>) | undefined;
+type QueryParams = (GetPostsParams & Omit<GetPostsParams, 'offset'>) | undefined;
 
 export const UserDashboard = ({
   userId,
   isPersonalUser,
   postsPaginatedResult,
   queryParams,
-}: Props) => {
+}: {
+  userId: string;
+  isPersonalUser: boolean;
+  postsPaginatedResult: PostPaginatedResult | null;
+  queryParams?: QueryParams;
+}) => {
   const [currentPaginatedResult, setCurrentPaginatedResult] =
     useState<PostPaginatedResult | null>(postsPaginatedResult);
   const [currentQueryParams, setCurrentQueryParams] =
     useState<QueryParam>(queryParams);
 
   const [showFriends, setShowFriends] = useState(false);
+  const [title, setTitle] = useState(UserPageSection.CreatedByUser);
 
   const onSectionChange = async (section: UserPageSection) => {
     const temporaryQueryParam: QueryParam = {};
+
+    setTitle(section);
 
     switch (section) {
       case UserPageSection.CreatedByUser:
@@ -77,6 +78,7 @@ export const UserDashboard = ({
     <>
       {isPersonalUser && (
         <div data-testid='user-tabs'>
+          <h2 className='sr-only'>{title}</h2>
           <Tabs
             tabs={[
               {
@@ -101,11 +103,13 @@ export const UserDashboard = ({
           <Friends userId={userId}></Friends>
         </div>
       ) : (
-        <PostList
-          postsPaginatedResult={currentPaginatedResult}
-          queryParams={currentQueryParams}
-          isPersonalUser={isPersonalUser}
-        />
+        <section>
+          <PostList
+            postsPaginatedResult={currentPaginatedResult}
+            queryParams={currentQueryParams}
+            isPersonalUser={isPersonalUser}
+          />
+        </section>
       )}
     </>
   );

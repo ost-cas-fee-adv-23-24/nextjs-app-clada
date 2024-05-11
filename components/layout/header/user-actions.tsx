@@ -1,7 +1,11 @@
 'use server';
 
-import { GetUserById } from '@/app/api/actions/user.actions';
+import { GetUserById } from '@/actions/user.actions';
 import { auth } from '@/auth';
+import LoginButton from '@/components/_shared/button/login-button';
+import LogoutButton from '@/components/_shared/button/logout-button';
+import { UserImage } from '@/components/_shared/user-image';
+import { SettingsModal } from '@/components/modals/settings';
 import { User } from '@/utils/models';
 import Link from 'next/link';
 import { SettingsModal } from '../modal/settings';
@@ -26,7 +30,7 @@ export const HeaderUserActions = async () => {
 
   return (
     <div className='ml-auto flex pt-xxs'>
-      <Link href={'/user/' + user?.id} data-testid='header-user-image-button'>
+      <Link href={'/user/' + user?.id} aria-label='User' data-testid='header-user-image-button'>
         <UserImage size='s' url={user?.avatarUrl}></UserImage>
       </Link>
       <div

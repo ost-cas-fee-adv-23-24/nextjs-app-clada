@@ -1,14 +1,20 @@
 'use client';
 
+import { TimeDiff } from '@/components/_shared/time-diff';
+import { UserImage } from '@/components/_shared/user-image';
+import { SettingsModal } from '@/components/modals/settings';
+import { Location } from '@/user/location';
+import { UserHandle } from '@/user/user-handle';
+import { getName } from '@/user/user-utils';
 import { User } from '@/utils/models';
-import { EditIcon, SettingsIcon } from 'clada-storybook';
+import { EditIcon } from 'clada-storybook';
 import NextImage from 'next/image';
-import { TimeDiff } from '../shared/time-diff';
-import { UserImage } from '../shared/user-image';
-import { Location } from './location';
-import { UserHandle } from './user-handle';
-import { getName } from './user-utils';
 
+/*
+The design presents an element in the user profile that shows how long the user has been registered.
+The problem is that the userId is not an ULID and there is no way to get at this date.
+That is why i am faking it here. Much like we are faking the user profile background image (that cannot be stored or retrieved via API).
+ */
 const fakeULID = '01HGX50H2SXXPE51S60Q7QY29M';
 
 export const Profile = ({
@@ -51,7 +57,7 @@ export const Profile = ({
           )}
         </div>
 
-        <div className='absolute right-0 -mt-[80px] mr-[25px]'>
+        <div className='absolute right-0 md:mt-[-80px] -mt-[152px]  md:mr-[25px] transform md:scale-100 scale-75'>
           <UserImage
             border={true}
             size='xl'
@@ -63,12 +69,16 @@ export const Profile = ({
       <div className='pt-l'></div>
       <div className='flex gap-xs'>
         <h1 className='mb-font-h3'>{getName(user)}</h1>
-        <div className='self-center'>
-          <SettingsIcon color='primary'></SettingsIcon>
+        <div className='self-center mt-xxs'>
+          <SettingsModal
+            user={user}
+            color='primary'
+            showText={false}
+          ></SettingsModal>
         </div>
       </div>
       <div className='pt-xs'></div>
-      <div className='flex gap-xs'>
+      <section className='flex gap-xs'>
         <UserHandle name={user.username} id={user.id}></UserHandle>
         <Location name='Rapperswil'></Location>
         {user.id && (
@@ -78,13 +88,14 @@ export const Profile = ({
             href={`/user/${user.id}`}
           ></TimeDiff>
         )}
-      </div>
+      </section>
       <div className='pt-s'></div>
-      <div className='text-base-400 mb-font-paragraph-m'>
+      <h2 className='sr-only'>Biografie</h2>
+      <section className='text-base-400 mb-font-paragraph-m'>
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
         voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-      </div>
+      </section>
     </div>
   );
 };
