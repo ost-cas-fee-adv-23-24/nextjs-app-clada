@@ -39,7 +39,7 @@ const ZoomImage = ({ src }: { src?: string }) => {
 
   const closePreview = () => {
     setIsPreviewOpen(false);
-    openerRef.current?.focus(); // Focus is restored to the image that opened the modal
+    openerRef.current?.focus();
   };
 
   useEffect(() => {
