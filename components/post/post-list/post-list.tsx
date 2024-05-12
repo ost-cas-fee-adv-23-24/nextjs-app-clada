@@ -55,11 +55,15 @@ export default function PostList({
   useEffect(() => {
     const eventSource = new EventSource(`${Config.apiUrl}/posts/_sse`);
 
-    const handlePostUpdate = (postId: string) => {
-      if (posts.find((x) => x.id === postId)) {
+    const handlePostUpdate = (data: { postId: string; userId: string }) => {
+      if (
+        data.userId === session?.user.id &&
+        posts.find((x) => x.id === data.postId)
+      ) {
         revalidateHomePosts();
+      } else {
+        sessionStorage.setItem('shouldRevalidate', 'true');
       }
-      sessionStorage.setItem('shouldRevalidate', 'true');
     };
 
     eventSource.addEventListener('postCreated', (e) => {
@@ -78,17 +82,18 @@ export default function PostList({
       sessionStorage.setItem('shouldRevalidate', 'true');
     });
 
-    eventSource.addEventListener('postLiked', (e) =>
-      handlePostUpdate(JSON.parse(e.data).postId)
-    );
+    eventSource.addEventListener('postLiked', (e) => {
+      console.log(JSON.parse(e.data));
+      handlePostUpdate(JSON.parse(e.data));
+    });
     eventSource.addEventListener('postUnliked', (e) =>
-      handlePostUpdate(JSON.parse(e.data).postId)
+      handlePostUpdate(JSON.parse(e.data))
     );
     eventSource.addEventListener('postDeleted', (e) =>
-      handlePostUpdate(JSON.parse(e.data).postId)
+      handlePostUpdate(JSON.parse(e.data))
     );
     eventSource.addEventListener('postUpdated', (e) =>
-      handlePostUpdate(JSON.parse(e.data).postId)
+      handlePostUpdate(JSON.parse(e.data))
     );
 
     return () => {
