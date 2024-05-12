@@ -162,3 +162,7 @@ const revalidatePosts = (userId: string) => {
   revalidateTag(`creators-${userId}`);
   revalidateTag(`likedBy-${userId}`);
 };
+
+export const revalidateHomePosts = () => {
+  revalidatePath('/', 'page');
+};

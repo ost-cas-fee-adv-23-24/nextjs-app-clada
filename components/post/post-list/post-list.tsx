@@ -1,5 +1,9 @@
 'use client';
-import { GetPosts, GetPostsParams } from '@/actions/post.actions';
+import {
+  GetPosts,
+  GetPostsParams,
+  revalidateHomePosts,
+} from '@/actions/post.actions';
 import { SinglePost } from '@/post/single-post';
 import { Post, PostPaginatedResult } from '@/utils/models';
 import { Config } from 'config/env';
@@ -7,8 +11,9 @@ import { useEffect, useState } from 'react';
 // inspiration from https://medium.com/@ferlat.simon/infinite-scroll-with-nextjs-server-actions-a-simple-guide-76a894824cfd
 import { CreatePost as FirstPost } from '@/post/create-post';
 import PostSkeleton from '@/post/skeleton/post-skeleton';
+import { useAuthSession } from '@/utils/hooks/swr-hooks';
+import { isNewer } from '@/utils/time';
 import { IconButton, RepostIcon } from 'clada-storybook';
-import { useSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
 
 export default function PostList({
@@ -35,11 +40,33 @@ export default function PostList({
   >([]);
 
   const { ref, inView } = useInView();
+  const { session: session } = useAuthSession();
 
-  const { data: session } = useSession();
+  useEffect(() => {
+    return () => {
+      const shouldRevalidate = sessionStorage.getItem('shouldRevalidate');
+
+      if (shouldRevalidate === 'true') {
+        revalidateHomePosts();
+        sessionStorage.removeItem('shouldRevalidate');
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const eventSource = new EventSource(`${Config.apiUrl}/posts/_sse`);
+
+    const handlePostUpdate = (data: { postId: string; userId: string }) => {
+      if (
+        data.userId === session?.user.id &&
+        (posts.find((x) => x.id === data.postId) ||
+          isNewer(data.postId, posts[0].id))
+      ) {
+        revalidateHomePosts();
+      } else {
+        sessionStorage.setItem('shouldRevalidate', 'true');
+      }
+    };
 
     eventSource.addEventListener('postCreated', (e) => {
       const newPost: Post = JSON.parse(e.data) as Post;
@@ -53,7 +80,26 @@ export default function PostList({
       ) {
         setStaleEventSourcePosts((posts) => [newPost, ...posts]);
       }
+
+      if (newPost.creator.id === session?.user.id) {
+        revalidateHomePosts();
+      } else {
+        sessionStorage.setItem('shouldRevalidate', 'true');
+      }
     });
+
+    eventSource.addEventListener('postLiked', (e) =>
+      handlePostUpdate(JSON.parse(e.data))
+    );
+    eventSource.addEventListener('postUnliked', (e) =>
+      handlePostUpdate(JSON.parse(e.data))
+    );
+    eventSource.addEventListener('postDeleted', (e) =>
+      handlePostUpdate(JSON.parse(e.data))
+    );
+    eventSource.addEventListener('postUpdated', (e) =>
+      handlePostUpdate(JSON.parse(e.data))
+    );
 
     return () => {
       eventSource.close();
@@ -115,10 +161,14 @@ export default function PostList({
 
   return (
     <>
-      {staleEventSourcePosts.length > 0 && (
+      {showRefresh && staleEventSourcePosts.length > 0 && (
         <div className='sticky top-[84px] z-50'>
           <div className='flex justify-around mt-[-32px]'>
-            <div className='bg-base-100 p-xs rounded-full cursor-pointer'>
+            <div
+              className='bg-base-100 p-xs rounded-full cursor-pointer'
+              aria-live='polite'
+              aria-atomic='true'
+            >
               <IconButton
                 Icon={RepostIcon}
                 href='javascript:void(0);'

@@ -2,9 +2,9 @@
 
 import { UpdateLike } from '@/actions/post.actions';
 import { UserPostsContext } from '@/post/user-posts-context';
+import { useAuthSession } from '@/utils/hooks/swr-hooks';
 import { Post } from '@/utils/models';
 import { LikeButton } from 'clada-storybook';
-import { useSession } from 'next-auth/react';
 import { useContext, useState } from 'react';
 
 const likeLabels = {
@@ -20,12 +20,14 @@ export const Like = ({ post }: { post: Post }) => {
 
   const { reloadData, isProvided } = useContext(UserPostsContext);
 
-  const { data: session } = useSession();
+  const { session: session } = useAuthSession();
 
   const like = async () => {
     setLikedBySelf(!likedBySelf);
     setLikes(likedBySelf ? likes - 1 : likes + 1);
+  };
 
+  const likeOnServer = async () => {
     try {
       await UpdateLike(
         post.id,
@@ -34,18 +36,22 @@ export const Like = ({ post }: { post: Post }) => {
       );
       reloadData();
     } catch (error) {
-      setLikedBySelf(post.likedBySelf ?? false);
-      setLikes(post.likedBySelf ? likes - 1 : likes + 1);
+      setTimeout(() => {
+        setLikedBySelf(post.likedBySelf ?? false);
+        setLikes(post.likedBySelf ? likes - 1 : likes + 1);
+      }, 1000);
     }
   };
 
   return (
-    <LikeButton
-      count={likes}
-      labels={likeLabels}
-      isAlreadyLiked={likedBySelf}
-      onClick={like}
-      testid='single-post-like'
-    ></LikeButton>
+    <div onClick={likeOnServer}>
+      <LikeButton
+        count={likes}
+        labels={likeLabels}
+        isAlreadyLiked={likedBySelf}
+        onClick={like}
+        testid='single-post-like'
+      ></LikeButton>
+    </div>
   );
 };
