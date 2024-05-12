@@ -25,7 +25,9 @@ export const Like = ({ post }: { post: Post }) => {
   const like = async () => {
     setLikedBySelf(!likedBySelf);
     setLikes(likedBySelf ? likes - 1 : likes + 1);
+  };
 
+  const likeOnServer = async () => {
     try {
       await UpdateLike(
         post.id,
@@ -40,12 +42,14 @@ export const Like = ({ post }: { post: Post }) => {
   };
 
   return (
-    <LikeButton
-      count={likes}
-      labels={likeLabels}
-      isAlreadyLiked={likedBySelf}
-      onClick={like}
-      testid='single-post-like'
-    ></LikeButton>
+    <div onClick={likeOnServer}>
+      <LikeButton
+        count={likes}
+        labels={likeLabels}
+        isAlreadyLiked={likedBySelf}
+        onClick={like}
+        testid='single-post-like'
+      ></LikeButton>
+    </div>
   );
 };
