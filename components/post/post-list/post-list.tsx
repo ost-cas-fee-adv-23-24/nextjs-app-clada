@@ -1,5 +1,9 @@
 'use client';
-import { GetPosts, GetPostsParams } from '@/actions/post.actions';
+import {
+  GetPosts,
+  GetPostsParams,
+  revalidateHomePosts,
+} from '@/actions/post.actions';
 import { SinglePost } from '@/post/single-post';
 import { Post, PostPaginatedResult } from '@/utils/models';
 import { Config } from 'config/env';
@@ -35,11 +39,28 @@ export default function PostList({
   >([]);
 
   const { ref, inView } = useInView();
-
   const { session: session } = useAuthSession();
 
   useEffect(() => {
+    return () => {
+      const shouldRevalidate = sessionStorage.getItem('shouldRevalidate');
+
+      if (shouldRevalidate === 'true') {
+        revalidateHomePosts();
+        sessionStorage.removeItem('shouldRevalidate');
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const eventSource = new EventSource(`${Config.apiUrl}/posts/_sse`);
+
+    const handlePostUpdate = (postId: string) => {
+      if (posts.find((x) => x.id === postId)) {
+        revalidateHomePosts();
+      }
+      sessionStorage.setItem('shouldRevalidate', 'true');
+    };
 
     eventSource.addEventListener('postCreated', (e) => {
       const newPost: Post = JSON.parse(e.data) as Post;
@@ -53,7 +74,22 @@ export default function PostList({
       ) {
         setStaleEventSourcePosts((posts) => [newPost, ...posts]);
       }
+
+      sessionStorage.setItem('shouldRevalidate', 'true');
     });
+
+    eventSource.addEventListener('postLiked', (e) =>
+      handlePostUpdate(JSON.parse(e.data).postId)
+    );
+    eventSource.addEventListener('postUnliked', (e) =>
+      handlePostUpdate(JSON.parse(e.data).postId)
+    );
+    eventSource.addEventListener('postDeleted', (e) =>
+      handlePostUpdate(JSON.parse(e.data).postId)
+    );
+    eventSource.addEventListener('postUpdated', (e) =>
+      handlePostUpdate(JSON.parse(e.data).postId)
+    );
 
     return () => {
       eventSource.close();
