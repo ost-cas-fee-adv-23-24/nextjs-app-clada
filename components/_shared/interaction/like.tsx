@@ -36,8 +36,10 @@ export const Like = ({ post }: { post: Post }) => {
       );
       reloadData();
     } catch (error) {
-      setLikedBySelf(post.likedBySelf ?? false);
-      setLikes(post.likedBySelf ? likes - 1 : likes + 1);
+      setTimeout(() => {
+        setLikedBySelf(post.likedBySelf ?? false);
+        setLikes(post.likedBySelf ? likes - 1 : likes + 1);
+      }, 1000);
     }
   };
 
