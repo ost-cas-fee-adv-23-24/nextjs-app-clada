@@ -1,0 +1,60 @@
+{
+  "name": "mumble",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf .next && rimraf node_modules",
+    "clean-all": "rimraf package-lock.json && npm run clean",
+    "postinstall": "husky install && npx playwright install",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prettier": "prettier . --write",
+    "test": "npx playwright test",
+    "test-interactive": "npx playwright test --ui"
+  },
+  "lint-staged": {
+    "*.{css,mdx,json,ts,tsx}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --max-warnings 0"
+    ]
+  },
+  "dependencies": {
+    "autoprefixer": "10.4.15",
+    "clada-storybook": "^2.8.0",
+    "dotenv": "^16.4.5",
+    "env-linter": "^2.0.0",
+    "next": "^14.2.0",
+    "next-auth": "^5.0.0-beta.4",
+    "postcss": "8.4.31",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.8.1",
+    "sharp": "^0.33.3",
+    "swr": "^2.2.5",
+    "tailwind-merge": "^2.2.1",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.2.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.41.1",
+    "@types/node": "20.6.0",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "cross-env": "^7.0.3",
+    "eslint": "8.56.0",
+    "eslint-config-next": "^14.2.2",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "rimraf": "^5.0.5"
+  }
+}
