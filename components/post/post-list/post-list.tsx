@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { CreatePost as FirstPost } from '@/post/create-post';
 import PostSkeleton from '@/post/skeleton/post-skeleton';
 import { useAuthSession } from '@/utils/hooks/swr-hooks';
+import { isNewer } from '@/utils/time';
 import { IconButton, RepostIcon } from 'clada-storybook';
 import { useInView } from 'react-intersection-observer';
 
@@ -58,7 +59,8 @@ export default function PostList({
     const handlePostUpdate = (data: { postId: string; userId: string }) => {
       if (
         data.userId === session?.user.id &&
-        posts.find((x) => x.id === data.postId)
+        (posts.find((x) => x.id === data.postId) ||
+          isNewer(data.postId, posts[0].id))
       ) {
         revalidateHomePosts();
       } else {
@@ -79,13 +81,16 @@ export default function PostList({
         setStaleEventSourcePosts((posts) => [newPost, ...posts]);
       }
 
-      sessionStorage.setItem('shouldRevalidate', 'true');
+      if (newPost.creator.id === session?.user.id) {
+        revalidateHomePosts();
+      } else {
+        sessionStorage.setItem('shouldRevalidate', 'true');
+      }
     });
 
-    eventSource.addEventListener('postLiked', (e) => {
-      console.log(JSON.parse(e.data));
-      handlePostUpdate(JSON.parse(e.data));
-    });
+    eventSource.addEventListener('postLiked', (e) =>
+      handlePostUpdate(JSON.parse(e.data))
+    );
     eventSource.addEventListener('postUnliked', (e) =>
       handlePostUpdate(JSON.parse(e.data))
     );

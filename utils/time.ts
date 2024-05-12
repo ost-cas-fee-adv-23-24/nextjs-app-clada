@@ -22,3 +22,10 @@ export const getTimeDifferenceInMinutes = (ulid: string): number => {
 
   return Math.round(Math.abs(diffInMinutes));
 };
+
+export const isNewer = (ulid1: string, ulid2: string): boolean => {
+  const date1 = decodeULIDTimestamp(ulid1);
+  const date2 = decodeULIDTimestamp(ulid2);
+
+  return date1 > date2;
+};
